@@ -191,3 +191,94 @@ body[data-layout="scroll"] .app-controls { display: none; }
   margin-right: var(--space-4);
   font-variant-numeric: tabular-nums;
 }
+
+/* ─────────────────────────────────────────────
+   Kapitel 2 — Verwaltung & KI
+   ───────────────────────────────────────────── */
+
+/* Kapitel 2: Verwaltung-Cards mit farbigem Akzent oben */
+.policy-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-3);
+  margin-top: var(--space-4);
+}
+.policy-card { /* extends .card */
+  border-top: 3px solid var(--accent);
+  padding-top: var(--space-4);
+}
+.policy-card.tone-2 { border-top-color: var(--success); }
+.policy-card.tone-3 { border-top-color: #c4623a; }
+.policy-card h3 {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: var(--text-tertiary);
+  margin-bottom: var(--space-3);
+}
+.policy-card ul { list-style: none; }
+.policy-card li {
+  padding: 4px 0;
+  font-size: 13px;
+  position: relative;
+  padding-left: 14px;
+}
+.policy-card li:before {
+  content: '•';
+  position: absolute;
+  left: 0;
+  color: var(--accent);
+}
+.policy-section-label {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: var(--text-tertiary);
+  font-weight: 600;
+  margin: var(--space-3) 0 var(--space-2) 0;
+}
+.policy-banner {
+  background: var(--bg-tint);
+  border-left: 3px solid var(--accent);
+  padding: var(--space-3) var(--space-4);
+  font-size: 13px;
+  color: var(--text-secondary);
+  margin: var(--space-4) 0;
+}
+
+/* Kapitel 2: Mythen-Tabelle */
+.myth-table {
+  display: grid;
+  grid-template-columns: 1.2fr 1.5fr 1.5fr;
+  gap: 1px;
+  background: var(--border);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  margin-top: var(--space-4);
+}
+.myth-table > div {
+  background: var(--bg-card);
+  padding: var(--space-3) var(--space-4);
+  font-size: 13px;
+}
+.myth-table .myth-header {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: var(--text-tertiary);
+  font-weight: 600;
+  padding-bottom: var(--space-2);
+}
+.myth-cell-myth { border-left: 3px solid #c4623a; }
+.pill {
+  display: inline-block;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  padding: 2px 8px;
+  border-radius: 99px;
+  margin-left: var(--space-2);
+  background: var(--accent-soft);
+  color: var(--accent-strong);
+}
