@@ -60,6 +60,8 @@ document.getElementById('next-slide').addEventListener('click', () => showSlide(
 
 document.addEventListener('keydown', (e) => {
   if (mode.get('layout') !== 'slide') return;
+  const tag = e.target.tagName;
+  if (tag === 'INPUT' || tag === 'TEXTAREA' || e.target.isContentEditable) return;
   if (e.key === 'ArrowRight' || e.key === 'PageDown') { e.preventDefault(); showSlide(currentIdx + 1); }
   if (e.key === 'ArrowLeft'  || e.key === 'PageUp')   { e.preventDefault(); showSlide(currentIdx - 1); }
 });

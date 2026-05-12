@@ -72,8 +72,8 @@ body[data-layout="scroll"] .app-controls { display: none; }
 .slide-counter { font-size: 12px; color: var(--text-tertiary); }
 
 /* TOC */
-.app-toc ol { list-style: none; counter-reset: toc; }
-.app-toc li { counter-increment: toc; margin-bottom: var(--space-2); }
+.app-toc ol { list-style: none; }
+.app-toc li { margin-bottom: var(--space-2); }
 .app-toc a {
   font-size: 13px;
   color: var(--text-secondary);
