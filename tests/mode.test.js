@@ -48,4 +48,14 @@ describe('ModeManager', () => {
     mode.toggle('exercises');
     expect(mode.get('exercises')).toBe(false);
   });
+
+  it('on() gibt unsubscribe-funktion zurück, die den listener entfernt', () => {
+    let callCount = 0;
+    const off = mode.on('change', () => { callCount++; });
+    mode.set('llm', true);
+    expect(callCount).toBe(1);
+    off();
+    mode.set('llm', false);
+    expect(callCount).toBe(1); // listener wurde entfernt, kein weiterer call
+  });
 });
