@@ -148,6 +148,7 @@ p, li { font-size: 14px; line-height: 1.6; }
   color: var(--accent);
 }
 .icon svg { stroke: currentColor; stroke-width: 1.75; fill: none; width: 14px; height: 14px; }
+.icon-svg { width: 14px; height: 14px; stroke: currentColor; stroke-width: 1.75; fill: none; }
 
 /* App-Shell */
 .app-header {
@@ -160,11 +161,14 @@ p, li { font-size: 14px; line-height: 1.6; }
 }
 .app-toggles { display: flex; gap: var(--space-2); align-items: center; }
 .toggle {
+  font-family: var(--font-sans);
   font-size: 11px;
   font-weight: 500;
   color: var(--text-secondary);
   padding: 4px 10px;
   border-radius: var(--radius-sm);
   cursor: pointer;
+  background: transparent;
+  border: none;
 }
 .toggle.active { color: var(--accent); background: var(--accent-soft); }
