@@ -12,7 +12,7 @@ document.querySelector('[data-mode="theme"][data-value="light"]').innerHTML = ic
 document.querySelector('[data-mode="theme"][data-value="dark"]').innerHTML = icon('moon');
 
 // Inline-Icon-Auflösung für Folien-Markup
-document.querySelectorAll('.icon[data-icon]').forEach(el => {
+document.querySelectorAll('[data-icon]').forEach(el => {
   el.innerHTML = icon(el.dataset.icon);
 });
 
