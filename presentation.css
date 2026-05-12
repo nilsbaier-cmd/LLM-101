@@ -1,0 +1,97 @@
+/* Layout-spezifische Styles für Slide- und Scroll-Modus */
+
+.app-main {
+  display: grid;
+  grid-template-rows: 1fr auto;
+  height: calc(100vh - 60px);
+}
+
+/* SLIDE-MODUS */
+body[data-layout="slide"] .app-toc { display: none; }
+body[data-layout="slide"] .app-deck {
+  overflow: hidden;
+  position: relative;
+}
+body[data-layout="slide"] .slide {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-7);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease;
+}
+body[data-layout="slide"] .slide.is-active {
+  opacity: 1;
+  pointer-events: auto;
+}
+body[data-layout="slide"] .slide-inner {
+  max-width: 980px;
+  width: 100%;
+}
+
+/* SCROLL-MODUS */
+body[data-layout="scroll"] .app-main {
+  grid-template-columns: 220px 1fr;
+  grid-template-rows: 1fr;
+}
+body[data-layout="scroll"] .app-toc {
+  display: block;
+  position: sticky;
+  top: 0;
+  padding: var(--space-5);
+  border-right: 1px solid var(--border);
+  overflow-y: auto;
+  height: calc(100vh - 60px);
+}
+body[data-layout="scroll"] .app-deck {
+  overflow-y: auto;
+  padding: var(--space-7);
+  scroll-behavior: smooth;
+}
+body[data-layout="scroll"] .slide {
+  max-width: 760px;
+  margin: 0 auto var(--space-7) auto;
+  padding-bottom: var(--space-7);
+  border-bottom: 1px solid var(--border);
+}
+body[data-layout="scroll"] .slide:last-child { border-bottom: none; }
+body[data-layout="scroll"] .app-controls { display: none; }
+
+/* CONTROLS */
+.app-controls {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-3);
+  border-top: 1px solid var(--border);
+}
+.slide-counter { font-size: 12px; color: var(--text-tertiary); }
+
+/* TOC */
+.app-toc ol { list-style: none; counter-reset: toc; }
+.app-toc li { counter-increment: toc; margin-bottom: var(--space-2); }
+.app-toc a {
+  font-size: 13px;
+  color: var(--text-secondary);
+  text-decoration: none;
+  display: block;
+  padding: 4px 0;
+  border-left: 2px solid transparent;
+  padding-left: var(--space-3);
+}
+.app-toc a:hover { color: var(--text-primary); }
+.app-toc a.is-current {
+  color: var(--accent);
+  border-left-color: var(--accent);
+}
+
+.toggle-divider {
+  width: 1px;
+  height: 18px;
+  background: var(--border);
+  margin: 0 var(--space-2);
+}

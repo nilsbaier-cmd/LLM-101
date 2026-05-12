@@ -41,3 +41,31 @@ function refreshToggleStates() {
 }
 
 refreshToggleStates();
+
+// Slide-Navigation
+const slides = () => Array.from(document.querySelectorAll('.app-deck .slide'));
+let currentIdx = 0;
+
+function showSlide(idx) {
+  const list = slides();
+  if (idx < 0 || idx >= list.length) return;
+  list.forEach((s, i) => s.classList.toggle('is-active', i === idx));
+  currentIdx = idx;
+  document.getElementById('current').textContent = idx + 1;
+  document.getElementById('total').textContent = list.length;
+}
+
+document.getElementById('prev-slide').addEventListener('click', () => showSlide(currentIdx - 1));
+document.getElementById('next-slide').addEventListener('click', () => showSlide(currentIdx + 1));
+
+document.addEventListener('keydown', (e) => {
+  if (mode.get('layout') !== 'slide') return;
+  if (e.key === 'ArrowRight' || e.key === 'PageDown') { e.preventDefault(); showSlide(currentIdx + 1); }
+  if (e.key === 'ArrowLeft'  || e.key === 'PageUp')   { e.preventDefault(); showSlide(currentIdx - 1); }
+});
+
+mode.on('change', ({ key }) => {
+  if (key === 'layout') showSlide(currentIdx);
+});
+
+showSlide(0);
