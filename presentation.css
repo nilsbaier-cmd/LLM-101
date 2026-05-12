@@ -1071,3 +1071,66 @@ body[data-layout="scroll"] .app-controls { display: none; }
   border-color: var(--accent);
 }
 .icon-cloud-item svg { width: 20px; height: 20px; }
+
+/* Step-by-Step Reveal — nur im Slide-Modus */
+body[data-layout="slide"] .slide[data-stepped] [data-step] {
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.35s ease, transform 0.35s ease;
+}
+body[data-layout="slide"] .slide[data-stepped] [data-step].is-revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+/* Lesen-Modus: alles sofort sichtbar */
+body[data-layout="scroll"] [data-step] {
+  opacity: 1 !important;
+  transform: none !important;
+}
+
+/* Timeline (Folie 5 Phasen) */
+.timeline {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  margin: var(--space-5) 0 var(--space-4) 0;
+  padding-top: var(--space-2);
+}
+.timeline-line {
+  position: absolute;
+  top: 10px;
+  left: 10%;
+  right: 10%;
+  height: 2px;
+  background: var(--border);
+  z-index: 0;
+}
+.timeline-marker {
+  text-align: center;
+  position: relative;
+  z-index: 1;
+}
+.timeline-dot {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--bg-base);
+  border: 2px solid var(--border);
+  margin: 0 auto;
+  transition: background 0.35s, border-color 0.35s, transform 0.35s;
+}
+.timeline-marker.is-revealed .timeline-dot {
+  background: var(--accent);
+  border-color: var(--accent);
+  transform: scale(1.25);
+}
+.timeline-date {
+  font-size: 12px;
+  color: var(--text-tertiary);
+  margin-top: var(--space-2);
+  transition: color 0.35s;
+}
+.timeline-marker.is-revealed .timeline-date {
+  color: var(--accent-strong);
+  font-weight: 600;
+}

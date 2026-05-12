@@ -51,24 +51,75 @@ refreshToggleStates();
 const slides = () => Array.from(document.querySelectorAll('.app-deck .slide'));
 let currentIdx = 0;
 
+function getMaxStep(slide) {
+  const nums = Array.from(slide.querySelectorAll('[data-step]'))
+    .map(el => parseInt(el.dataset.step, 10))
+    .filter(n => !isNaN(n));
+  return nums.length ? Math.max(...nums) : 0;
+}
+
+function getRevealedCount(slide) {
+  return parseInt(slide.dataset.stepCurrent || '0', 10);
+}
+
+function setRevealedCount(slide, n) {
+  slide.dataset.stepCurrent = n;
+  slide.querySelectorAll('[data-step]').forEach(el => {
+    const stepN = parseInt(el.dataset.step, 10);
+    el.classList.toggle('is-revealed', !isNaN(stepN) && stepN <= n);
+  });
+}
+
+function resetSteps(slide) { setRevealedCount(slide, 0); }
+function revealAllSteps(slide) { setRevealedCount(slide, getMaxStep(slide)); }
+
 function showSlide(idx) {
   const list = slides();
   if (idx < 0 || idx >= list.length) return;
+  const goingForward = idx > currentIdx;
   list.forEach((s, i) => s.classList.toggle('is-active', i === idx));
+  const newSlide = list[idx];
+  if (newSlide?.hasAttribute('data-stepped')) {
+    if (goingForward) resetSteps(newSlide);
+    else revealAllSteps(newSlide);
+  }
   currentIdx = idx;
   document.getElementById('current').textContent = idx + 1;
   document.getElementById('total').textContent = list.length;
 }
 
-document.getElementById('prev-slide').addEventListener('click', () => showSlide(currentIdx - 1));
-document.getElementById('next-slide').addEventListener('click', () => showSlide(currentIdx + 1));
+function goNext() {
+  if (mode.get('layout') === 'slide') {
+    const cur = slides()[currentIdx];
+    if (cur?.hasAttribute('data-stepped')) {
+      const max = getMaxStep(cur);
+      const rev = getRevealedCount(cur);
+      if (rev < max) { setRevealedCount(cur, rev + 1); return; }
+    }
+  }
+  showSlide(currentIdx + 1);
+}
+
+function goPrev() {
+  if (mode.get('layout') === 'slide') {
+    const cur = slides()[currentIdx];
+    if (cur?.hasAttribute('data-stepped')) {
+      const rev = getRevealedCount(cur);
+      if (rev > 0) { setRevealedCount(cur, rev - 1); return; }
+    }
+  }
+  showSlide(currentIdx - 1);
+}
+
+document.getElementById('prev-slide').addEventListener('click', goPrev);
+document.getElementById('next-slide').addEventListener('click', goNext);
 
 document.addEventListener('keydown', (e) => {
   if (mode.get('layout') !== 'slide') return;
   const tag = e.target.tagName;
   if (tag === 'INPUT' || tag === 'TEXTAREA' || e.target.isContentEditable) return;
-  if (e.key === 'ArrowRight' || e.key === 'PageDown') { e.preventDefault(); showSlide(currentIdx + 1); }
-  if (e.key === 'ArrowLeft'  || e.key === 'PageUp')   { e.preventDefault(); showSlide(currentIdx - 1); }
+  if (e.key === 'ArrowRight' || e.key === 'PageDown' || e.key === ' ') { e.preventDefault(); goNext(); }
+  if (e.key === 'ArrowLeft'  || e.key === 'PageUp') { e.preventDefault(); goPrev(); }
 });
 
 mode.on('change', ({ key }) => {
