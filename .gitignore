@@ -1,5 +1,5 @@
 # Node / Vitest
-node_modules/
+node_modules*/
 coverage/
 .vite/
 
