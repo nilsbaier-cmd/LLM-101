@@ -11,6 +11,11 @@ const mode = new ModeManager(storage);
 document.querySelector('[data-mode="theme"][data-value="light"]').innerHTML = icon('sun');
 document.querySelector('[data-mode="theme"][data-value="dark"]').innerHTML = icon('moon');
 
+// Inline-Icon-Auflösung für Folien-Markup
+document.querySelectorAll('.icon[data-icon]').forEach(el => {
+  el.innerHTML = icon(el.dataset.icon);
+});
+
 // Toggle-Verkabelung
 document.querySelectorAll('.toggle').forEach(btn => {
   btn.addEventListener('click', () => {

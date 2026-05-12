@@ -482,6 +482,76 @@
           <p class="pricing-note">Preise können sich ändern — aktuelle Infos auf claude.ai/pricing.</p>
         </div>
       </section>
+
+      <!-- Kapitel 4 — Context & Pflege -->
+      <section class="slide" data-slide-id="context-1" data-chapter="context">
+        <div class="slide-inner">
+          <div class="chapter-label">Kapitel 4 — Kontext & Pflege</div>
+          <h2>Context Window</h2>
+          <p class="pull-quote">Context is like milk — best freshly served and condensed.</p>
+
+          <div class="consequence-grid">
+            <div class="card">
+              <div class="code-label">Strategie A — alles rein</div>
+              <ul class="ctx-list">
+                <li><span class="icon" data-icon="paperclip"></span>12 Anhänge</li>
+                <li><span class="icon" data-icon="file-text"></span>8 Vorab-Anweisungen</li>
+                <li><span class="icon" data-icon="message-square"></span>Chat-Verlauf 50+ Nachrichten</li>
+              </ul>
+              <hr>
+              <p><strong>Frage:</strong> Was war Schritt 3?</p>
+              <p class="answer answer-bad"><strong>Antwort:</strong> ✗ erfunden / falsch</p>
+            </div>
+
+            <div class="card">
+              <div class="code-label">Strategie B — progressiv</div>
+              <ul class="ctx-list">
+                <li><span class="icon" data-icon="file-text"></span>Kernkontext (kurz)</li>
+                <li><span class="icon" data-icon="paperclip"></span>nur relevanter Anhang</li>
+                <li><span class="icon" data-icon="message-square"></span>letzte 5 Nachrichten</li>
+              </ul>
+              <hr>
+              <p><strong>Frage:</strong> Was war Schritt 3?</p>
+              <p class="answer answer-good"><strong>Antwort:</strong> ✓ korrekt</p>
+            </div>
+          </div>
+
+          <p class="see-more">→ Wie pflegt man das? Concept-Explainer A: <a href="explainer/a-context-window.html">Context Window & Pflege-Strategien</a></p>
+        </div>
+      </section>
+
+      <section class="slide" data-slide-id="context-2" data-chapter="context">
+        <div class="slide-inner">
+          <div class="chapter-label">Kapitel 4 — Kontext & Pflege</div>
+          <h2>Wie pflegt man das Context Window?</h2>
+          <p class="pull-quote">Drei Strategien — sequenziell oder kombiniert.</p>
+
+          <div class="strategy-grid">
+            <div class="card strategy-card">
+              <div class="strategy-icon">↺</div>
+              <h3>Reset</h3>
+              <p>Neuer Chat. Lädt nur das nötigste neu — Anweisung, vielleicht ein Anhang. Schneller Schnitt, wenn die Konversation zu sehr abgeschweift ist.</p>
+              <p class="strategy-when"><strong>Wann:</strong> wenn die letzten Antworten merklich schwächer werden.</p>
+            </div>
+
+            <div class="card strategy-card">
+              <div class="strategy-icon">∑</div>
+              <h3>Summarize</h3>
+              <p>Mittendrin um eine Zusammenfassung bitten („Fasse den bisherigen Stand zusammen"). Diese in einen neuen Chat kopieren — komprimiert viel Kontext in wenig Tokens.</p>
+              <p class="strategy-when"><strong>Wann:</strong> bei langen Recherche- oder Brainstorming-Strängen.</p>
+            </div>
+
+            <div class="card strategy-card">
+              <div class="strategy-icon">⤴</div>
+              <h3>Progressive</h3>
+              <p>Nur das einbringen, was für die aktuelle Frage wirklich nötig ist. Kernkontext kurz, Details erst auf Nachfrage. Skills nutzen genau dieses Prinzip auf System-Ebene.</p>
+              <p class="strategy-when"><strong>Wann:</strong> als Default-Haltung bei jeder neuen Aufgabe.</p>
+            </div>
+          </div>
+
+          <p class="see-more">→ Live-Simulator dazu: <a href="explainer/a-context-window.html">Context Window & Pflege-Strategien</a></p>
+        </div>
+      </section>
     </div>
 
     <div class="app-controls">
