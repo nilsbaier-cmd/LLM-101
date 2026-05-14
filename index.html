@@ -34,20 +34,22 @@
       <!-- Kapitel 1 — Einstieg & Standort -->
       <section class="slide" data-slide-id="einstieg-1" data-chapter="einstieg">
         <div class="slide-inner" style="text-align:center;">
-          <h1>Einführung Claude</h1>
-          <div class="icon-cloud">
-            <span class="icon-cloud-item" data-icon="brain"></span>
-            <span class="icon-cloud-item" data-icon="book"></span>
-            <span class="icon-cloud-item" data-icon="code"></span>
-            <span class="icon-cloud-item" data-icon="file-text"></span>
-            <span class="icon-cloud-item" data-icon="message-square"></span>
-            <span class="icon-cloud-item" data-icon="sparkles"></span>
-            <span class="icon-cloud-item" data-icon="lightbulb"></span>
-            <span class="icon-cloud-item" data-icon="search"></span>
-            <span class="icon-cloud-item" data-icon="database"></span>
-            <span class="icon-cloud-item" data-icon="zap"></span>
-            <span class="icon-cloud-item" data-icon="layers"></span>
-            <span class="icon-cloud-item" data-icon="workflow"></span>
+          <div class="cover-stage">
+            <h1 class="cover-title">Einführung Claude</h1>
+            <div class="icon-cloud">
+              <span class="icon-cloud-item" data-icon="brain" style="top: 6%; left: 10%; --fly-from-x: -180px; --fly-from-y: -120px; --fly-from-rot: -25deg; transition-delay: 0.05s;"></span>
+              <span class="icon-cloud-item" data-icon="book" style="top: 2%; left: 40%; --fly-from-x: 20px; --fly-from-y: -200px; --fly-from-rot: 8deg; transition-delay: 0.12s;"></span>
+              <span class="icon-cloud-item" data-icon="code" style="top: 9%; left: 68%; --fly-from-x: 220px; --fly-from-y: -90px; --fly-from-rot: 22deg; transition-delay: 0.18s;"></span>
+              <span class="icon-cloud-item" data-icon="file-text" style="top: 26%; left: 4%; --fly-from-x: -240px; --fly-from-y: -40px; --fly-from-rot: -18deg; transition-delay: 0.24s;"></span>
+              <span class="icon-cloud-item" data-icon="message-square" style="top: 28%; left: 84%; --fly-from-x: 240px; --fly-from-y: -50px; --fly-from-rot: 18deg; transition-delay: 0.3s;"></span>
+              <span class="icon-cloud-item" data-icon="sparkles" style="top: 52%; left: 14%; --fly-from-x: -210px; --fly-from-y: 70px; --fly-from-rot: -12deg; transition-delay: 0.36s;"></span>
+              <span class="icon-cloud-item" data-icon="lightbulb" style="top: 56%; left: 76%; --fly-from-x: 210px; --fly-from-y: 70px; --fly-from-rot: 14deg; transition-delay: 0.42s;"></span>
+              <span class="icon-cloud-item" data-icon="search" style="top: 72%; left: 6%; --fly-from-x: -210px; --fly-from-y: 150px; --fly-from-rot: -22deg; transition-delay: 0.48s;"></span>
+              <span class="icon-cloud-item" data-icon="database" style="top: 78%; left: 44%; --fly-from-x: 10px; --fly-from-y: 200px; --fly-from-rot: 0deg; transition-delay: 0.54s;"></span>
+              <span class="icon-cloud-item" data-icon="zap" style="top: 70%; left: 80%; --fly-from-x: 220px; --fly-from-y: 140px; --fly-from-rot: 26deg; transition-delay: 0.6s;"></span>
+              <span class="icon-cloud-item" data-icon="layers" style="top: 88%; left: 26%; --fly-from-x: -110px; --fly-from-y: 220px; --fly-from-rot: -15deg; transition-delay: 0.66s;"></span>
+              <span class="icon-cloud-item" data-icon="workflow" style="top: 86%; left: 62%; --fly-from-x: 110px; --fly-from-y: 220px; --fly-from-rot: 18deg; transition-delay: 0.72s;"></span>
+            </div>
           </div>
         </div>
       </section>
@@ -122,7 +124,7 @@
         </div>
       </section>
 
-      <section class="slide" data-slide-id="einstieg-3" data-chapter="einstieg">
+      <section class="slide" data-slide-id="einstieg-3" data-chapter="einstieg" data-stepped>
         <div class="slide-inner">
           <div class="chapter-label">Kapitel 1 — Einstieg</div>
           <h2>7-Level Skill-Ladder</h2>
@@ -143,8 +145,8 @@
                 <div class="ladder-desc">Echte Dialoge: iteriert über Ergebnisse, gibt Feedback, liefert bewusst Kontext mit.</div>
               </div>
             </div>
-            <div class="ladder-divider">▲ Grösster Sprung: Features entdecken</div>
-            <div class="ladder-item">
+            <div class="ladder-divider" data-step="1">▲ Grösster Sprung: Features entdecken</div>
+            <div class="ladder-item" data-step="1">
               <span class="ladder-icon" data-icon="zap"></span>
               <div class="ladder-level">LEVEL 3</div>
               <div>
@@ -152,7 +154,7 @@
                 <div class="ladder-desc">System Prompts, Projects, Datei-Uploads, Code Execution gezielt eingesetzt.</div>
               </div>
             </div>
-            <div class="ladder-item">
+            <div class="ladder-item" data-step="1">
               <span class="ladder-icon" data-icon="git-branch"></span>
               <div class="ladder-level">LEVEL 4</div>
               <div>
@@ -160,8 +162,8 @@
                 <div class="ladder-desc">Workflows statt Einzelprompts. Skills und Custom Instructions als wiederverwendbare Bausteine.</div>
               </div>
             </div>
-            <div class="ladder-divider">▲ Paradigmenwechsel: Nutzer wird Architekt</div>
-            <div class="ladder-item">
+            <div class="ladder-divider" data-step="2">▲ Paradigmenwechsel: Nutzer wird Architekt</div>
+            <div class="ladder-item" data-step="2">
               <span class="ladder-icon" data-icon="package"></span>
               <div class="ladder-level">LEVEL 5</div>
               <div>
@@ -169,7 +171,7 @@
                 <div class="ladder-desc">Projects mit Skill-Architektur, Custom GPTs mit strukturiertem Wissen, automatisierte Pipelines.</div>
               </div>
             </div>
-            <div class="ladder-item">
+            <div class="ladder-item" data-step="2">
               <span class="ladder-icon" data-icon="play-circle"></span>
               <div class="ladder-level">LEVEL 6</div>
               <div>
@@ -177,7 +179,7 @@
                 <div class="ladder-desc">Claude Code, MCP-Server, Subagents für mehrstufige autonome Aufgaben.</div>
               </div>
             </div>
-            <div class="ladder-item">
+            <div class="ladder-item" data-step="2">
               <span class="ladder-icon" data-icon="layers"></span>
               <div class="ladder-level">LEVEL 7</div>
               <div>
@@ -186,7 +188,7 @@
               </div>
             </div>
           </div>
-          <p class="pull-quote" style="margin-top: var(--space-4);">Ziel der meisten Kurse: Von Level 1 auf Level 3 — mit klarem Ausblick auf Level 4.</p>
+          <p class="pull-quote" style="margin-top: var(--space-3);" data-step="3">Ziel der meisten Kurse: Von Level 1 auf Level 3 — mit klarem Ausblick auf Level 4.</p>
         </div>
       </section>
 
@@ -209,13 +211,13 @@
       </section>
 
       <!-- Kapitel 2 — Verwaltung & KI -->
-      <section class="slide" data-slide-id="verwaltung-1" data-chapter="verwaltung">
+      <section class="slide" data-slide-id="verwaltung-1" data-chapter="verwaltung" data-stepped>
         <div class="slide-inner">
           <div class="chapter-label">Kapitel 2 — Verwaltung &amp; KI</div>
           <h2>Was sagt die Verwaltung zu KI?</h2>
           <div class="policy-banner">Verantwortungsvolles Experimentieren ist erwünscht.</div>
           <div class="policy-grid">
-            <div class="card policy-card tone-1">
+            <div class="card policy-card tone-1" data-step="1">
               <h3>Leitlinien 2020</h3>
               <ul>
                 <li>Mensch im Mittelpunkt</li>
@@ -227,23 +229,33 @@
                 <li>Einbezug aller Akteure</li>
               </ul>
             </div>
-            <div class="card policy-card tone-2">
+            <div class="card policy-card tone-2" data-step="2">
               <h3>Merkblatt 2024</h3>
-              <div class="policy-section-label">Erlaubt</div>
-              <ul>
-                <li>Öffentliche Texte zusammenfassen</li>
-                <li>Strukturierungshilfe, Brainstorming</li>
-                <li>Inspiration für Code</li>
-                <li>Bilder für Präsentationen</li>
-              </ul>
-              <div class="policy-section-label">Verboten</div>
-              <ul>
-                <li>Personendaten jeglicher Art</li>
-                <li>Klassifizierte Informationen</li>
-                <li>Amtsgeheimnisse</li>
-              </ul>
+              <div class="merkblatt-section merkblatt-allowed">
+                <div class="merkblatt-section-header">
+                  <span class="icon" data-icon="check"></span>
+                  <span>Erlaubt</span>
+                </div>
+                <ul>
+                  <li>Öffentliche Texte zusammenfassen</li>
+                  <li>Strukturierungshilfe, Brainstorming</li>
+                  <li>Inspiration für Code</li>
+                  <li>Bilder für Präsentationen</li>
+                </ul>
+              </div>
+              <div class="merkblatt-section merkblatt-forbidden">
+                <div class="merkblatt-section-header">
+                  <span class="icon" data-icon="x"></span>
+                  <span>Verboten</span>
+                </div>
+                <ul>
+                  <li>Personendaten jeglicher Art</li>
+                  <li>Klassifizierte Informationen</li>
+                  <li>Amtsgeheimnisse</li>
+                </ul>
+              </div>
             </div>
-            <div class="card policy-card tone-3">
+            <div class="card policy-card tone-3" data-step="3">
               <h3>Verantwortung</h3>
               <ul>
                 <li>Ergebnisse immer kritisch prüfen</li>
@@ -257,7 +269,7 @@
         </div>
       </section>
 
-      <section class="slide" data-slide-id="verwaltung-2" data-chapter="verwaltung">
+      <section class="slide" data-slide-id="verwaltung-2" data-chapter="verwaltung" data-stepped>
         <div class="slide-inner">
           <div class="chapter-label">Kapitel 2 — Verwaltung &amp; KI</div>
           <h2>Verwaltung &amp; KI: Kritische Einschätzung</h2>
@@ -266,19 +278,21 @@
             <div class="myth-header">Realität 2025</div>
             <div class="myth-header">Einordnung</div>
 
-            <div class="myth-cell-myth">„KI trainiert mit all meinen Eingaben"</div>
-            <div>Bei professionellen Lizenzen (Claude Pro, ChatGPT Enterprise) werden Eingaben nicht für Training verwendet. Opt-out ist Standard.</div>
-            <div>Pauschal-Aussagen suggerieren Datenabfluss. Differenzierung nach Anbieter und Lizenz fehlt oft.<span class="pill">veraltet</span></div>
+            <div class="myth-cell-myth myth-row" data-step="1">„KI trainiert mit all meinen Eingaben"</div>
+            <div class="myth-row" data-step="1">Bei professionellen Lizenzen (Claude Pro, ChatGPT Enterprise) werden Eingaben nicht für Training verwendet. Opt-out ist Standard.</div>
+            <div class="myth-row" data-step="1">Pauschal-Aussagen suggerieren Datenabfluss. Differenzierung nach Anbieter und Lizenz fehlt oft.<span class="pill">veraltet</span></div>
 
-            <div class="myth-cell-myth">„KI halluziniert, also unbrauchbar"</div>
-            <div>Halluzinationen sind real, aber durch kompetente Nutzung (Prompts, Kontext, Verifikation) stark einschränkbar.</div>
-            <div>8 Risiken gelistet, null Erfolgsgeschichten in vielen Warnkatalogen. Risiko-Listen neutralisieren oft den eigenen Aufruf zum Experimentieren.<span class="pill">einseitig</span></div>
+            <div class="myth-cell-myth myth-row" data-step="2">„KI halluziniert, also unbrauchbar"</div>
+            <div class="myth-row" data-step="2">Halluzinationen sind real, aber durch kompetente Nutzung (Prompts, Kontext, Verifikation) stark einschränkbar.</div>
+            <div class="myth-row" data-step="2">8 Risiken gelistet, null Erfolgsgeschichten in vielen Warnkatalogen. Risiko-Listen neutralisieren oft den eigenen Aufruf zum Experimentieren.<span class="pill">einseitig</span></div>
 
-            <div class="myth-cell-myth">„Lediglich statistische Wortteilfolge"</div>
-            <div>Technisch korrekt, erklärt emergente Fähigkeiten so wenig wie „Neuronen feuern" das Denken erklärt.</div>
-            <div>Das Wort „lediglich" trivialisiert und gibt Skeptikern unnötig Munition.<span class="pill">irreführend</span></div>
+            <div class="myth-cell-myth myth-row" data-step="3">„Lediglich statistische Wortteilfolge"</div>
+            <div class="myth-row" data-step="3">Technisch korrekt, erklärt emergente Fähigkeiten so wenig wie „Neuronen feuern" das Denken erklärt.</div>
+            <div class="myth-row" data-step="3">Das Wort „lediglich" trivialisiert und gibt Skeptikern unnötig Munition.<span class="pill">irreführend</span></div>
           </div>
-          <div class="policy-banner">Ziel: Verantwortungsvolle Nutzung lernen statt pauschale Vermeidung.</div>
+          <div class="closing-message" data-step="4">
+            Ziel: Verantwortungsvolle Nutzung lernen statt pauschale Vermeidung.
+          </div>
         </div>
       </section>
 

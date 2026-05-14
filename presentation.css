@@ -134,18 +134,18 @@ body[data-layout="scroll"] .app-controls { display: none; }
   letter-spacing: 0.3px;
 }
 
-/* Skill-Ladder (Folie einstieg-3) */
+/* Skill-Ladder (Folie einstieg-3) — kompakt */
 .ladder-list {
   display: flex;
   flex-direction: column;
   gap: var(--space-1);
-  margin-top: var(--space-5);
+  margin-top: var(--space-3);
 }
 .ladder-item {
   display: grid;
-  grid-template-columns: 36px 80px 1fr;
+  grid-template-columns: 32px 70px 1fr;
   gap: var(--space-3);
-  padding: var(--space-3) 0;
+  padding: 6px 0;
   border-bottom: 1px solid var(--border);
   align-items: center;
 }
@@ -153,33 +153,34 @@ body[data-layout="scroll"] .app-controls { display: none; }
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 32px;
-  height: 32px;
+  width: 28px;
+  height: 28px;
   border-radius: var(--radius-sm);
   background: var(--accent-soft);
   color: var(--accent-strong);
 }
-.ladder-icon svg { width: 18px; height: 18px; }
+.ladder-icon svg { width: 16px; height: 16px; }
 .ladder-level {
-  font-size: 11px;
+  font-size: 10px;
   font-weight: 600;
   color: var(--accent);
   letter-spacing: 1px;
 }
 .ladder-name {
   font-weight: 600;
-  font-size: 15px;
+  font-size: 14px;
 }
 .ladder-desc {
-  font-size: 13px;
+  font-size: 12px;
+  line-height: 1.4;
   color: var(--text-secondary);
-  margin-top: 2px;
+  margin-top: 1px;
 }
 .ladder-divider {
-  font-size: 11px;
+  font-size: 10px;
   color: var(--text-tertiary);
   text-align: center;
-  margin: var(--space-2) 0;
+  margin: var(--space-1) 0;
   font-style: italic;
   letter-spacing: 0.3px;
 }
@@ -222,7 +223,8 @@ body[data-layout="scroll"] .app-controls { display: none; }
 .policy-card.tone-2 { border-top-color: var(--success); }
 .policy-card.tone-3 { border-top-color: #c4623a; }
 .policy-card h3 {
-  font-size: 11px;
+  font-size: 14px;
+  font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 1.5px;
   color: var(--text-tertiary);
@@ -231,7 +233,8 @@ body[data-layout="scroll"] .app-controls { display: none; }
 .policy-card ul { list-style: none; }
 .policy-card li {
   padding: 4px 0;
-  font-size: 13px;
+  font-size: 16px;
+  line-height: 1.45;
   position: relative;
   padding-left: 14px;
 }
@@ -242,13 +245,58 @@ body[data-layout="scroll"] .app-controls { display: none; }
   color: var(--accent);
 }
 .policy-section-label {
-  font-size: 10px;
+  font-size: 13px;
   text-transform: uppercase;
   letter-spacing: 1.5px;
   color: var(--text-tertiary);
   font-weight: 600;
   margin: var(--space-3) 0 var(--space-2) 0;
 }
+
+/* Merkblatt 2024 — ERLAUBT / VERBOTEN visuell trennen */
+.merkblatt-section {
+  padding: var(--space-3);
+  border-radius: var(--radius-md);
+  margin-top: var(--space-2);
+}
+.merkblatt-allowed {
+  background: var(--success-soft);
+  border-left: 3px solid var(--success);
+}
+.merkblatt-allowed .merkblatt-section-header { color: var(--success); }
+.merkblatt-forbidden {
+  background: rgba(220, 75, 60, 0.08);
+  border-left: 3px solid #b35f44;
+}
+.merkblatt-forbidden .merkblatt-section-header { color: var(--accent-strong); }
+.merkblatt-section-header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: 13px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: var(--space-2);
+}
+.merkblatt-section-header .icon svg { width: 16px; height: 16px; }
+.merkblatt-section ul { list-style: none; margin: 0; }
+.merkblatt-section li {
+  padding: 3px 0;
+  font-size: 16px;
+  line-height: 1.45;
+  position: relative;
+  padding-left: 14px;
+}
+.merkblatt-section li:before {
+  content: '•';
+  position: absolute;
+  left: 0;
+  color: currentColor;
+  opacity: 0.6;
+}
+.merkblatt-allowed li:before { color: var(--success); opacity: 0.9; }
+.merkblatt-forbidden li:before { color: var(--accent-strong); opacity: 0.9; }
 .policy-banner {
   background: var(--bg-tint);
   border-left: 3px solid var(--accent);
@@ -272,17 +320,33 @@ body[data-layout="scroll"] .app-controls { display: none; }
 .myth-table > div {
   background: var(--bg-card);
   padding: var(--space-3) var(--space-4);
-  font-size: 13px;
+  font-size: 16px;
+  line-height: 1.45;
 }
 .myth-table .myth-header {
-  font-size: 10px;
+  font-size: 13px;
   text-transform: uppercase;
   letter-spacing: 1.5px;
   color: var(--text-tertiary);
   font-weight: 600;
   padding-bottom: var(--space-2);
 }
-.myth-cell-myth { border-left: 3px solid #c4623a; }
+.myth-cell-myth {
+  border-left: 3px solid #c4623a;
+  font-style: italic;
+}
+
+/* Closing-Message (grüne Schluss-Botschaft auf verwaltung-2) */
+.closing-message {
+  margin-top: var(--space-5);
+  padding: var(--space-4) var(--space-5);
+  background: var(--success-soft);
+  border-left: 4px solid var(--success);
+  border-radius: var(--radius-md);
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--text-primary);
+}
 .pill {
   display: inline-block;
   font-size: 10px;
@@ -1061,35 +1125,70 @@ body[data-layout="scroll"] .app-controls { display: none; }
   margin-bottom: var(--space-2);
 }
 
-/* Cover Icon-Cloud */
-.icon-cloud {
+/* Cover Stage — Titel + Icon-Cloud overlappen */
+.cover-stage {
+  position: relative;
+  min-height: 480px;
   display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-4) var(--space-5);
+  align-items: center;
   justify-content: center;
-  margin-top: var(--space-7);
-  max-width: 800px;
-  margin-left: auto;
-  margin-right: auto;
-  opacity: 0.6;
+}
+.cover-title {
+  position: relative;
+  z-index: 2;
+  font-size: 64px;
+  letter-spacing: -0.025em;
+  margin: 0;
+}
+.cover-stage .icon-cloud {
+  position: absolute;
+  inset: 0;
+  height: 100%;
+  width: 100%;
+  z-index: 1;
+  margin: 0;
+  max-width: none;
+  opacity: 1;
+}
+
+/* Cover Icon-Cloud — als echte verteilte Wolke */
+.icon-cloud {
+  position: relative;
+  width: 100%;
+  height: 380px;
+  max-width: 900px;
+  margin: var(--space-4) auto 0 auto;
+  opacity: 0.85;
 }
 .icon-cloud-item {
+  position: absolute;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 40px;
-  height: 40px;
+  width: 48px;
+  height: 48px;
   border-radius: var(--radius-md);
   background: var(--bg-card);
   border: 1px solid var(--border);
   color: var(--text-tertiary);
-  transition: color 0.2s, border-color 0.2s;
+  opacity: 0;
+  transform: translate(var(--fly-from-x, 0), var(--fly-from-y, 0)) scale(0.6) rotate(var(--fly-from-rot, 0deg));
+  transition: opacity 0.7s ease, transform 0.7s cubic-bezier(0.22, 1, 0.36, 1), color 0.2s, border-color 0.2s;
+}
+body[data-layout="slide"] .slide.is-active .icon-cloud-item {
+  opacity: 0.7;
+  transform: translate(0, 0) scale(1) rotate(0deg);
+}
+body[data-layout="scroll"] .icon-cloud-item {
+  opacity: 0.7;
+  transform: translate(0, 0) scale(1) rotate(0deg);
 }
 .icon-cloud-item:hover {
   color: var(--accent);
   border-color: var(--accent);
+  opacity: 1 !important;
 }
-.icon-cloud-item svg { width: 20px; height: 20px; }
+.icon-cloud-item svg { width: 24px; height: 24px; }
 
 /* Step-by-Step Reveal — nur im Slide-Modus */
 body[data-layout="slide"] .slide[data-stepped] [data-step] {
