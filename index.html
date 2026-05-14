@@ -302,25 +302,82 @@
         <div class="slide-inner">
           <div class="chapter-label">Kapitel 3 — Claude 101</div>
           <h2>Die Modellfamilie</h2>
-          <div class="model-grid">
-            <div class="card model-card">
-              <span class="model-pill">Opus</span>
-              <h3>Opus 4.7 — Stärkstes Modell</h3>
-              <p>Höchste Intelligenz und Tiefe. Ideal für komplexe Analysen, Forschung, mehrstufige Aufgaben und anspruchsvolles Coding.</p>
+
+          <div class="llm-tabs" data-llm-tabs data-sync-group="llm">
+            <nav class="llm-tabs-nav">
+              <button data-tab="claude" class="active" type="button">Claude</button>
+              <button data-tab="chatgpt" type="button">ChatGPT</button>
+              <button data-tab="gemini" type="button">Gemini</button>
+            </nav>
+
+            <div data-tab-panel="claude" class="active">
+              <div class="model-grid">
+                <div class="card model-card">
+                  <span class="model-pill">Opus</span>
+                  <h3>Opus 4.7 — Stärkstes Modell</h3>
+                  <p>Höchste Intelligenz und Tiefe. Ideal für komplexe Analysen, Forschung, mehrstufige Aufgaben und anspruchsvolles Coding.</p>
+                </div>
+                <div class="card model-card">
+                  <span class="model-pill">Sonnet</span>
+                  <h3>Sonnet 4.6 — Ausgewogen</h3>
+                  <p>Bester Kompromiss aus Geschwindigkeit und Qualität. Standard für die meisten Alltagsaufgaben und Programmierung.</p>
+                </div>
+                <div class="card model-card model-card-wide">
+                  <span class="model-pill">Haiku</span>
+                  <h3>Haiku 4.5 — Schnell &amp; effizient</h3>
+                  <p>Schnellste Antworten, günstigster Preis (API). Für einfache Aufgaben, Zusammenfassungen und schnelle Abfragen.</p>
+                </div>
+              </div>
+              <div class="info-block">
+                <strong>Modellwahl im Chat</strong> — Im Chatfenster kann das Modell oben links per Dropdown gewechselt werden. Pro-User haben Zugang zu allen Modellen inkl. Opus. Free-User nutzen Sonnet (mit Limit) und Haiku als Fallback.
+              </div>
             </div>
-            <div class="card model-card">
-              <span class="model-pill">Sonnet</span>
-              <h3>Sonnet 4.6 — Ausgewogen</h3>
-              <p>Bester Kompromiss aus Geschwindigkeit und Qualität. Standard für die meisten Alltagsaufgaben und Programmierung.</p>
+
+            <div data-tab-panel="chatgpt" hidden>
+              <div class="model-grid">
+                <div class="card model-card">
+                  <span class="model-pill">GPT-5.5</span>
+                  <h3>GPT-5.5 — Topmodell</h3>
+                  <p>Für komplexe Reasoning-Aufgaben, mehrstufige Analysen und anspruchsvolles Coding. Stärkstes Modell der GPT-Familie.</p>
+                </div>
+                <div class="card model-card">
+                  <span class="model-pill">GPT-5</span>
+                  <h3>GPT-5 — Standard</h3>
+                  <p>Gutes Preis-Leistungs-Verhältnis. Standardmodell für die meisten Alltagsaufgaben und Programmierung.</p>
+                </div>
+                <div class="card model-card model-card-wide">
+                  <span class="model-pill">GPT-5 mini</span>
+                  <h3>GPT-5 mini — Schnell &amp; günstig</h3>
+                  <p>Schnellste und günstigste Variante. Für einfache Aufgaben, Zusammenfassungen und schnelle Abfragen.</p>
+                </div>
+              </div>
+              <div class="info-block">
+                <strong>Modellwahl im Chat</strong> — Im Chatfenster kann das Modell per Dropdown gewechselt werden. Plus/Pro-User haben Zugang zu allen Modellen inkl. GPT-5.5. Free-User nutzen GPT-5 (mit Limit) und GPT-5 mini als Fallback.
+              </div>
             </div>
-            <div class="card model-card model-card-wide">
-              <span class="model-pill">Haiku</span>
-              <h3>Haiku 4.5 — Schnell &amp; effizient</h3>
-              <p>Schnellste Antworten, günstigster Preis (API). Für einfache Aufgaben, Zusammenfassungen und schnelle Abfragen.</p>
+
+            <div data-tab-panel="gemini" hidden>
+              <div class="model-grid">
+                <div class="card model-card">
+                  <span class="model-pill">Pro</span>
+                  <h3>Gemini 3.1 Pro — Stärkstes Modell</h3>
+                  <p>Höchste Intelligenz mit sehr großem Context-Fenster. Ideal für komplexe Analysen, lange Dokumente und mehrstufige Aufgaben.</p>
+                </div>
+                <div class="card model-card">
+                  <span class="model-pill">Flash</span>
+                  <h3>Gemini 3.1 Flash — Schnell</h3>
+                  <p>Schnell und multimodal. Guter Kompromiss aus Geschwindigkeit und Qualität für die meisten Alltagsaufgaben.</p>
+                </div>
+                <div class="card model-card model-card-wide">
+                  <span class="model-pill">Nano</span>
+                  <h3>Gemini 3.1 Nano — Lokal/Edge</h3>
+                  <p>Sehr klein, läuft lokal auf Endgeräten (Edge). Für schnelle, datenschutzfreundliche Abfragen ohne Cloud.</p>
+                </div>
+              </div>
+              <div class="info-block">
+                <strong>Modellwahl im Chat</strong> — Im Chatfenster kann das Modell per Dropdown gewechselt werden. AI-Pro/Ultra-User haben Zugang zu Pro. Free-User nutzen Flash (mit Limit), Nano kommt auf Pixel/Android-Geräten zum Einsatz.
+              </div>
             </div>
-          </div>
-          <div class="info-block">
-            <strong>Modellwahl im Chat</strong> — Im Chatfenster kann das Modell oben links per Dropdown gewechselt werden. Pro-User haben Zugang zu allen Modellen inkl. Opus. Free-User nutzen Sonnet (mit Limit) und Haiku als Fallback.
           </div>
         </div>
       </section>
@@ -329,61 +386,194 @@
         <div class="slide-inner">
           <div class="chapter-label">Kapitel 3 — Claude 101</div>
           <h2>Chat-Optionen</h2>
-          <div class="letter-list">
-            <div class="letter-list-row">
-              <div class="letter-badge">W</div>
-              <div class="letter-content">
-                <strong>Websuche</strong>
-                <p>Claude durchsucht das Internet in Echtzeit für aktuelle Informationen. Aktivierbar pro Chat oder global.</p>
+
+          <div class="llm-tabs" data-llm-tabs data-sync-group="llm">
+            <nav class="llm-tabs-nav">
+              <button data-tab="claude" class="active" type="button">Claude</button>
+              <button data-tab="chatgpt" type="button">ChatGPT</button>
+              <button data-tab="gemini" type="button">Gemini</button>
+            </nav>
+
+            <div data-tab-panel="claude" class="active">
+              <div class="letter-list">
+                <div class="letter-list-row">
+                  <div class="letter-badge">W</div>
+                  <div class="letter-content">
+                    <strong>Websuche</strong>
+                    <p>Claude durchsucht das Internet in Echtzeit für aktuelle Informationen. Aktivierbar pro Chat oder global.</p>
+                  </div>
+                </div>
+                <div class="letter-list-row">
+                  <div class="letter-badge">A</div>
+                  <div class="letter-content">
+                    <strong>Artifacts</strong>
+                    <p>Interaktive Dateien (Code, HTML, React, SVG, Dokumente) werden als eigenständige Objekte neben dem Chat angezeigt und sind herunterladbar.</p>
+                  </div>
+                </div>
+                <div class="letter-list-row">
+                  <div class="letter-badge">D</div>
+                  <div class="letter-content">
+                    <strong>Deep Research</strong>
+                    <p>Vertiefte Recherche mit automatischer Websuche über mehrere Quellen. Erstellt umfassende Berichte.</p>
+                  </div>
+                </div>
+                <div class="letter-list-row">
+                  <div class="letter-badge">C</div>
+                  <div class="letter-content">
+                    <strong>Code Execution &amp; Dateien</strong>
+                    <p>Claude kann Code ausführen, Dateien erstellen (DOCX, PPTX, XLSX, PDF) und Ergebnisse direkt liefern.</p>
+                  </div>
+                </div>
+                <div class="letter-list-row">
+                  <div class="letter-badge">P</div>
+                  <div class="letter-content">
+                    <strong>Projekte</strong>
+                    <p>Chats, Dateien und Anweisungen in einem Projekt bündeln. System-Prompt und Wissensquellen projektspezifisch definierbar.</p>
+                  </div>
+                </div>
+                <div class="letter-list-row">
+                  <div class="letter-badge">M</div>
+                  <div class="letter-content">
+                    <strong>MCP-Integrationen</strong>
+                    <p>Externe Dienste (Google Drive, Gmail, Figma, Slack u.a.) direkt im Chat anbinden über das Model Context Protocol.</p>
+                  </div>
+                </div>
+                <div class="letter-list-row">
+                  <div class="letter-badge">V</div>
+                  <div class="letter-content">
+                    <strong>Visualizer</strong>
+                    <p>Inline-Diagramme, Charts und interaktive Widgets direkt im Chatverlauf — ohne separate Datei.</p>
+                  </div>
+                </div>
+                <div class="letter-list-row">
+                  <div class="letter-badge">U</div>
+                  <div class="letter-content">
+                    <strong>Datei-Upload</strong>
+                    <p>Bilder, PDFs, Office-Dokumente, Code-Dateien hochladen. Claude kann diese lesen, analysieren und bearbeiten.</p>
+                  </div>
+                </div>
               </div>
             </div>
-            <div class="letter-list-row">
-              <div class="letter-badge">A</div>
-              <div class="letter-content">
-                <strong>Artifacts</strong>
-                <p>Interaktive Dateien (Code, HTML, React, SVG, Dokumente) werden als eigenständige Objekte neben dem Chat angezeigt und sind herunterladbar.</p>
+
+            <div data-tab-panel="chatgpt" hidden>
+              <div class="letter-list">
+                <div class="letter-list-row">
+                  <div class="letter-badge">S</div>
+                  <div class="letter-content">
+                    <strong>Search</strong>
+                    <p>ChatGPT durchsucht das Internet in Echtzeit für aktuelle Informationen. Aktivierbar pro Chat.</p>
+                  </div>
+                </div>
+                <div class="letter-list-row">
+                  <div class="letter-badge">C</div>
+                  <div class="letter-content">
+                    <strong>Canvas</strong>
+                    <p>Interaktive Dateien (Code, Dokumente) werden als eigenständige Objekte neben dem Chat angezeigt und sind bearbeitbar.</p>
+                  </div>
+                </div>
+                <div class="letter-list-row">
+                  <div class="letter-badge">D</div>
+                  <div class="letter-content">
+                    <strong>Deep Research</strong>
+                    <p>Vertiefte Recherche mit automatischer Websuche über mehrere Quellen. Erstellt umfassende Berichte.</p>
+                  </div>
+                </div>
+                <div class="letter-list-row">
+                  <div class="letter-badge">I</div>
+                  <div class="letter-content">
+                    <strong>Code Interpreter</strong>
+                    <p>ChatGPT kann Code ausführen, Dateien erstellen (DOCX, PPTX, XLSX, PDF) und Ergebnisse direkt liefern.</p>
+                  </div>
+                </div>
+                <div class="letter-list-row">
+                  <div class="letter-badge">G</div>
+                  <div class="letter-content">
+                    <strong>Custom GPTs</strong>
+                    <p>Chats, Dateien und Anweisungen in einem eigenen GPT bündeln. System-Prompt und Wissensquellen GPT-spezifisch definierbar.</p>
+                  </div>
+                </div>
+                <div class="letter-list-row">
+                  <div class="letter-badge">P</div>
+                  <div class="letter-content">
+                    <strong>Connectors / Plugins</strong>
+                    <p>Externe Dienste (Google Drive, Gmail, GitHub u.a.) direkt im Chat anbinden über Connectors und Plugins.</p>
+                  </div>
+                </div>
+                <div class="letter-list-row">
+                  <div class="letter-badge">V</div>
+                  <div class="letter-content">
+                    <strong>Charts / Canvas</strong>
+                    <p>Inline-Diagramme und Charts direkt im Chatverlauf oder als interaktives Canvas-Element.</p>
+                  </div>
+                </div>
+                <div class="letter-list-row">
+                  <div class="letter-badge">U</div>
+                  <div class="letter-content">
+                    <strong>Datei-Upload</strong>
+                    <p>Bilder, PDFs, Office-Dokumente, Code-Dateien hochladen. ChatGPT kann diese lesen, analysieren und bearbeiten.</p>
+                  </div>
+                </div>
               </div>
             </div>
-            <div class="letter-list-row">
-              <div class="letter-badge">D</div>
-              <div class="letter-content">
-                <strong>Deep Research</strong>
-                <p>Vertiefte Recherche mit automatischer Websuche über mehrere Quellen. Erstellt umfassende Berichte.</p>
-              </div>
-            </div>
-            <div class="letter-list-row">
-              <div class="letter-badge">C</div>
-              <div class="letter-content">
-                <strong>Code Execution &amp; Dateien</strong>
-                <p>Claude kann Code ausführen, Dateien erstellen (DOCX, PPTX, XLSX, PDF) und Ergebnisse direkt liefern.</p>
-              </div>
-            </div>
-            <div class="letter-list-row">
-              <div class="letter-badge">P</div>
-              <div class="letter-content">
-                <strong>Projekte</strong>
-                <p>Chats, Dateien und Anweisungen in einem Projekt bündeln. System-Prompt und Wissensquellen projektspezifisch definierbar.</p>
-              </div>
-            </div>
-            <div class="letter-list-row">
-              <div class="letter-badge">M</div>
-              <div class="letter-content">
-                <strong>MCP-Integrationen</strong>
-                <p>Externe Dienste (Google Drive, Gmail, Figma, Slack u.a.) direkt im Chat anbinden über das Model Context Protocol.</p>
-              </div>
-            </div>
-            <div class="letter-list-row">
-              <div class="letter-badge">V</div>
-              <div class="letter-content">
-                <strong>Visualizer</strong>
-                <p>Inline-Diagramme, Charts und interaktive Widgets direkt im Chatverlauf — ohne separate Datei.</p>
-              </div>
-            </div>
-            <div class="letter-list-row">
-              <div class="letter-badge">U</div>
-              <div class="letter-content">
-                <strong>Datei-Upload</strong>
-                <p>Bilder, PDFs, Office-Dokumente, Code-Dateien hochladen. Claude kann diese lesen, analysieren und bearbeiten.</p>
+
+            <div data-tab-panel="gemini" hidden>
+              <div class="letter-list">
+                <div class="letter-list-row">
+                  <div class="letter-badge">S</div>
+                  <div class="letter-content">
+                    <strong>Search</strong>
+                    <p>Gemini greift via Google Search auf das Internet zu. Standardmäßig aktiv für aktuelle Informationen.</p>
+                  </div>
+                </div>
+                <div class="letter-list-row">
+                  <div class="letter-badge">C</div>
+                  <div class="letter-content">
+                    <strong>Canvas</strong>
+                    <p>Interaktive Dateien (Code, Dokumente) werden als eigenständige Objekte neben dem Chat angezeigt und sind bearbeitbar.</p>
+                  </div>
+                </div>
+                <div class="letter-list-row">
+                  <div class="letter-badge">D</div>
+                  <div class="letter-content">
+                    <strong>Deep Research</strong>
+                    <p>Vertiefte Recherche mit automatischer Websuche über mehrere Quellen. Erstellt umfassende Berichte.</p>
+                  </div>
+                </div>
+                <div class="letter-list-row">
+                  <div class="letter-badge">X</div>
+                  <div class="letter-content">
+                    <strong>Code Execution</strong>
+                    <p>Gemini kann Python-Code ausführen, Dateien erstellen und Ergebnisse direkt liefern.</p>
+                  </div>
+                </div>
+                <div class="letter-list-row">
+                  <div class="letter-badge">G</div>
+                  <div class="letter-content">
+                    <strong>Gems</strong>
+                    <p>Chats, Dateien und Anweisungen in einem eigenen Gem bündeln. System-Prompt und Wissensquellen pro Gem definierbar.</p>
+                  </div>
+                </div>
+                <div class="letter-list-row">
+                  <div class="letter-badge">E</div>
+                  <div class="letter-content">
+                    <strong>Extensions</strong>
+                    <p>Externe Dienste (Google Workspace, Maps, YouTube u.a.) direkt im Chat anbinden über Extensions.</p>
+                  </div>
+                </div>
+                <div class="letter-list-row">
+                  <div class="letter-badge">V</div>
+                  <div class="letter-content">
+                    <strong>Canvas</strong>
+                    <p>Inline-Diagramme, Charts und interaktive Widgets direkt im Canvas neben dem Chat.</p>
+                  </div>
+                </div>
+                <div class="letter-list-row">
+                  <div class="letter-badge">U</div>
+                  <div class="letter-content">
+                    <strong>Datei-Upload</strong>
+                    <p>Bilder, PDFs, Office-Dokumente, Code-Dateien hochladen. Gemini kann diese lesen, analysieren und bearbeiten.</p>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -394,43 +584,140 @@
         <div class="slide-inner">
           <div class="chapter-label">Kapitel 3 — Claude 101</div>
           <h2>Einstellungen</h2>
-          <div class="settings-section">
-            <div class="settings-section-label">Persönliche Einstellungen</div>
-            <div class="settings-grid">
-              <div class="settings-card">
-                <span class="settings-card-icon" data-icon="brain"></span>
-                <h4>Memory</h4>
-                <p>Claude merkt sich Kontext aus vergangenen Gesprächen (Name, Beruf, Vorlieben). Kann aktiviert/deaktiviert und bearbeitet werden.</p>
+
+          <div class="llm-tabs" data-llm-tabs data-sync-group="llm">
+            <nav class="llm-tabs-nav">
+              <button data-tab="claude" class="active" type="button">Claude</button>
+              <button data-tab="chatgpt" type="button">ChatGPT</button>
+              <button data-tab="gemini" type="button">Gemini</button>
+            </nav>
+
+            <div data-tab-panel="claude" class="active">
+              <div class="settings-section">
+                <div class="settings-section-label">Persönliche Einstellungen</div>
+                <div class="settings-grid">
+                  <div class="settings-card">
+                    <span class="settings-card-icon" data-icon="brain"></span>
+                    <h4>Memory</h4>
+                    <p>Claude merkt sich Kontext aus vergangenen Gesprächen (Name, Beruf, Vorlieben). Kann aktiviert/deaktiviert und bearbeitet werden.</p>
+                  </div>
+                  <div class="settings-card">
+                    <span class="settings-card-icon" data-icon="file-text"></span>
+                    <h4>Schreibstil</h4>
+                    <p>Benutzerdefinierte Stile für Claudes Antworten — z.B. formell, knapp, technisch. Mehrere Stile speicherbar.</p>
+                  </div>
+                  <div class="settings-card">
+                    <span class="settings-card-icon" data-icon="cog"></span>
+                    <h4>User Preferences</h4>
+                    <p>Freitext-Feld für persönliche Anweisungen: Tonalität, Formatierung, Sprache, bevorzugte Verhaltensweisen.</p>
+                  </div>
+                  <div class="settings-card">
+                    <span class="settings-card-icon" data-icon="zap"></span>
+                    <h4>Feature-Toggles</h4>
+                    <p>Websuche, Artifacts, Code-Ausführung, Memory und Chat-Verlauf einzeln ein-/ausschalten — global oder pro Chat.</p>
+                  </div>
+                </div>
               </div>
-              <div class="settings-card">
-                <span class="settings-card-icon" data-icon="file-text"></span>
-                <h4>Schreibstil</h4>
-                <p>Benutzerdefinierte Stile für Claudes Antworten — z.B. formell, knapp, technisch. Mehrere Stile speicherbar.</p>
-              </div>
-              <div class="settings-card">
-                <span class="settings-card-icon" data-icon="cog"></span>
-                <h4>User Preferences</h4>
-                <p>Freitext-Feld für persönliche Anweisungen: Tonalität, Formatierung, Sprache, bevorzugte Verhaltensweisen.</p>
-              </div>
-              <div class="settings-card">
-                <span class="settings-card-icon" data-icon="zap"></span>
-                <h4>Feature-Toggles</h4>
-                <p>Websuche, Artifacts, Code-Ausführung, Memory und Chat-Verlauf einzeln ein-/ausschalten — global oder pro Chat.</p>
+              <div class="settings-section">
+                <div class="settings-section-label">Datenschutz-Optionen</div>
+                <div class="settings-grid cols-2">
+                  <div class="settings-card">
+                    <span class="settings-card-icon" data-icon="moon"></span>
+                    <h4>Incognito-Modus</h4>
+                    <p>Chats werden nicht gespeichert und nicht für Memory oder Training verwendet.</p>
+                  </div>
+                  <div class="settings-card">
+                    <span class="settings-card-icon" data-icon="messages-square"></span>
+                    <h4>Chat-Verlauf</h4>
+                    <p>Vergangene Chats durchsuchen und referenzieren. Gelöschte Chats werden auch aus Memory entfernt.</p>
+                  </div>
+                </div>
               </div>
             </div>
-          </div>
-          <div class="settings-section">
-            <div class="settings-section-label">Datenschutz-Optionen</div>
-            <div class="settings-grid cols-2">
-              <div class="settings-card">
-                <span class="settings-card-icon" data-icon="moon"></span>
-                <h4>Incognito-Modus</h4>
-                <p>Chats werden nicht gespeichert und nicht für Memory oder Training verwendet.</p>
+
+            <div data-tab-panel="chatgpt" hidden>
+              <div class="settings-section">
+                <div class="settings-section-label">Persönliche Einstellungen</div>
+                <div class="settings-grid">
+                  <div class="settings-card">
+                    <span class="settings-card-icon" data-icon="brain"></span>
+                    <h4>Memory</h4>
+                    <p>ChatGPT merkt sich Kontext aus vergangenen Gesprächen (Name, Beruf, Vorlieben). Einträge können angezeigt, bearbeitet und gelöscht werden.</p>
+                  </div>
+                  <div class="settings-card">
+                    <span class="settings-card-icon" data-icon="file-text"></span>
+                    <h4>Custom Instructions</h4>
+                    <p>Freitext-Feld für Tonalität, Stil und Format. Wirkt als persistente Vorgabe für alle Chats.</p>
+                  </div>
+                  <div class="settings-card">
+                    <span class="settings-card-icon" data-icon="cog"></span>
+                    <h4>(Custom Instructions)</h4>
+                    <p>Vorlieben werden im selben Custom-Instructions-Feld erfasst — kein separater Slot für User Preferences.</p>
+                  </div>
+                  <div class="settings-card">
+                    <span class="settings-card-icon" data-icon="zap"></span>
+                    <h4>Settings</h4>
+                    <p>Features (Search, Canvas, Code Interpreter, Memory, History) global in den Settings ein-/ausschalten.</p>
+                  </div>
+                </div>
               </div>
-              <div class="settings-card">
-                <span class="settings-card-icon" data-icon="messages-square"></span>
-                <h4>Chat-Verlauf</h4>
-                <p>Vergangene Chats durchsuchen und referenzieren. Gelöschte Chats werden auch aus Memory entfernt.</p>
+              <div class="settings-section">
+                <div class="settings-section-label">Datenschutz-Optionen</div>
+                <div class="settings-grid cols-2">
+                  <div class="settings-card">
+                    <span class="settings-card-icon" data-icon="moon"></span>
+                    <h4>Temporary Chat</h4>
+                    <p>Chats werden nicht gespeichert, nicht für Memory verwendet und nicht zum Training herangezogen.</p>
+                  </div>
+                  <div class="settings-card">
+                    <span class="settings-card-icon" data-icon="messages-square"></span>
+                    <h4>Chat History</h4>
+                    <p>Vergangene Chats durchsuchen und referenzieren. Über Settings einzeln oder komplett löschbar.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div data-tab-panel="gemini" hidden>
+              <div class="settings-section">
+                <div class="settings-section-label">Persönliche Einstellungen</div>
+                <div class="settings-grid">
+                  <div class="settings-card">
+                    <span class="settings-card-icon" data-icon="brain"></span>
+                    <h4>Saved Info</h4>
+                    <p>Gemini merkt sich Kontext aus vergangenen Gesprächen. Einträge können in den Settings angezeigt und gelöscht werden.</p>
+                  </div>
+                  <div class="settings-card">
+                    <span class="settings-card-icon" data-icon="file-text"></span>
+                    <h4>Personalization</h4>
+                    <p>Persönliche Vorgaben für Tonalität, Stil und Format. Wirkt persistent auf alle Chats.</p>
+                  </div>
+                  <div class="settings-card">
+                    <span class="settings-card-icon" data-icon="cog"></span>
+                    <h4>(Personalization)</h4>
+                    <p>Vorlieben werden im Personalization-Bereich gepflegt — kein separater Slot für User Preferences.</p>
+                  </div>
+                  <div class="settings-card">
+                    <span class="settings-card-icon" data-icon="zap"></span>
+                    <h4>Settings</h4>
+                    <p>Extensions, Saved Info und Activity in den Settings ein-/ausschalten — global für alle Chats.</p>
+                  </div>
+                </div>
+              </div>
+              <div class="settings-section">
+                <div class="settings-section-label">Datenschutz-Optionen</div>
+                <div class="settings-grid cols-2">
+                  <div class="settings-card">
+                    <span class="settings-card-icon" data-icon="moon"></span>
+                    <h4>Nicht im Verlauf</h4>
+                    <p>Kein direktes Äquivalent zum Incognito-Modus. Gemini Activity lässt sich pausieren, sodass Chats nicht gespeichert werden.</p>
+                  </div>
+                  <div class="settings-card">
+                    <span class="settings-card-icon" data-icon="messages-square"></span>
+                    <h4>Activity</h4>
+                    <p>Vergangene Chats unter Gemini Activity durchsuchen, referenzieren und löschen.</p>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -551,29 +838,95 @@
           <div class="chapter-label">Kapitel 4 — Kontext & Pflege</div>
           <h2>Context Window</h2>
 
-          <div class="consequence-grid">
-            <div class="card">
-              <div class="code-label">Strategie A — alles rein</div>
-              <ul class="ctx-list">
-                <li><span class="icon" data-icon="paperclip"></span>12 Anhänge</li>
-                <li><span class="icon" data-icon="file-text"></span>8 Vorab-Anweisungen</li>
-                <li><span class="icon" data-icon="message-square"></span>Chat-Verlauf 50+ Nachrichten</li>
-              </ul>
-              <hr>
-              <p><strong>Frage:</strong> Was war Schritt 3?</p>
-              <p class="answer answer-bad"><strong>Antwort:</strong> ✗ erfunden / falsch</p>
+          <div class="llm-tabs" data-llm-tabs data-sync-group="llm">
+            <nav class="llm-tabs-nav">
+              <button data-tab="claude" class="active" type="button">Claude</button>
+              <button data-tab="chatgpt" type="button">ChatGPT</button>
+              <button data-tab="gemini" type="button">Gemini</button>
+            </nav>
+
+            <div data-tab-panel="claude" class="active">
+              <div class="consequence-grid">
+                <div class="card">
+                  <div class="code-label">Strategie A — alles rein</div>
+                  <ul class="ctx-list">
+                    <li><span class="icon" data-icon="paperclip"></span>12 Anhänge</li>
+                    <li><span class="icon" data-icon="file-text"></span>8 Vorab-Anweisungen</li>
+                    <li><span class="icon" data-icon="message-square"></span>Chat-Verlauf 50+ Nachrichten</li>
+                  </ul>
+                  <hr>
+                  <p><strong>Frage:</strong> Was war Schritt 3?</p>
+                  <p class="answer answer-bad"><strong>Antwort:</strong> ✗ erfunden / falsch</p>
+                </div>
+
+                <div class="card">
+                  <div class="code-label">Strategie B — progressiv</div>
+                  <ul class="ctx-list">
+                    <li><span class="icon" data-icon="file-text"></span>Kernkontext (kurz)</li>
+                    <li><span class="icon" data-icon="paperclip"></span>nur relevanter Anhang</li>
+                    <li><span class="icon" data-icon="message-square"></span>letzte 5 Nachrichten</li>
+                  </ul>
+                  <hr>
+                  <p><strong>Frage:</strong> Was war Schritt 3?</p>
+                  <p class="answer answer-good"><strong>Antwort:</strong> ✓ korrekt</p>
+                </div>
+              </div>
             </div>
 
-            <div class="card">
-              <div class="code-label">Strategie B — progressiv</div>
-              <ul class="ctx-list">
-                <li><span class="icon" data-icon="file-text"></span>Kernkontext (kurz)</li>
-                <li><span class="icon" data-icon="paperclip"></span>nur relevanter Anhang</li>
-                <li><span class="icon" data-icon="message-square"></span>letzte 5 Nachrichten</li>
-              </ul>
-              <hr>
-              <p><strong>Frage:</strong> Was war Schritt 3?</p>
-              <p class="answer answer-good"><strong>Antwort:</strong> ✓ korrekt</p>
+            <div data-tab-panel="chatgpt" hidden>
+              <div class="consequence-grid">
+                <div class="card">
+                  <div class="code-label">Strategie A — alles rein</div>
+                  <ul class="ctx-list">
+                    <li><span class="icon" data-icon="paperclip"></span>12 Datei-Uploads</li>
+                    <li><span class="icon" data-icon="file-text"></span>8 Custom Instructions</li>
+                    <li><span class="icon" data-icon="message-square"></span>Chat-Verlauf 50+ Nachrichten</li>
+                  </ul>
+                  <hr>
+                  <p><strong>Frage:</strong> Was war Schritt 3?</p>
+                  <p class="answer answer-bad"><strong>Antwort:</strong> ✗ erfunden / falsch</p>
+                </div>
+
+                <div class="card">
+                  <div class="code-label">Strategie B — progressiv</div>
+                  <ul class="ctx-list">
+                    <li><span class="icon" data-icon="file-text"></span>Kernkontext (kurz)</li>
+                    <li><span class="icon" data-icon="paperclip"></span>nur relevanter Datei-Upload</li>
+                    <li><span class="icon" data-icon="message-square"></span>letzte 5 Nachrichten</li>
+                  </ul>
+                  <hr>
+                  <p><strong>Frage:</strong> Was war Schritt 3?</p>
+                  <p class="answer answer-good"><strong>Antwort:</strong> ✓ korrekt</p>
+                </div>
+              </div>
+            </div>
+
+            <div data-tab-panel="gemini" hidden>
+              <div class="consequence-grid">
+                <div class="card">
+                  <div class="code-label">Strategie A — alles rein</div>
+                  <ul class="ctx-list">
+                    <li><span class="icon" data-icon="paperclip"></span>12 Datei-Uploads</li>
+                    <li><span class="icon" data-icon="file-text"></span>8 Personalization-Einträge</li>
+                    <li><span class="icon" data-icon="message-square"></span>Chat-Verlauf 50+ Nachrichten</li>
+                  </ul>
+                  <hr>
+                  <p><strong>Frage:</strong> Was war Schritt 3?</p>
+                  <p class="answer answer-bad"><strong>Antwort:</strong> ✗ erfunden / falsch</p>
+                </div>
+
+                <div class="card">
+                  <div class="code-label">Strategie B — progressiv</div>
+                  <ul class="ctx-list">
+                    <li><span class="icon" data-icon="file-text"></span>Kernkontext (kurz)</li>
+                    <li><span class="icon" data-icon="paperclip"></span>nur relevanter Datei-Upload</li>
+                    <li><span class="icon" data-icon="message-square"></span>letzte 5 Nachrichten</li>
+                  </ul>
+                  <hr>
+                  <p><strong>Frage:</strong> Was war Schritt 3?</p>
+                  <p class="answer answer-good"><strong>Antwort:</strong> ✓ korrekt</p>
+                </div>
+              </div>
             </div>
           </div>
 
@@ -723,108 +1076,314 @@
         <div class="slide-inner">
           <div class="chapter-label">Kapitel 6 — Skills</div>
           <h2>Was ist ein Skill?</h2>
-          <p class="lead">Ein Skill ist ein Ordner mit einer <code>SKILL.md</code>-Datei plus optional Skripten, Referenzen und Assets. Claude lädt nur das, was die jeweilige Aufgabe braucht.</p>
 
-          <div class="skill-anatomy">
-            <!-- COLUMN 1: Ordner-Struktur -->
-            <div class="anatomy-column">
-              <div class="anatomy-column-title">Ordner-Struktur</div>
-              <div class="folder-tree">
-                <div class="folder-root">
-                  <span class="folder-icon" data-icon="package"></span>
-                  <span class="folder-name">mein-skill/</span>
-                </div>
-                <div class="folder-item folder-required">
-                  <span class="folder-bullet">●</span>
-                  <div>
-                    <div class="folder-item-name">SKILL.md</div>
-                    <div class="folder-item-meta">Pflicht · Kerninhalt</div>
-                  </div>
-                </div>
-                <div class="folder-section-label">optional:</div>
-                <div class="folder-optionals">
-                  <div class="folder-item folder-optional">
-                    <span class="folder-bullet">○</span>
-                    <div>
-                      <div class="folder-item-name">scripts/</div>
-                      <div class="folder-item-meta">Code</div>
+          <div class="llm-tabs" data-llm-tabs data-sync-group="llm">
+            <nav class="llm-tabs-nav">
+              <button data-tab="claude" class="active" type="button">Claude</button>
+              <button data-tab="chatgpt" type="button">ChatGPT</button>
+              <button data-tab="gemini" type="button">Gemini</button>
+            </nav>
+
+            <div data-tab-panel="claude" class="active">
+              <p class="lead">Ein <strong>Skill</strong> ist ein Ordner mit einer <code>SKILL.md</code>-Datei plus optional Skripten, Referenzen und Assets. Claude lädt nur das, was die jeweilige Aufgabe braucht.</p>
+
+              <div class="skill-anatomy">
+                <div class="anatomy-column">
+                  <div class="anatomy-column-title">Ordner-Struktur</div>
+                  <div class="folder-tree">
+                    <div class="folder-root">
+                      <span class="folder-icon" data-icon="package"></span>
+                      <span class="folder-name">mein-skill/</span>
+                    </div>
+                    <div class="folder-item folder-required">
+                      <span class="folder-bullet">●</span>
+                      <div>
+                        <div class="folder-item-name">SKILL.md</div>
+                        <div class="folder-item-meta">Pflicht · Kerninhalt</div>
+                      </div>
+                    </div>
+                    <div class="folder-section-label">optional:</div>
+                    <div class="folder-optionals">
+                      <div class="folder-item folder-optional">
+                        <span class="folder-bullet">○</span>
+                        <div>
+                          <div class="folder-item-name">scripts/</div>
+                          <div class="folder-item-meta">Code</div>
+                        </div>
+                      </div>
+                      <div class="folder-item folder-optional">
+                        <span class="folder-bullet">○</span>
+                        <div>
+                          <div class="folder-item-name">refs/</div>
+                          <div class="folder-item-meta">Dokumente</div>
+                        </div>
+                      </div>
+                      <div class="folder-item folder-optional">
+                        <span class="folder-bullet">○</span>
+                        <div>
+                          <div class="folder-item-name">assets/</div>
+                          <div class="folder-item-meta">Vorlagen</div>
+                        </div>
+                      </div>
                     </div>
                   </div>
-                  <div class="folder-item folder-optional">
-                    <span class="folder-bullet">○</span>
-                    <div>
-                      <div class="folder-item-name">refs/</div>
-                      <div class="folder-item-meta">Dokumente</div>
+                </div>
+
+                <div class="anatomy-column">
+                  <div class="anatomy-column-title">SKILL.md</div>
+                  <div class="file-mockup">
+                    <div class="file-section file-frontmatter">
+                      <div class="file-section-label">YAML-Frontmatter</div>
+                      <div class="file-line"><span class="file-key">name:</span> <span class="file-value">aktennotiz-helper</span></div>
+                      <div class="file-line"><span class="file-key">description:</span> <span class="file-value">Erstellt Aktennotizen im Hausstil</span></div>
+                      <div class="file-line"><span class="file-key">version:</span> <span class="file-value">1.0</span></div>
+                    </div>
+                    <div class="file-section file-body">
+                      <div class="file-section-label">Body</div>
+                      <ul class="file-body-list">
+                        <li>Anweisungen für Claude</li>
+                        <li>Output-Format</li>
+                        <li>Beispiele und Edge-Cases</li>
+                      </ul>
                     </div>
                   </div>
-                  <div class="folder-item folder-optional">
-                    <span class="folder-bullet">○</span>
-                    <div>
-                      <div class="folder-item-name">assets/</div>
-                      <div class="folder-item-meta">Vorlagen</div>
+                </div>
+
+                <div class="anatomy-column">
+                  <div class="anatomy-column-title">Lade-Mechanismus</div>
+                  <div class="loading-stages">
+                    <div class="loading-stage stage-1">
+                      <div class="loading-stage-num">1</div>
+                      <div class="loading-stage-content">
+                        <div class="loading-stage-name">YAML-Frontmatter</div>
+                        <div class="loading-stage-desc">Immer im System-Prompt geladen (~50 Tokens) — <strong>description triggert Auto-Load</strong></div>
+                      </div>
+                    </div>
+                    <div class="loading-arrow">↓</div>
+                    <div class="loading-stage stage-2">
+                      <div class="loading-stage-num">2</div>
+                      <div class="loading-stage-content">
+                        <div class="loading-stage-name">SKILL.md Body</div>
+                        <div class="loading-stage-desc">Bei Aktivierung geladen (~2000 Tokens)</div>
+                      </div>
+                    </div>
+                    <div class="loading-arrow">↓</div>
+                    <div class="loading-stage stage-3">
+                      <div class="loading-stage-num">3</div>
+                      <div class="loading-stage-content">
+                        <div class="loading-stage-name">Verlinkte Dateien</div>
+                        <div class="loading-stage-desc">Bei Bedarf nachgeladen (variabel)</div>
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
+
+              <p class="anatomy-footer">
+                <strong>Progressive Disclosure:</strong> Claude lädt nur das, was die aktuelle Aufgabe braucht. Der Rest bleibt verfügbar, kostet aber keine Tokens.
+              </p>
+
+              <div class="explainer-hint">→ Interaktiver Explainer mit Token-Counter: <a href="explainer/c-skills-architektur.html">Concept-Explainer C — Skills Progressive Disclosure</a></div>
             </div>
 
-            <!-- COLUMN 2: SKILL.md Aufbau -->
-            <div class="anatomy-column">
-              <div class="anatomy-column-title">SKILL.md</div>
-              <div class="file-mockup">
-                <div class="file-section file-frontmatter">
-                  <div class="file-section-label">YAML-Frontmatter</div>
-                  <div class="file-line"><span class="file-key">name:</span> <span class="file-value">aktennotiz-helper</span></div>
-                  <div class="file-line"><span class="file-key">description:</span> <span class="file-value">Erstellt Aktennotizen im Hausstil</span></div>
-                  <div class="file-line"><span class="file-key">version:</span> <span class="file-value">1.0</span></div>
+            <div data-tab-panel="chatgpt" hidden>
+              <p class="lead">Ein <strong>Custom GPT</strong> bündelt Instructions, Knowledge-Files und optionale Actions in einem eigenen GPT. Nutzer aktivieren ihn manuell aus dem GPT-Store oder dem eigenen Workspace.</p>
+
+              <div class="skill-anatomy">
+                <div class="anatomy-column">
+                  <div class="anatomy-column-title">Bestandteile</div>
+                  <div class="folder-tree">
+                    <div class="folder-root">
+                      <span class="folder-icon" data-icon="package"></span>
+                      <span class="folder-name">mein-custom-gpt/</span>
+                    </div>
+                    <div class="folder-item folder-required">
+                      <span class="folder-bullet">●</span>
+                      <div>
+                        <div class="folder-item-name">Instructions</div>
+                        <div class="folder-item-meta">Pflicht · Freitext</div>
+                      </div>
+                    </div>
+                    <div class="folder-section-label">optional:</div>
+                    <div class="folder-optionals">
+                      <div class="folder-item folder-optional">
+                        <span class="folder-bullet">○</span>
+                        <div>
+                          <div class="folder-item-name">Knowledge files</div>
+                          <div class="folder-item-meta">PDFs, Docs</div>
+                        </div>
+                      </div>
+                      <div class="folder-item folder-optional">
+                        <span class="folder-bullet">○</span>
+                        <div>
+                          <div class="folder-item-name">Actions</div>
+                          <div class="folder-item-meta">API-Calls</div>
+                        </div>
+                      </div>
+                      <div class="folder-item folder-optional">
+                        <span class="folder-bullet">○</span>
+                        <div>
+                          <div class="folder-item-name">Capabilities</div>
+                          <div class="folder-item-meta">Search, Canvas, Code</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
-                <div class="file-section file-body">
-                  <div class="file-section-label">Body</div>
-                  <ul class="file-body-list">
-                    <li>Anweisungen für Claude</li>
-                    <li>Output-Format</li>
-                    <li>Beispiele und Edge-Cases</li>
-                  </ul>
+
+                <div class="anatomy-column">
+                  <div class="anatomy-column-title">Instructions</div>
+                  <div class="file-mockup">
+                    <div class="file-section file-frontmatter">
+                      <div class="file-section-label">Meta</div>
+                      <div class="file-line"><span class="file-key">name:</span> <span class="file-value">Aktennotiz-Helper</span></div>
+                      <div class="file-line"><span class="file-key">description:</span> <span class="file-value">Erstellt Aktennotizen im Hausstil</span></div>
+                    </div>
+                    <div class="file-section file-body">
+                      <div class="file-section-label">Instructions (Text)</div>
+                      <ul class="file-body-list">
+                        <li>Anweisungen für ChatGPT</li>
+                        <li>Output-Format</li>
+                        <li>Beispiele und Edge-Cases</li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="anatomy-column">
+                  <div class="anatomy-column-title">Lade-Mechanismus</div>
+                  <div class="loading-stages">
+                    <div class="loading-stage stage-1">
+                      <div class="loading-stage-num">1</div>
+                      <div class="loading-stage-content">
+                        <div class="loading-stage-name">Name &amp; Beschreibung</div>
+                        <div class="loading-stage-desc">Im GPT-Store sichtbar — <strong>Nutzer aktiviert manuell</strong></div>
+                      </div>
+                    </div>
+                    <div class="loading-arrow">↓</div>
+                    <div class="loading-stage stage-2">
+                      <div class="loading-stage-num">2</div>
+                      <div class="loading-stage-content">
+                        <div class="loading-stage-name">Instructions</div>
+                        <div class="loading-stage-desc">Bei GPT-Auswahl als System-Prompt geladen</div>
+                      </div>
+                    </div>
+                    <div class="loading-arrow">↓</div>
+                    <div class="loading-stage stage-3">
+                      <div class="loading-stage-num">3</div>
+                      <div class="loading-stage-content">
+                        <div class="loading-stage-name">Knowledge / Actions</div>
+                        <div class="loading-stage-desc">Bei Bedarf abgefragt (variabel)</div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
+
+              <p class="anatomy-footer">
+                <strong>Manuelle Aktivierung:</strong> Custom GPTs werden vom Nutzer pro Chat ausgewählt — kein Auto-Load über Description-Match.
+              </p>
             </div>
 
-            <!-- COLUMN 3: Lade-Mechanismus -->
-            <div class="anatomy-column">
-              <div class="anatomy-column-title">Lade-Mechanismus</div>
-              <div class="loading-stages">
-                <div class="loading-stage stage-1">
-                  <div class="loading-stage-num">1</div>
-                  <div class="loading-stage-content">
-                    <div class="loading-stage-name">YAML-Frontmatter</div>
-                    <div class="loading-stage-desc">Immer im System-Prompt geladen (~50 Tokens)</div>
+            <div data-tab-panel="gemini" hidden>
+              <p class="lead">Ein <strong>Gem</strong> bündelt Instructions, Knowledge-Files und Capabilities in einem eigenen Assistant. Nutzer wählen einen Gem manuell aus der Gem-Galerie oder dem eigenen Workspace.</p>
+
+              <div class="skill-anatomy">
+                <div class="anatomy-column">
+                  <div class="anatomy-column-title">Bestandteile</div>
+                  <div class="folder-tree">
+                    <div class="folder-root">
+                      <span class="folder-icon" data-icon="package"></span>
+                      <span class="folder-name">mein-gem/</span>
+                    </div>
+                    <div class="folder-item folder-required">
+                      <span class="folder-bullet">●</span>
+                      <div>
+                        <div class="folder-item-name">Instructions</div>
+                        <div class="folder-item-meta">Pflicht · Freitext</div>
+                      </div>
+                    </div>
+                    <div class="folder-section-label">optional:</div>
+                    <div class="folder-optionals">
+                      <div class="folder-item folder-optional">
+                        <span class="folder-bullet">○</span>
+                        <div>
+                          <div class="folder-item-name">Knowledge</div>
+                          <div class="folder-item-meta">PDFs, Docs</div>
+                        </div>
+                      </div>
+                      <div class="folder-item folder-optional">
+                        <span class="folder-bullet">○</span>
+                        <div>
+                          <div class="folder-item-name">Capabilities</div>
+                          <div class="folder-item-meta">Search, Canvas, Code</div>
+                        </div>
+                      </div>
+                      <div class="folder-item folder-optional">
+                        <span class="folder-bullet">○</span>
+                        <div>
+                          <div class="folder-item-name">Extensions</div>
+                          <div class="folder-item-meta">Workspace, Maps</div>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </div>
-                <div class="loading-arrow">↓</div>
-                <div class="loading-stage stage-2">
-                  <div class="loading-stage-num">2</div>
-                  <div class="loading-stage-content">
-                    <div class="loading-stage-name">SKILL.md Body</div>
-                    <div class="loading-stage-desc">Bei Aktivierung geladen (~2000 Tokens)</div>
+
+                <div class="anatomy-column">
+                  <div class="anatomy-column-title">Instructions</div>
+                  <div class="file-mockup">
+                    <div class="file-section file-frontmatter">
+                      <div class="file-section-label">Meta</div>
+                      <div class="file-line"><span class="file-key">name:</span> <span class="file-value">Aktennotiz-Helper</span></div>
+                      <div class="file-line"><span class="file-key">description:</span> <span class="file-value">Erstellt Aktennotizen im Hausstil</span></div>
+                    </div>
+                    <div class="file-section file-body">
+                      <div class="file-section-label">Instructions (Text)</div>
+                      <ul class="file-body-list">
+                        <li>Anweisungen für Gemini</li>
+                        <li>Output-Format</li>
+                        <li>Beispiele und Edge-Cases</li>
+                      </ul>
+                    </div>
                   </div>
                 </div>
-                <div class="loading-arrow">↓</div>
-                <div class="loading-stage stage-3">
-                  <div class="loading-stage-num">3</div>
-                  <div class="loading-stage-content">
-                    <div class="loading-stage-name">Verlinkte Dateien</div>
-                    <div class="loading-stage-desc">Bei Bedarf nachgeladen (variabel)</div>
+
+                <div class="anatomy-column">
+                  <div class="anatomy-column-title">Lade-Mechanismus</div>
+                  <div class="loading-stages">
+                    <div class="loading-stage stage-1">
+                      <div class="loading-stage-num">1</div>
+                      <div class="loading-stage-content">
+                        <div class="loading-stage-name">Name &amp; Beschreibung</div>
+                        <div class="loading-stage-desc">In der Gem-Galerie sichtbar — <strong>Nutzer aktiviert manuell</strong></div>
+                      </div>
+                    </div>
+                    <div class="loading-arrow">↓</div>
+                    <div class="loading-stage stage-2">
+                      <div class="loading-stage-num">2</div>
+                      <div class="loading-stage-content">
+                        <div class="loading-stage-name">Instructions</div>
+                        <div class="loading-stage-desc">Bei Gem-Auswahl als System-Prompt geladen</div>
+                      </div>
+                    </div>
+                    <div class="loading-arrow">↓</div>
+                    <div class="loading-stage stage-3">
+                      <div class="loading-stage-num">3</div>
+                      <div class="loading-stage-content">
+                        <div class="loading-stage-name">Knowledge / Capabilities</div>
+                        <div class="loading-stage-desc">Bei Bedarf abgefragt (variabel)</div>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
+
+              <p class="anatomy-footer">
+                <strong>Manuelle Aktivierung:</strong> Gems werden vom Nutzer pro Chat ausgewählt — kein Auto-Load über Description-Match.
+              </p>
             </div>
           </div>
-
-          <p class="anatomy-footer">
-            <strong>Progressive Disclosure:</strong> Claude lädt nur das, was die aktuelle Aufgabe braucht. Der Rest bleibt verfügbar, kostet aber keine Tokens.
-          </p>
-
-          <div class="explainer-hint">→ Interaktiver Explainer mit Token-Counter: <a href="explainer/c-skills-architektur.html">Concept-Explainer C — Skills Progressive Disclosure</a></div>
         </div>
       </section>
 

@@ -2,6 +2,7 @@
 import { Storage } from './lib/storage.js';
 import { ModeManager } from './lib/mode.js';
 import { icon } from './lib/icons.js';
+import { initTabs } from './lib/tabs.js';
 
 const NS = 'srege-praesentation-v1';
 const storage = new Storage(NS);
@@ -15,6 +16,9 @@ document.querySelector('[data-mode="theme"][data-value="dark"]').innerHTML = ico
 document.querySelectorAll('[data-icon]').forEach(el => {
   el.innerHTML = icon(el.dataset.icon);
 });
+
+// LLM-Tabs initialisieren (nach Icon-Resolver, vor TOC-Aufbau)
+initTabs(document.body);
 
 // Toggle-Verkabelung
 document.querySelectorAll('.toggle').forEach(btn => {

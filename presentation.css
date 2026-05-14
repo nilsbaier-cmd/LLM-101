@@ -1765,3 +1765,39 @@ body[data-layout="scroll"] [data-step] {
   max-width: 180px;
   margin: 0 auto;
 }
+
+/* LLM-Tabs */
+.llm-tabs { margin-top: var(--space-3); }
+.llm-tabs-nav {
+  display: flex;
+  gap: var(--space-1);
+  border-bottom: 1px solid var(--border);
+  margin-bottom: var(--space-5);
+}
+.llm-tabs-nav button {
+  font-family: var(--font-sans);
+  font-size: 13px;
+  font-weight: 600;
+  padding: var(--space-2) var(--space-4);
+  background: none;
+  border: none;
+  color: var(--text-secondary);
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
+  transition: color 0.15s, border-color 0.15s;
+}
+.llm-tabs-nav button:hover { color: var(--text-primary); }
+.llm-tabs-nav button.active {
+  color: var(--accent);
+  border-bottom-color: var(--accent);
+}
+
+/* Im Workshop-Modus (LLM-Toggle aus): Tab-Nav verstecken, immer nur Claude zeigen */
+body[data-llm="off"] .llm-tabs-nav { display: none; }
+body[data-llm="off"] [data-tab-panel="chatgpt"],
+body[data-llm="off"] [data-tab-panel="gemini"] { display: none; }
+body[data-llm="off"] [data-tab-panel="claude"] {
+  display: block !important;
+  visibility: visible !important;
+}
