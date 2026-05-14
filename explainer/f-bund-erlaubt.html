@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="Cache-Control" content="no-store">
+  <title>Verwaltung & KI — Erlaubt/Verboten — Concept-Explainer F</title>
+  <link rel="stylesheet" href="../tokens.css?v=2026-05-15b">
+  <link rel="stylesheet" href="../app.css?v=2026-05-15b">
+  <link rel="stylesheet" href="explainer.css?v=2026-05-15b">
+</head>
+<body>
+  <header class="app-header">
+    <div class="app-title"><a href="../index.html" style="color:inherit;text-decoration:none;">← Zurück zur Präsentation</a></div>
+    <div class="app-toggles">
+      <button class="toggle" data-mode="theme" data-value="light"></button>
+      <button class="toggle" data-mode="theme" data-value="dark"></button>
+      <button class="toggle" data-mode="theme" data-value="auto">Auto</button>
+    </div>
+  </header>
+  <main class="explainer-page">
+    <div class="chapter-label">Concept-Explainer F</div>
+    <h2>Erlaubt, bedingt, verboten?</h2>
+    <p class="lead">Praktische Beispiele aus dem Verwaltungs-Alltag, geprüft gegen das Merkblatt für generative KI. Klick auf einen Filter, um nur eine Kategorie zu sehen.</p>
+
+    <div class="erlaubt-filters">
+      <button class="erlaubt-filter active" data-filter="all" type="button">Alle</button>
+      <button class="erlaubt-filter" data-filter="ok" type="button"><span class="erlaubt-dot ok"></span> Erlaubt</button>
+      <button class="erlaubt-filter" data-filter="warn" type="button"><span class="erlaubt-dot warn"></span> Bedingt</button>
+      <button class="erlaubt-filter" data-filter="no" type="button"><span class="erlaubt-dot no"></span> Verboten</button>
+    </div>
+
+    <div class="erlaubt-list" id="erlaubt-list"></div>
+
+    <p class="erlaubt-footer-note">Verantwortlich für den korrekten Einsatz im Einzelfall bleibst <strong>du selbst</strong>. Im Zweifel: vorgesetzte Person oder Datenschutzbeauftragten fragen.</p>
+
+    <p class="back-link">→ <a href="../index.html">Zurück zur Präsentation</a></p>
+  </main>
+
+  <script type="module">
+    import { ModeManager } from '../lib/mode.js?v=2026-05-15b';
+    import { Storage } from '../lib/storage.js?v=2026-05-15b';
+    import { icon } from '../lib/icons.js?v=2026-05-15b';
+
+    const storage = new Storage('srege-praesentation-v1');
+    const mode = new ModeManager(storage);
+    document.querySelector('[data-mode="theme"][data-value="light"]').innerHTML = icon('sun');
+    document.querySelector('[data-mode="theme"][data-value="dark"]').innerHTML = icon('moon');
+    document.querySelectorAll('.toggle').forEach(btn => btn.addEventListener('click', () => {
+      mode.set('theme', btn.dataset.value);
+      document.querySelectorAll('.toggle').forEach(b => b.classList.toggle('active', b.dataset.value === mode.get('theme')));
+    }));
+    document.querySelectorAll('.toggle').forEach(b => b.classList.toggle('active', b.dataset.value === mode.get('theme')));
+
+    const TASKS = [
+      { kind: 'ok', task: 'Öffentliches Schreiben strukturieren', reason: 'Brainstorming und Gliederung von Texten, die für die Öffentlichkeit bestimmt sind, ist explizit erlaubt.' },
+      { kind: 'ok', task: 'Sitzungsprotokoll aus öffentlichen Notizen zusammenfassen', reason: 'Zusammenfassen öffentlicher Texte ist erlaubt. Auf Faktenkorrektheit prüfen.' },
+      { kind: 'ok', task: 'Code-Snippet entwickeln (z.B. Excel-Makro)', reason: 'Inspiration für Code und Hilfestellung bei Entwicklung ist erlaubt.' },
+      { kind: 'ok', task: 'Bilder für interne Präsentationen generieren', reason: 'Visuelle Hilfsmittel für Präsentationen sind erlaubt.' },
+      { kind: 'warn', task: 'Verfassungstext analysieren', reason: 'Öffentlicher Text — erlaubt. Aber: Analyse muss durch dich überprüft werden, juristische Beurteilung bleibt menschlich.' },
+      { kind: 'warn', task: 'Antwort an Bürger entwerfen', reason: 'Entwurf erstellen ist OK. Aber: keine Personendaten in den Prompt, und der finale Text muss von dir freigegeben werden.' },
+      { kind: 'warn', task: 'Statistik aus internen Daten (nicht personenbezogen) erstellen', reason: 'Aggregierte, nicht-personenbezogene Daten sind grenzwertig — Klassifizierung im Einzelfall prüfen.' },
+      { kind: 'no', task: 'Personendaten verarbeiten (Namen, Adressen, AHV-Nr.)', reason: 'Klares Verbot. Auch keine indirekt identifizierbaren Personendaten.' },
+      { kind: 'no', task: 'Klassifizierte Informationen analysieren (z.B. VERTRAULICH)', reason: 'Klassifizierte Informationen jeglicher Stufe sind verboten.' },
+      { kind: 'no', task: 'Amtsgeheimnisse weitergeben', reason: 'Amtsgeheimnisse fallen unter Verschwiegenheitspflicht — auch nicht in KI-Prompts.' },
+      { kind: 'no', task: 'Vertrauliche Personalakte zusammenfassen', reason: 'Personendaten + interne Vertraulichkeit — doppeltes Tabu.' },
+      { kind: 'no', task: 'Entscheidung über Bürger:innen automatisiert treffen', reason: 'Verwaltungsentscheidungen müssen menschlich verantwortet werden. KI darf vorbereiten, nicht entscheiden.' }
+    ];
+
+    function renderList(filter = 'all') {
+      const list = document.getElementById('erlaubt-list');
+      const filtered = filter === 'all' ? TASKS : TASKS.filter(t => t.kind === filter);
+      list.innerHTML = filtered.map(t => `
+        <div class="erlaubt-item erlaubt-${t.kind}">
+          <span class="erlaubt-dot ${t.kind}"></span>
+          <div class="erlaubt-text">
+            <div class="erlaubt-task">${t.task}</div>
+            <div class="erlaubt-reason">${t.reason}</div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    document.querySelectorAll('.erlaubt-filter').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.erlaubt-filter').forEach(b => b.classList.toggle('active', b === btn));
+        renderList(btn.dataset.filter);
+      });
+    });
+
+    renderList();
+  </script>
+</body>
+</html>

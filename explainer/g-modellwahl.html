@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="Cache-Control" content="no-store">
+  <title>Welches Modell? — Concept-Explainer G</title>
+  <link rel="stylesheet" href="../tokens.css?v=2026-05-15b">
+  <link rel="stylesheet" href="../app.css?v=2026-05-15b">
+  <link rel="stylesheet" href="explainer.css?v=2026-05-15b">
+</head>
+<body>
+  <header class="app-header">
+    <div class="app-title"><a href="../index.html" style="color:inherit;text-decoration:none;">← Zurück zur Präsentation</a></div>
+    <div class="app-toggles">
+      <button class="toggle" data-mode="theme" data-value="light"></button>
+      <button class="toggle" data-mode="theme" data-value="dark"></button>
+      <button class="toggle" data-mode="theme" data-value="auto">Auto</button>
+    </div>
+  </header>
+  <main class="explainer-page">
+    <div class="chapter-label">Concept-Explainer G</div>
+    <h2>Welches Modell für deine Aufgabe?</h2>
+    <p class="lead">Zwei kurze Fragen, dann eine passende Empfehlung. Funktioniert für Claude — die Logik überträgt sich auf andere Anbieter.</p>
+
+    <div class="mw-quiz" id="mw-quiz"></div>
+    <div class="mw-result" id="mw-result" hidden></div>
+
+    <p class="back-link">→ <a href="../index.html">Zurück zur Präsentation</a></p>
+  </main>
+
+  <script type="module">
+    import { ModeManager } from '../lib/mode.js?v=2026-05-15b';
+    import { Storage } from '../lib/storage.js?v=2026-05-15b';
+    import { icon } from '../lib/icons.js?v=2026-05-15b';
+
+    const storage = new Storage('srege-praesentation-v1');
+    const mode = new ModeManager(storage);
+    document.querySelector('[data-mode="theme"][data-value="light"]').innerHTML = icon('sun');
+    document.querySelector('[data-mode="theme"][data-value="dark"]').innerHTML = icon('moon');
+    document.querySelectorAll('.toggle').forEach(btn => btn.addEventListener('click', () => {
+      mode.set('theme', btn.dataset.value);
+      document.querySelectorAll('.toggle').forEach(b => b.classList.toggle('active', b.dataset.value === mode.get('theme')));
+    }));
+    document.querySelectorAll('.toggle').forEach(b => b.classList.toggle('active', b.dataset.value === mode.get('theme')));
+
+    const STEPS = [
+      {
+        id: 'speed',
+        q: 'Wie wichtig ist Geschwindigkeit?',
+        a: [
+          { val: 'slow', text: 'Egal — Hauptsache gute Qualität' },
+          { val: 'medium', text: 'Mittel — sollte zügig sein, aber nicht unter Druck' },
+          { val: 'fast', text: 'Sehr wichtig — möglichst sofort' }
+        ]
+      },
+      {
+        id: 'complexity',
+        q: 'Wie komplex ist die Aufgabe?',
+        a: [
+          { val: 'simple', text: 'Einfach — Zusammenfassung, schnelle Frage, klare Anweisung' },
+          { val: 'medium', text: 'Mittel — Standard-Aufgaben, Texte schreiben, Analyse mit klarem Rahmen' },
+          { val: 'complex', text: 'Komplex — mehrstufiges Reasoning, Code-Refactoring, Forschung' }
+        ]
+      }
+    ];
+
+    const MATRIX = {
+      'fast/simple':   { model: 'Haiku', tag: '4.5', reason: 'Schnellste Antworten, günstigster Preis. Perfekt für einfache, klar umrissene Aufgaben.' },
+      'fast/medium':   { model: 'Sonnet', tag: '4.6', reason: 'Sonnet ist trotz „mittlerer Stufe" immer noch schnell genug. Bessere Qualität als Haiku bei wenig Mehrkosten.' },
+      'fast/complex':  { model: 'Sonnet', tag: '4.6', reason: 'Für komplexe Aufgaben unter Zeitdruck. Opus wäre besser, aber zu langsam — Sonnet ist der pragmatische Kompromiss.' },
+      'medium/simple': { model: 'Haiku', tag: '4.5', reason: 'Bei einfacher Aufgabe ist Haiku ausreichend. Speed-Bonus.' },
+      'medium/medium': { model: 'Sonnet', tag: '4.6', reason: 'Bester Kompromiss aus Geschwindigkeit und Qualität. Standardwahl für die meisten Alltagsaufgaben.' },
+      'medium/complex':{ model: 'Opus', tag: '4.7', reason: 'Komplexe Aufgaben verdienen Opus. Etwas langsamer, deutlich tiefere Antworten.' },
+      'slow/simple':   { model: 'Sonnet', tag: '4.6', reason: 'Bei „Geschwindigkeit egal" wirkt Haiku oft zu kurzgegriffen. Sonnet liefert mehr Substanz für minimal mehr Wartezeit.' },
+      'slow/medium':   { model: 'Sonnet', tag: '4.6', reason: 'Für mittlere Aufgaben ist Sonnet auch ohne Speed-Druck die richtige Wahl. Opus wäre Overkill.' },
+      'slow/complex':  { model: 'Opus', tag: '4.7', reason: 'Höchste Intelligenz, tiefste Analysen. Ideal wenn Qualität alles ist und Wartezeit egal.' }
+    };
+
+    let answers = {};
+    let stepIdx = 0;
+
+    function renderStep() {
+      const step = STEPS[stepIdx];
+      const container = document.getElementById('mw-quiz');
+      container.innerHTML = `
+        <div class="mw-step">
+          <div class="mw-step-num">Frage ${stepIdx + 1} / ${STEPS.length}</div>
+          <h3>${step.q}</h3>
+          <div class="mw-choices">
+            ${step.a.map(opt => `<button class="mw-choice" data-val="${opt.val}" type="button">${opt.text}</button>`).join('')}
+          </div>
+        </div>
+      `;
+      container.querySelectorAll('.mw-choice').forEach(btn => {
+        btn.addEventListener('click', () => {
+          answers[step.id] = btn.dataset.val;
+          stepIdx++;
+          if (stepIdx >= STEPS.length) {
+            renderResult();
+          } else {
+            renderStep();
+          }
+        });
+      });
+    }
+
+    function renderResult() {
+      const key = `${answers.speed}/${answers.complexity}`;
+      const rec = MATRIX[key];
+      document.getElementById('mw-quiz').hidden = true;
+      const r = document.getElementById('mw-result');
+      r.hidden = false;
+      r.innerHTML = `
+        <div class="mw-result-card">
+          <div class="mw-result-label">Empfehlung</div>
+          <h2 class="mw-result-model">${rec.model} <span class="mw-result-tag">${rec.tag}</span></h2>
+          <p class="mw-result-reason">${rec.reason}</p>
+          <div class="mw-result-recap">
+            <strong>Deine Antworten:</strong><br>
+            Geschwindigkeit: <em>${STEPS[0].a.find(a => a.val === answers.speed).text}</em><br>
+            Komplexität: <em>${STEPS[1].a.find(a => a.val === answers.complexity).text}</em>
+          </div>
+          <button class="btn" id="mw-reset" type="button">Nochmal</button>
+        </div>
+      `;
+      document.getElementById('mw-reset').addEventListener('click', () => {
+        answers = {}; stepIdx = 0;
+        document.getElementById('mw-result').hidden = true;
+        document.getElementById('mw-quiz').hidden = false;
+        renderStep();
+      });
+    }
+
+    renderStep();
+  </script>
+</body>
+</html>

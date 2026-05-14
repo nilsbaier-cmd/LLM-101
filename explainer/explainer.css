@@ -515,3 +515,249 @@
   color: var(--text-tertiary);
   margin-bottom: var(--space-4);
 }
+
+/* === Explainer E: Phasen-Timeline === */
+.phase-timeline {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: var(--space-2);
+  margin: var(--space-5) 0 var(--space-6) 0;
+  padding-top: var(--space-2);
+}
+.phase-line {
+  position: absolute;
+  top: 20px;
+  left: 8%;
+  right: 8%;
+  height: 2px;
+  background: var(--border);
+  z-index: 0;
+}
+.phase-marker {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  cursor: pointer;
+}
+.phase-dot {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--bg-base);
+  border: 2px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+  font-weight: 700;
+  color: var(--text-tertiary);
+  transition: all 0.3s;
+}
+.phase-marker:hover .phase-dot { border-color: var(--accent); color: var(--accent); }
+.phase-marker.active .phase-dot {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+  transform: scale(1.2);
+}
+.phase-label {
+  font-size: 13px;
+  margin-top: var(--space-2);
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+.phase-marker.active .phase-label { color: var(--accent-strong); font-weight: 600; }
+.phase-date {
+  font-size: 11px;
+  color: var(--text-tertiary);
+  margin-top: 2px;
+}
+.phase-detail-card {
+  background: var(--bg-card);
+  border: 1px solid var(--accent);
+  border-radius: var(--radius-lg);
+  padding: var(--space-5);
+}
+.phase-detail-time {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: var(--accent);
+  font-weight: 700;
+  margin-bottom: var(--space-2);
+}
+.phase-detail-new {
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--text-secondary);
+  margin: var(--space-3) 0;
+}
+.phase-detail-example {
+  background: var(--bg-tint);
+  border-radius: var(--radius-md);
+  padding: var(--space-4);
+  margin-top: var(--space-4);
+}
+.phase-detail-example blockquote {
+  font-style: italic;
+  font-size: 15px;
+  margin: var(--space-2) 0;
+  padding-left: var(--space-3);
+  border-left: 3px solid var(--accent);
+  color: var(--text-primary);
+}
+.phase-detail-note {
+  font-size: 13px;
+  color: var(--text-secondary);
+  margin-top: var(--space-2);
+  line-height: 1.5;
+}
+.phase-conclusion {
+  margin: var(--space-7) 0 var(--space-5) 0;
+  padding: var(--space-5);
+  background: var(--accent-soft);
+  border-left: 4px solid var(--accent);
+  border-radius: var(--radius-md);
+}
+.phase-conclusion h3 { margin-bottom: var(--space-2); color: var(--accent-strong); }
+
+/* === Explainer F: Erlaubt/Verboten === */
+.erlaubt-filters {
+  display: flex;
+  gap: var(--space-2);
+  margin-bottom: var(--space-5);
+  flex-wrap: wrap;
+}
+.erlaubt-filter {
+  font-family: var(--font-sans);
+  font-size: 13px;
+  font-weight: 500;
+  padding: 8px 14px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  color: var(--text-secondary);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.erlaubt-filter:hover { border-color: var(--accent); }
+.erlaubt-filter.active {
+  background: var(--accent-soft);
+  border-color: var(--accent);
+  color: var(--accent-strong);
+}
+.erlaubt-dot {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+.erlaubt-dot.ok { background: var(--success); }
+.erlaubt-dot.warn { background: #f0a830; }
+.erlaubt-dot.no { background: #c84a3a; }
+.erlaubt-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+.erlaubt-item {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  padding: var(--space-4);
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  border-left-width: 4px;
+}
+.erlaubt-item.erlaubt-ok { border-left-color: var(--success); }
+.erlaubt-item.erlaubt-warn { border-left-color: #f0a830; }
+.erlaubt-item.erlaubt-no { border-left-color: #c84a3a; }
+.erlaubt-item .erlaubt-dot { margin-top: 6px; flex-shrink: 0; }
+.erlaubt-task { font-weight: 600; font-size: 15px; margin-bottom: 2px; }
+.erlaubt-reason { font-size: 13px; color: var(--text-secondary); line-height: 1.5; }
+.erlaubt-footer-note {
+  font-size: 13px;
+  color: var(--text-secondary);
+  margin-top: var(--space-5);
+  padding: var(--space-3);
+  background: var(--bg-tint);
+  border-radius: var(--radius-md);
+  border-left: 3px solid var(--accent);
+}
+
+/* === Explainer G: Modellwahl === */
+.mw-step-num {
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: var(--accent);
+  font-weight: 700;
+  margin-bottom: var(--space-2);
+}
+.mw-step h3 {
+  font-size: 22px;
+  margin-bottom: var(--space-5);
+}
+.mw-choices {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+.mw-choice {
+  text-align: left;
+  font-family: var(--font-sans);
+  font-size: 15px;
+  padding: var(--space-4);
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  color: var(--text-primary);
+  cursor: pointer;
+}
+.mw-choice:hover { border-color: var(--accent); background: var(--accent-soft); }
+.mw-result-card {
+  background: var(--bg-card);
+  border: 2px solid var(--accent);
+  border-radius: var(--radius-lg);
+  padding: var(--space-6);
+  text-align: center;
+}
+.mw-result-label {
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: var(--accent);
+  font-weight: 700;
+  margin-bottom: var(--space-2);
+}
+.mw-result-model {
+  font-size: 44px;
+  margin-bottom: var(--space-3);
+  letter-spacing: -0.025em;
+}
+.mw-result-tag {
+  font-size: 18px;
+  color: var(--text-tertiary);
+  font-weight: 400;
+}
+.mw-result-reason {
+  font-size: 15px;
+  color: var(--text-secondary);
+  margin: 0 auto var(--space-5) auto;
+  max-width: 540px;
+  line-height: 1.6;
+}
+.mw-result-recap {
+  background: var(--bg-tint);
+  border-radius: var(--radius-md);
+  padding: var(--space-3);
+  font-size: 13px;
+  text-align: left;
+  color: var(--text-secondary);
+  margin-bottom: var(--space-4);
+}
+.mw-result-recap em { color: var(--text-primary); font-style: normal; }
