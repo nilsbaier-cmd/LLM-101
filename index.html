@@ -293,6 +293,16 @@
           <div class="closing-message" data-step="4">
             Ziel: Verantwortungsvolle Nutzung lernen statt pauschale Vermeidung.
           </div>
+
+          <div class="exercise reflection" data-chapter="verwaltung" data-exercise="r1">
+            <div class="ex-tag">Reflexion</div>
+            <p class="ex-prompt">Welche deiner aktuellen Aufgaben würdest du Claude erlauben — und wo wäre eine Grenze?</p>
+            <textarea class="ex-textarea" placeholder="z. B. Sitzungsprotokolle zusammenfassen ok, Personendaten nicht …"></textarea>
+            <div class="ex-meta">
+              <span class="ex-save-hint">✓ Lokal gespeichert — kein Server.</span>
+              <a class="ex-notes-link" href="meine-notizen.html">→ Meine Notizen (<span class="ex-notes-count">0</span>)</a>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -378,6 +388,18 @@
                 <strong>Modellwahl im Chat</strong> — Im Chatfenster kann das Modell per Dropdown gewechselt werden. AI-Pro/Ultra-User haben Zugang zu Pro. Free-User nutzen Flash (mit Limit), Nano kommt auf Pixel/Android-Geräten zum Einsatz.
               </div>
             </div>
+          </div>
+
+          <div class="exercise quiz" data-chapter="claude" data-exercise="q1"
+               data-feedback="Korrekt — Haiku ist für einfache, klar umrissene Aufgaben das richtige Werkzeug. Sonnet wäre Overkill, Opus erst recht.">
+            <div class="ex-tag">Mini-Quiz</div>
+            <p class="ex-prompt">Welches Modell wählst du für eine schnelle Zusammenfassung von 5 kurzen Dokumenten?</p>
+            <div class="quiz-choices">
+              <button class="quiz-choice" data-correct="false" type="button">Opus 4.7 — Für maximale Qualität auch bei einfachen Aufgaben.</button>
+              <button class="quiz-choice" data-correct="false" type="button">Sonnet 4.6 — Standard für die meisten Alltagsaufgaben.</button>
+              <button class="quiz-choice" data-correct="true" type="button">Haiku 4.5 — Schnellste, günstigste Variante für einfache Aufgaben.</button>
+            </div>
+            <div class="quiz-feedback" hidden></div>
           </div>
         </div>
       </section>
@@ -965,6 +987,18 @@
           </div>
 
           <p><span class="see-more-disabled">→ Live-Simulator folgt im Concept-Explainer A (Phase 7 in Arbeit)</span></p>
+
+          <div class="exercise quiz" data-chapter="context" data-exercise="q2"
+               data-feedback="Genau — und das ist tückisch, weil man es nicht direkt merkt. Die Pflege-Strategien (Reset, Summarize, Progressive) verhindern das.">
+            <div class="ex-tag">Mini-Quiz</div>
+            <p class="ex-prompt">Was passiert, wenn das Context Window voll ist?</p>
+            <div class="quiz-choices">
+              <button class="quiz-choice" data-correct="false" type="button">Claude stoppt und meldet „Context full"</button>
+              <button class="quiz-choice" data-correct="false" type="button">Älteste Nachrichten werden sichtbar entfernt</button>
+              <button class="quiz-choice" data-correct="true" type="button">Antworten werden schlechter, aber nichts geht offensichtlich kaputt</button>
+            </div>
+            <div class="quiz-feedback" hidden></div>
+          </div>
         </div>
       </section>
 
@@ -1069,6 +1103,16 @@
             <li><span><strong>Analyse erhalten</strong> — Muster, Ausreißer, Trends</span></li>
             <li><span><strong>Visualisieren</strong> — Charts, Dashboards, Berichte</span></li>
           </ol>
+
+          <div class="exercise reflection" data-chapter="usecases" data-exercise="r2">
+            <div class="ex-tag">Reflexion</div>
+            <p class="ex-prompt">Welcher der drei Use Cases (Sparringpartner, Ghostwriter, Data Analyst) löst dein größtes aktuelles Problem? Beschreib in einem Satz.</p>
+            <textarea class="ex-textarea" placeholder="z. B. Sparringpartner — habe oft Entscheidungen, die ich noch mal challenge'n könnte …"></textarea>
+            <div class="ex-meta">
+              <span class="ex-save-hint">✓ Lokal gespeichert — kein Server.</span>
+              <a class="ex-notes-link" href="meine-notizen.html">→ Meine Notizen (<span class="ex-notes-count">0</span>)</a>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -1474,6 +1518,38 @@
           </ul>
 
           <div class="demo-footer-note">(Folie dient als Übergang zur Live-Demo im Workshop.)</div>
+
+          <div class="exercise handson" data-chapter="skills" data-exercise="h1">
+            <div class="ex-tag">Hands-on</div>
+            <p class="ex-prompt">Probier diesen Prompt zweimal — einmal im normalen Chat, einmal in einem Project mit dem Beispiel-Glossar.</p>
+            <div class="code-label">Prompt</div>
+            <div class="code-block" data-copy-source><button class="copy-btn">Kopieren</button>Erstelle eine kurze Aktennotiz zu folgendem Sachverhalt:
+[füge deinen Sachverhalt ein].
+
+Format: Datum · Sachverhalt · Beurteilung · Massnahmen.
+Tonfall: intern, präzise, ohne Floskeln.</div>
+            <div class="code-label" style="margin-top: var(--space-4);">Beispiel-Hausstil-Glossar (in Project laden)</div>
+            <div class="code-block" data-copy-source><button class="copy-btn">Kopieren</button>HAUSSTIL — Beispiel-Glossar
+
+TONALITÄT
+- Sach- und Fachton, keine Phrasen
+- Aktivkonstruktionen bevorzugen
+- Anglizismen vermeiden, wenn deutsche Entsprechung üblich
+
+ANREDE
+- Intern: kein Gruß, direkter Einstieg
+- Extern: Sehr geehrte Damen und Herren
+
+FORMAT
+- Datum: TT. Monat JJJJ
+- Aktennotiz-Struktur: Sachverhalt · Beurteilung · Massnahmen
+
+VERBOTEN
+- "Wir freuen uns über"
+- "darf ich Sie kurz stören"
+- Pauschalfloskeln wie "im Rahmen von"</div>
+            <p class="ex-hint"><strong>Was du erwarten kannst:</strong> Der reine Chat-Output trifft das Format, aber nicht deinen Tonfall. Im Project mit Glossar landen beide — der Unterschied wird ohne Wiederholungsanweisungen sichtbar.</p>
+          </div>
         </div>
       </section>
 

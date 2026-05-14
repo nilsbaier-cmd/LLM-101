@@ -1801,3 +1801,120 @@ body[data-llm="off"] [data-tab-panel="claude"] {
   display: block !important;
   visibility: visible !important;
 }
+
+/* Übungs-Komponenten */
+.exercise {
+  background: var(--bg-tint);
+  padding: var(--space-5);
+  border-radius: var(--radius-lg);
+  margin-top: var(--space-6);
+  border: 1px solid var(--border);
+}
+.ex-tag {
+  display: inline-block;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: var(--accent);
+  font-weight: 700;
+  padding: 4px 10px;
+  border: 1px solid var(--accent);
+  border-radius: var(--radius-sm);
+  margin-bottom: var(--space-3);
+}
+.ex-prompt {
+  font-size: 16px;
+  font-weight: 500;
+  margin-bottom: var(--space-3);
+  line-height: 1.5;
+}
+.ex-textarea {
+  width: 100%;
+  min-height: 80px;
+  padding: var(--space-3);
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  font-family: var(--font-sans);
+  font-size: 14px;
+  color: var(--text-primary);
+  resize: vertical;
+}
+.ex-textarea:focus {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-color: var(--accent);
+}
+.ex-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: var(--space-2);
+  font-size: 12px;
+  color: var(--text-tertiary);
+}
+.ex-notes-link {
+  color: var(--accent);
+  text-decoration: none;
+  font-weight: 500;
+}
+.ex-notes-link:hover { text-decoration: underline; }
+
+.ex-hint {
+  font-size: 13px;
+  color: var(--text-secondary);
+  margin-top: var(--space-3);
+  padding: var(--space-3);
+  background: var(--bg-card);
+  border-radius: var(--radius-md);
+  border-left: 3px solid var(--accent);
+  line-height: 1.5;
+}
+.ex-hint strong { color: var(--text-primary); }
+
+.quiz-choices {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  margin-top: var(--space-3);
+}
+.quiz-choice {
+  font-family: var(--font-sans);
+  font-size: 14px;
+  text-align: left;
+  padding: var(--space-3) var(--space-4);
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  color: var(--text-primary);
+  cursor: pointer;
+  transition: border-color 0.15s, background 0.15s;
+}
+.quiz-choice:hover:not(:disabled) {
+  border-color: var(--accent);
+}
+.quiz-choice.is-correct {
+  background: var(--success-soft);
+  border-color: var(--success);
+  color: var(--text-primary);
+}
+.quiz-choice.is-wrong {
+  background: rgba(220, 75, 60, 0.08);
+  border-color: #b35f44;
+}
+.quiz-feedback {
+  margin-top: var(--space-3);
+  padding: var(--space-3);
+  border-radius: var(--radius-md);
+  font-size: 13px;
+  background: var(--success-soft);
+  border-left: 3px solid var(--success);
+  color: var(--text-primary);
+}
+.quiz-feedback.is-wrong {
+  background: rgba(220, 75, 60, 0.08);
+  border-left-color: #b35f44;
+}
+
+/* Workshop-Mode (Übungen aus): alle Übungen verstecken */
+body[data-exercises="off"] .exercise { display: none; }

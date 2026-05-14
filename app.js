@@ -3,10 +3,12 @@ import { Storage } from './lib/storage.js';
 import { ModeManager } from './lib/mode.js';
 import { icon } from './lib/icons.js';
 import { initTabs } from './lib/tabs.js';
+import { Exercises } from './lib/exercises.js';
 
 const NS = 'srege-praesentation-v1';
 const storage = new Storage(NS);
 const mode = new ModeManager(storage);
+const exercises = new Exercises(storage);
 
 // Theme-Buttons mit Icons befüllen
 document.querySelector('[data-mode="theme"][data-value="light"]').innerHTML = icon('sun');
@@ -19,6 +21,71 @@ document.querySelectorAll('[data-icon]').forEach(el => {
 
 // LLM-Tabs initialisieren (nach Icon-Resolver, vor TOC-Aufbau)
 initTabs(document.body);
+
+// Übungs-Komponenten initialisieren
+function initExercises(root = document) {
+  // Reflexionen: Restore + onInput-Save
+  root.querySelectorAll('.exercise.reflection textarea').forEach(ta => {
+    const ex = ta.closest('.exercise');
+    const chapter = ex.dataset.chapter;
+    const exId = ex.dataset.exercise;
+    const existing = exercises.getReflection(chapter, exId);
+    if (existing) ta.value = existing.antwort;
+    ta.addEventListener('input', () => {
+      exercises.saveReflection(chapter, exId, ta.value);
+      updateNotesCount();
+    });
+  });
+
+  // Copy-Buttons
+  root.querySelectorAll('.code-block .copy-btn').forEach(btn => {
+    btn.addEventListener('click', async () => {
+      const text = btn.parentElement.textContent.replace(/^Kopieren\s*/, '').trim();
+      try {
+        await navigator.clipboard.writeText(text);
+        btn.textContent = '✓ Kopiert';
+        setTimeout(() => btn.textContent = 'Kopieren', 1500);
+      } catch (e) {
+        btn.textContent = '✗ Fehler';
+        setTimeout(() => btn.textContent = 'Kopieren', 1500);
+      }
+    });
+  });
+
+  // Quiz-Choices
+  root.querySelectorAll('.quiz-choice').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const ex = btn.closest('.exercise');
+      const correct = btn.dataset.correct === 'true';
+      btn.classList.add(correct ? 'is-correct' : 'is-wrong');
+      ex.querySelectorAll('.quiz-choice').forEach(b => b.disabled = true);
+      const fb = ex.querySelector('.quiz-feedback');
+      const feedback = correct
+        ? (ex.dataset.feedback || '✓ Korrekt.')
+        : '✗ Falsche Antwort. Schau dir die richtige Auflösung an (grün markiert).';
+      if (!correct) {
+        const right = ex.querySelector('.quiz-choice[data-correct="true"]');
+        if (right) right.classList.add('is-correct');
+      }
+      fb.textContent = feedback;
+      fb.classList.toggle('is-wrong', !correct);
+      fb.hidden = false;
+      exercises.recordQuizAttempt(ex.dataset.chapter, ex.dataset.exercise, {
+        choice: btn.textContent.trim(),
+        correct
+      });
+    });
+  });
+
+  updateNotesCount();
+}
+
+function updateNotesCount() {
+  const n = exercises.countReflections();
+  document.querySelectorAll('.ex-notes-count').forEach(el => el.textContent = n);
+}
+
+initExercises();
 
 // Toggle-Verkabelung
 document.querySelectorAll('.toggle').forEach(btn => {
