@@ -717,39 +717,10 @@
         <div class="slide-inner">
           <div class="chapter-label">Kapitel 6 — Skills</div>
           <h2>Was ist ein Skill?</h2>
-
-          <div class="skill-arch-section">
-            <div class="skill-arch-text">
-              <p><strong>Was ist ein Skill?</strong> Ein Skill ist ein Ordner mit Instruktionen (primär eine SKILL.md-Datei), der Claude beibringt, wie bestimmte Aufgaben oder Workflows zu erledigen sind.</p>
-              <p><strong>Testing.</strong> Drei Ebenen — Trigger-Tests (lädt der Skill zum richtigen Zeitpunkt?), Funktionale Tests (stimmt der Output?) und Performance-Vergleiche (besser als ohne Skill?).</p>
-              <p><strong>Distribution.</strong> Skills werden als ZIP über Claude.ai hochgeladen oder im Claude Code Skills-Verzeichnis abgelegt.</p>
-            </div>
-
-            <div class="skill-stack">
-              <div class="skill-stack-header">Skill-Architektur: progressive disclosure — Drei Ebenen minimieren Token-Verbrauch bei maximaler Expertise</div>
-
-              <div class="skill-layer skill-layer-1">
-                <div class="skill-layer-title">Ebene 1 — YAML frontmatter</div>
-                <div class="skill-layer-sub">Immer im System-Prompt geladen</div>
-                <div class="skill-layer-content">
-                  name (kebab-case) · description (Was + Wann) · metadata (author, version…)
-                </div>
-              </div>
-              <div class="skill-layer-arrow">↓ Skill relevant? → laden</div>
-
-              <div class="skill-layer skill-layer-2">
-                <div class="skill-layer-title">Ebene 2 — SKILL.md body</div>
-                <div class="skill-layer-content">Vollständige Instruktionen, Steps, Beispiele, Troubleshooting</div>
-              </div>
-              <div class="skill-layer-arrow">↓ Bei Bedarf navigieren</div>
-
-              <div class="skill-layer skill-layer-3">
-                <div class="skill-layer-title">Ebene 3 — Verlinkte Dateien</div>
-                <div class="skill-layer-content">scripts/ · references/ · assets/</div>
-              </div>
-            </div>
+          <p class="lead">Ein Skill ist ein Ordner mit Instruktionen, primär eine <code>SKILL.md</code>-Datei. Claude lädt ihn automatisch, wenn die Aufgabe zur description passt.</p>
+          <div class="skill-anatomy-frame">
+            <img src="assets/skill-anatomy.svg" alt="Aufbau einer SKILL-Datei — Ordner-Struktur, SKILL.md, dreistufiges Ladesystem" class="skill-anatomy-img">
           </div>
-
           <div class="explainer-hint">→ Interaktiver Explainer mit Token-Counter: <a href="explainer/c-skills-architektur.html">Concept-Explainer C — Skills Progressive Disclosure</a></div>
         </div>
       </section>
@@ -757,46 +728,45 @@
       <section class="slide" data-slide-id="skills-2" data-chapter="skills">
         <div class="slide-inner">
           <div class="chapter-label">Kapitel 6 — Skills</div>
-          <h2>Skills entwickeln & verwenden</h2>
+          <h2>Skill-Lifecycle</h2>
+          <p class="lead">Skills entstehen iterativ — keine einmalige Erstellung, sondern ein fortlaufender Loop aus Verstehen, Bauen, Testen, Verbessern.</p>
 
-          <div class="uc-section-label">Entwicklungs-Lifecycle</div>
-          <div class="lifecycle-flow">
-            <div class="lifecycle-step"><strong>Planen</strong><small>Use Cases</small></div>
-            <div class="lifecycle-arrow">→</div>
-            <div class="lifecycle-step"><strong>Bauen</strong><small>SKILL.md</small></div>
-            <div class="lifecycle-arrow">→</div>
-            <div class="lifecycle-step"><strong>Testen</strong><small>3 Testebenen</small></div>
-            <div class="lifecycle-arrow">→</div>
-            <div class="lifecycle-step"><strong>Ship</strong><small>&nbsp;</small></div>
-          </div>
-          <div class="lifecycle-loopback">⤴ Iterieren basierend auf Feedback</div>
+          <div class="lifecycle-wheel">
+            <svg viewBox="0 0 420 420" xmlns="http://www.w3.org/2000/svg" class="lifecycle-svg" aria-hidden="true">
+              <defs>
+                <marker id="lifecycle-arrowhead" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+                  <path d="M0,0 L10,5 L0,10 Z" fill="var(--accent)"/>
+                </marker>
+              </defs>
+              <circle cx="210" cy="210" r="62" fill="var(--accent-soft)" stroke="var(--accent)" stroke-width="2"/>
+              <text x="210" y="205" text-anchor="middle" font-size="13" font-weight="700" fill="var(--accent-strong)" font-family="var(--font-sans)">ITERATION</text>
+              <text x="210" y="225" text-anchor="middle" font-size="11" fill="var(--text-secondary)" font-family="var(--font-sans)">Skills wachsen</text>
 
-          <div class="uc-section-label">Fünf Workflow-Patterns</div>
-          <div class="patterns-grid">
-            <div class="pattern-card">
-              <div class="pattern-num">1</div>
-              <strong>Sequentiell</strong>
-              <p>Schritte in Reihenfolge</p>
+              <path d="M 290 130 A 130 130 0 0 1 290 290" fill="none" stroke="var(--accent)" stroke-width="2.5" marker-end="url(#lifecycle-arrowhead)" stroke-linecap="round"/>
+              <path d="M 290 290 A 130 130 0 0 1 130 290" fill="none" stroke="var(--accent)" stroke-width="2.5" marker-end="url(#lifecycle-arrowhead)" stroke-linecap="round"/>
+              <path d="M 130 290 A 130 130 0 0 1 130 130" fill="none" stroke="var(--accent)" stroke-width="2.5" marker-end="url(#lifecycle-arrowhead)" stroke-linecap="round"/>
+              <path d="M 130 130 A 130 130 0 0 1 290 130" fill="none" stroke="var(--accent)" stroke-width="2.5" marker-end="url(#lifecycle-arrowhead)" stroke-linecap="round"/>
+            </svg>
+
+            <div class="lifecycle-phase lifecycle-phase-top">
+              <div class="lifecycle-phase-num">1</div>
+              <div class="lifecycle-phase-name">Planen</div>
+              <div class="lifecycle-phase-desc">Welche Aufgabe wiederholt sich? Welcher Output wird gebraucht?</div>
             </div>
-            <div class="pattern-card">
-              <div class="pattern-num">2</div>
-              <strong>Multi-MCP</strong>
-              <p>Über Services hinweg</p>
+            <div class="lifecycle-phase lifecycle-phase-right">
+              <div class="lifecycle-phase-num">2</div>
+              <div class="lifecycle-phase-name">Bauen</div>
+              <div class="lifecycle-phase-desc"><code>SKILL.md</code> mit klarer description, Anweisungen, Beispielen.</div>
             </div>
-            <div class="pattern-card">
-              <div class="pattern-num">3</div>
-              <strong>Iterativ</strong>
-              <p>Qualität durch Schleifen</p>
+            <div class="lifecycle-phase lifecycle-phase-bottom">
+              <div class="lifecycle-phase-num">3</div>
+              <div class="lifecycle-phase-name">Testen</div>
+              <div class="lifecycle-phase-desc">Lädt der Skill zum richtigen Zeitpunkt? Stimmt der Output?</div>
             </div>
-            <div class="pattern-card">
-              <div class="pattern-num">4</div>
-              <strong>Context-aware</strong>
-              <p>Tool je nach Kontext wählen</p>
-            </div>
-            <div class="pattern-card">
-              <div class="pattern-num">5</div>
-              <strong>Domain-Wissen</strong>
-              <p>Expertise eingebettet</p>
+            <div class="lifecycle-phase lifecycle-phase-left">
+              <div class="lifecycle-phase-num">4</div>
+              <div class="lifecycle-phase-name">Verbessern</div>
+              <div class="lifecycle-phase-desc">Feedback einarbeiten, description schärfen, Beispiele ergänzen.</div>
             </div>
           </div>
         </div>
@@ -876,86 +846,123 @@
         </div>
       </section>
 
-      <section class="slide" data-slide-id="next-2" data-chapter="next-level">
+      <section class="slide" data-slide-id="next-2" data-chapter="next-level" data-stepped>
         <div class="slide-inner">
           <div class="chapter-label">Kapitel 7 — Next Level</div>
           <h2>GitHub 101</h2>
-
-          <div class="git-glossary-intro">
-            <strong>Repository (Repo)</strong> — Der gemeinsame Projektordner in der Cloud. Enthält alle Dateien, die gesamte Änderungshistorie und ist für das Team zugänglich.
-          </div>
+          <p class="lead">Versionsverwaltung in vier Schritten — von der Idee zum geprüften Merge in den Hauptzweig.</p>
 
           <div class="git-flow">
-            <pre>main (Hauptversion) &#9679;&#9472;&#9472;&#9472;&#9679;&#9472;&#9472;&#9472;&#9679;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9679;  &#8592;Merge
-                                \           /
-                feature-branch   &#9679;&#9472;&#9472;&#9472;&#9679;&#9472;&#9472;&#9472;&#9679; &#8592;Pull Request
-                                 1   2   3</pre>
-            <div class="git-flow-steps">
-              <div class="git-flow-step"><span class="step-num">1</span><strong>Branch erstellen</strong>Arbeitskopie abzweigen</div>
-              <div class="git-flow-step"><span class="step-num">2</span><strong>Commits machen</strong>Änderungen speichern</div>
-              <div class="git-flow-step"><span class="step-num">3</span><strong>Pull Request öffnen</strong>Team um Review bitten</div>
-              <div class="git-flow-step"><span class="step-num">4</span><strong>Merge</strong>In Hauptversion übernehmen</div>
-            </div>
+            <svg viewBox="0 0 900 280" xmlns="http://www.w3.org/2000/svg" class="git-flow-svg" aria-hidden="true">
+              <line x1="40" y1="60" x2="860" y2="60" stroke="var(--success)" stroke-width="3" stroke-linecap="round"/>
+              <circle cx="120" cy="60" r="8" fill="var(--success)"/>
+              <circle cx="240" cy="60" r="8" fill="var(--success)"/>
+              <text x="80" y="40" font-size="13" font-weight="600" fill="var(--success)" font-family="var(--font-sans)">main</text>
+
+              <g data-step="1">
+                <path d="M 240 60 Q 280 140, 340 200 L 580 200" fill="none" stroke="var(--accent)" stroke-width="3" stroke-linecap="round"/>
+                <text x="350" y="190" font-size="13" font-weight="600" fill="var(--accent)" font-family="var(--font-sans)">feature-branch</text>
+              </g>
+
+              <g data-step="2">
+                <circle cx="380" cy="200" r="8" fill="var(--accent)"/>
+                <circle cx="480" cy="200" r="8" fill="var(--accent)"/>
+                <text x="380" y="232" font-size="11" fill="var(--text-tertiary)" text-anchor="middle" font-family="var(--font-sans)">Commit</text>
+                <text x="480" y="232" font-size="11" fill="var(--text-tertiary)" text-anchor="middle" font-family="var(--font-sans)">Commit</text>
+              </g>
+
+              <g data-step="3">
+                <rect x="540" y="170" width="100" height="32" rx="6" fill="var(--accent-soft)" stroke="var(--accent)" stroke-width="2"/>
+                <text x="590" y="190" font-size="12" font-weight="600" fill="var(--accent-strong)" text-anchor="middle" font-family="var(--font-sans)">Pull Request</text>
+              </g>
+
+              <g data-step="4">
+                <path d="M 640 200 Q 700 140, 760 60" fill="none" stroke="var(--success)" stroke-width="3" stroke-linecap="round" stroke-dasharray="6 4"/>
+                <circle cx="780" cy="60" r="10" fill="var(--success)" stroke="var(--bg-base)" stroke-width="2"/>
+                <text x="780" y="40" font-size="13" font-weight="700" fill="var(--success)" text-anchor="middle" font-family="var(--font-sans)">Merge!</text>
+              </g>
+            </svg>
           </div>
 
-          <div class="git-terms">
-            <div class="git-term"><strong>Main Branch</strong><p>Die offizielle Hauptversion des Projekts. Hier landen nur geprüfte Änderungen.</p></div>
-            <div class="git-term"><strong>Branch</strong><p>Eine Arbeitskopie, in der du Änderungen machst, ohne die Hauptversion zu berühren.</p></div>
-            <div class="git-term"><strong>Commit</strong><p>Ein gespeicherter Zwischenstand. Wie „Speichern unter" mit Kommentar.</p></div>
-            <div class="git-term"><strong>Pull Request (PR)</strong><p>„Bitte schaut euch meine Änderung an." Das Team prüft, bevor es übernommen wird.</p></div>
-            <div class="git-term"><strong>Merge</strong><p>Änderungen aus dem Branch werden in die Hauptversion (main) übernommen.</p></div>
-            <div class="git-term"><strong>Clone / Pull / Push</strong><p>Clone = Repo herunterladen. Pull = Updates holen. Push = eigene Änderungen hochladen.</p></div>
+          <div class="git-glossary">
+            <div class="git-term">
+              <span class="icon" data-icon="git-branch"></span>
+              <div class="git-term-name">Main Branch</div>
+              <div class="git-term-desc">Die offizielle Hauptversion des Projekts. Hier landen nur geprüfte Änderungen.</div>
+            </div>
+            <div class="git-term">
+              <span class="icon" data-icon="git-branch"></span>
+              <div class="git-term-name">Branch</div>
+              <div class="git-term-desc">Eine Arbeitskopie, in der du Änderungen machst, ohne die Hauptversion zu berühren.</div>
+            </div>
+            <div class="git-term">
+              <span class="icon" data-icon="check"></span>
+              <div class="git-term-name">Commit</div>
+              <div class="git-term-desc">Ein gespeicherter Zwischenstand. Wie „Speichern unter" mit Kommentar.</div>
+            </div>
+            <div class="git-term">
+              <span class="icon" data-icon="messages-square"></span>
+              <div class="git-term-name">Pull Request (PR)</div>
+              <div class="git-term-desc">„Bitte schaut euch meine Änderung an." Team prüft, bevor es übernommen wird.</div>
+            </div>
+            <div class="git-term">
+              <span class="icon" data-icon="layers"></span>
+              <div class="git-term-name">Merge</div>
+              <div class="git-term-desc">Änderungen aus dem Branch werden in die Hauptversion (main) übernommen.</div>
+            </div>
+            <div class="git-term">
+              <span class="icon" data-icon="rotate-ccw"></span>
+              <div class="git-term-name">Clone / Pull / Push</div>
+              <div class="git-term-desc">Clone = Repo herunterladen. Pull = Updates holen. Push = eigene Änderungen hochladen.</div>
+            </div>
           </div>
         </div>
       </section>
 
-      <section class="slide" data-slide-id="next-3" data-chapter="next-level">
+      <section class="slide" data-slide-id="next-3" data-chapter="next-level" data-stepped>
         <div class="slide-inner">
           <div class="chapter-label">Kapitel 7 — Next Level</div>
-          <h2>Claude Code & Cowork</h2>
+          <h2>Claude überall</h2>
+          <p class="lead">Vier Plattformen, derselbe Claude. Je nach Aufgabe und Kontext die richtige Wahl.</p>
 
-          <div class="code-variants">
-            <div class="code-variant">
-              <div class="code-variant-symbol">&gt;_</div>
-              <h4>CLI (Terminal)</h4>
-              <p>Das Original. Lokal auf deinem Rechner. Volle Kontrolle.</p>
-              <span class="code-variant-pill-bottom">npm install</span>
+          <div class="platforms-grid">
+            <div class="platform-card" data-step="1">
+              <div class="platform-logo">
+                <span class="icon platform-icon" data-icon="messages-square"></span>
+              </div>
+              <div class="platform-name">Web</div>
+              <div class="platform-tag">claude.ai</div>
+              <div class="platform-desc">Browser-basierte Chat-Oberfläche. Kein Setup, sofort einsatzbereit. Projects, Artifacts, Deep Research.</div>
             </div>
-            <div class="code-variant featured">
-              <span class="code-variant-pill-top">Kurs-Fokus</span>
-              <div class="code-variant-symbol">WEB</div>
-              <h4>Web (Browser)</h4>
-              <p>Im Browser unter claude.ai/code. Kein Setup. Cloud-Sandbox.</p>
-              <span class="code-variant-pill-bottom">Pro / Max</span>
+            <div class="platform-card" data-step="2">
+              <div class="platform-logo">
+                <span class="icon platform-icon" data-icon="sparkles"></span>
+              </div>
+              <div class="platform-name">Lokale App</div>
+              <div class="platform-tag">Claude für Mac · Cowork · Claude Code</div>
+              <div class="platform-desc">Native macOS-App mit Datei-Zugriff, Cowork-Workflows und integriertem Claude Code.</div>
             </div>
-            <div class="code-variant">
-              <div class="code-variant-symbol">VS</div>
-              <h4>VS Code</h4>
-              <p>Native Extension. Claude direkt in deiner IDE.</p>
-              <span class="code-variant-pill-bottom">Extension</span>
+            <div class="platform-card" data-step="3">
+              <div class="platform-logo">
+                <span class="icon platform-icon" data-icon="code"></span>
+              </div>
+              <div class="platform-name">CLI</div>
+              <div class="platform-tag">Terminal · Claude Code</div>
+              <div class="platform-desc">Claude direkt in der Shell. Volle lokale Kontrolle, Subagents, Git-Integration, MCP-Server.</div>
             </div>
-            <div class="code-variant">
-              <div class="code-variant-symbol">iOS</div>
-              <h4>Mobile</h4>
-              <p>Claude Code in der iOS-App. Coding unterwegs.</p>
-              <span class="code-variant-pill-bottom">Preview</span>
+            <div class="platform-card" data-step="4">
+              <div class="platform-logo">
+                <span class="icon platform-icon" data-icon="zap"></span>
+              </div>
+              <div class="platform-name">Mobile</div>
+              <div class="platform-tag">iOS · Android</div>
+              <div class="platform-desc">Claude unterwegs. Lesen, schnelle Fragen, Sprach-Eingabe.</div>
             </div>
           </div>
 
-          <div class="code-info-blocks">
-            <div class="code-info-block">
-              <h4>Schritt 1 — GitHub verbinden</h4>
-              <p>Unter claude.ai/code verknüpfst du dein GitHub-Konto. Claude erhält Lesezugriff auf deine Repositories. Du wählst aus, welche Repos Claude sehen darf.</p>
-            </div>
-            <div class="code-info-block">
-              <h4>Was passiert technisch?</h4>
-              <p>Authentifizierung via GitHub OAuth. Claude kann nur auf autorisierte Repos zugreifen — über einen sicheren Proxy, nie direkt auf deine Credentials.</p>
-            </div>
-            <div class="code-info-block" style="grid-column: span 2;">
-              <h4>Web vs. CLI — wann was?</h4>
-              <p>Die Web-Version ist ideal, wenn du schnell einen Task delegieren willst, ohne lokales Setup. Mehrere Repos parallel bearbeiten, Bug-Backlogs abarbeiten, oder Routineaufgaben auslagern. Das CLI hingegen bietet volle lokale Kontrolle, Zugriff auf dein Dateisystem und Integration mit deiner bestehenden Toolchain. Beide ergänzen sich — Web für Delegation, CLI für tiefe lokale Arbeit.</p>
-            </div>
-          </div>
+          <p class="platform-future-note">
+            <em>Später ergänzbar: ChatGPT · Codex · Gemini · Antigravity (offizielle Logos pflegen wir wenn verfügbar).</em>
+          </p>
         </div>
       </section>
     </div>
