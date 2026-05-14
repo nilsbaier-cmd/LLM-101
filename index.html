@@ -3,10 +3,13 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
   <title>Einführung Claude</title>
-  <link rel="stylesheet" href="tokens.css">
-  <link rel="stylesheet" href="app.css">
-  <link rel="stylesheet" href="presentation.css">
+  <link rel="stylesheet" href="tokens.css?v=2026-05-15">
+  <link rel="stylesheet" href="app.css?v=2026-05-15">
+  <link rel="stylesheet" href="presentation.css?v=2026-05-15">
 </head>
 <body data-layout="slide">
   <header class="app-header">
@@ -811,54 +814,6 @@
         <div class="slide-inner">
           <div class="chapter-label">Kapitel 3 — Claude 101</div>
           <h2>Abos &amp; Preise</h2>
-          <div class="pricing-grid">
-            <div class="pricing-card">
-              <div class="plan-name">Free</div>
-              <div class="plan-price">$0</div>
-              <div class="plan-period">kostenlos</div>
-              <ul>
-                <li>Chat auf Web, iOS, Android, Desktop</li>
-                <li>Websuche &amp; Memory</li>
-                <li>Code &amp; Daten visualisieren</li>
-                <li>Dateien erstellen, Code ausführen</li>
-                <li>MCP-Connectors &amp; Extended Thinking</li>
-              </ul>
-            </div>
-            <div class="pricing-card featured">
-              <span class="model-pill">Beliebtestes</span>
-              <div class="plan-name">Pro</div>
-              <div class="plan-price">$20</div>
-              <div class="plan-period">pro Monat (jährlich $17)</div>
-              <ul>
-                <li>Alles aus Free, plus:</li>
-                <li>Mehr Nutzung &amp; alle Modelle (Opus)</li>
-                <li>Claude Code &amp; Claude Cowork</li>
-                <li>Unbegrenzte Projekte &amp; Research</li>
-                <li>Claude für Microsoft 365 &amp; Outlook</li>
-              </ul>
-            </div>
-            <div class="pricing-card">
-              <div class="plan-name">Max</div>
-              <div class="plan-price">ab $100</div>
-              <div class="plan-period">pro Monat</div>
-              <ul>
-                <li>Alles aus Pro, plus:</li>
-                <li>5× oder 20× mehr Nutzung</li>
-                <li>Höhere Output-Limits</li>
-                <li>Early Access zu neuen Features</li>
-                <li>Priority-Zugang bei Lastspitzen</li>
-              </ul>
-            </div>
-          </div>
-          <p class="see-more">Aktuelle Preise: <a href="https://claude.com/pricing" target="_blank" rel="noopener">claude.com/pricing</a></p>
-        </div>
-      </section>
-
-      <!-- Kapitel 4 — Context & Pflege -->
-      <section class="slide" data-slide-id="context-1" data-chapter="context">
-        <div class="slide-inner">
-          <div class="chapter-label">Kapitel 4 — Kontext & Pflege</div>
-          <h2>Context Window</h2>
 
           <div class="llm-tabs" data-llm-tabs data-sync-group="llm">
             <nav class="llm-tabs-nav">
@@ -868,87 +823,166 @@
             </nav>
 
             <div data-tab-panel="claude" class="active">
-              <div class="consequence-grid">
-                <div class="card">
-                  <div class="code-label">Strategie A — alles rein</div>
-                  <ul class="ctx-list">
-                    <li><span class="icon" data-icon="paperclip"></span>12 Anhänge</li>
-                    <li><span class="icon" data-icon="file-text"></span>8 Vorab-Anweisungen</li>
-                    <li><span class="icon" data-icon="message-square"></span>Chat-Verlauf 50+ Nachrichten</li>
+              <div class="pricing-grid">
+                <div class="pricing-card">
+                  <div class="plan-name">Free</div>
+                  <div class="plan-price">$0</div>
+                  <div class="plan-period">kostenlos</div>
+                  <ul>
+                    <li>Chat auf Web, iOS, Android, Desktop</li>
+                    <li>Websuche &amp; Memory</li>
+                    <li>Code &amp; Daten visualisieren</li>
+                    <li>Dateien erstellen, Code ausführen</li>
+                    <li>MCP-Connectors &amp; Extended Thinking</li>
                   </ul>
-                  <hr>
-                  <p><strong>Frage:</strong> Was war Schritt 3?</p>
-                  <p class="answer answer-bad"><strong>Antwort:</strong> ✗ erfunden / falsch</p>
                 </div>
-
-                <div class="card">
-                  <div class="code-label">Strategie B — progressiv</div>
-                  <ul class="ctx-list">
-                    <li><span class="icon" data-icon="file-text"></span>Kernkontext (kurz)</li>
-                    <li><span class="icon" data-icon="paperclip"></span>nur relevanter Anhang</li>
-                    <li><span class="icon" data-icon="message-square"></span>letzte 5 Nachrichten</li>
+                <div class="pricing-card featured">
+                  <span class="model-pill">Beliebtestes</span>
+                  <div class="plan-name">Pro</div>
+                  <div class="plan-price">$20</div>
+                  <div class="plan-period">pro Monat (jährlich $17)</div>
+                  <ul>
+                    <li>Alles aus Free, plus:</li>
+                    <li>Mehr Nutzung &amp; alle Modelle (Opus)</li>
+                    <li>Claude Code &amp; Claude Cowork</li>
+                    <li>Unbegrenzte Projekte &amp; Research</li>
+                    <li>Claude für Microsoft 365 &amp; Outlook</li>
                   </ul>
-                  <hr>
-                  <p><strong>Frage:</strong> Was war Schritt 3?</p>
-                  <p class="answer answer-good"><strong>Antwort:</strong> ✓ korrekt</p>
+                </div>
+                <div class="pricing-card">
+                  <div class="plan-name">Max</div>
+                  <div class="plan-price">ab $100</div>
+                  <div class="plan-period">pro Monat</div>
+                  <ul>
+                    <li>Alles aus Pro, plus:</li>
+                    <li>5× oder 20× mehr Nutzung</li>
+                    <li>Höhere Output-Limits</li>
+                    <li>Early Access zu neuen Features</li>
+                    <li>Priority-Zugang bei Lastspitzen</li>
+                  </ul>
                 </div>
               </div>
+              <p class="see-more">Aktuelle Preise: <a href="https://claude.com/pricing" target="_blank" rel="noopener">claude.com/pricing</a></p>
             </div>
 
             <div data-tab-panel="chatgpt" hidden>
-              <div class="consequence-grid">
-                <div class="card">
-                  <div class="code-label">Strategie A — alles rein</div>
-                  <ul class="ctx-list">
-                    <li><span class="icon" data-icon="paperclip"></span>12 Datei-Uploads</li>
-                    <li><span class="icon" data-icon="file-text"></span>8 Custom Instructions</li>
-                    <li><span class="icon" data-icon="message-square"></span>Chat-Verlauf 50+ Nachrichten</li>
+              <div class="pricing-grid">
+                <div class="pricing-card">
+                  <div class="plan-name">Free</div>
+                  <div class="plan-price">$0</div>
+                  <div class="plan-period">kostenlos</div>
+                  <ul>
+                    <li>Zugriff auf GPT-5 mit Standard-Limits</li>
+                    <li>Begrenzte Datei-Uploads &amp; Bildanalyse</li>
+                    <li>Websuche &amp; Memory (Basis)</li>
+                    <li>Custom GPTs nutzen</li>
+                    <li>GPTs-Store-Zugriff</li>
                   </ul>
-                  <hr>
-                  <p><strong>Frage:</strong> Was war Schritt 3?</p>
-                  <p class="answer answer-bad"><strong>Antwort:</strong> ✗ erfunden / falsch</p>
                 </div>
-
-                <div class="card">
-                  <div class="code-label">Strategie B — progressiv</div>
-                  <ul class="ctx-list">
-                    <li><span class="icon" data-icon="file-text"></span>Kernkontext (kurz)</li>
-                    <li><span class="icon" data-icon="paperclip"></span>nur relevanter Datei-Upload</li>
-                    <li><span class="icon" data-icon="message-square"></span>letzte 5 Nachrichten</li>
+                <div class="pricing-card featured">
+                  <span class="model-pill">Beliebtestes</span>
+                  <div class="plan-name">Plus</div>
+                  <div class="plan-price">$20</div>
+                  <div class="plan-period">pro Monat</div>
+                  <ul>
+                    <li>Alles aus Free, plus:</li>
+                    <li>Höhere Limits auf GPT-5 &amp; Reasoning-Modelle</li>
+                    <li>Erweiterter Memory &amp; Custom Instructions</li>
+                    <li>Eigene GPTs erstellen</li>
+                    <li>Sora-Videogenerierung (limitiert)</li>
                   </ul>
-                  <hr>
-                  <p><strong>Frage:</strong> Was war Schritt 3?</p>
-                  <p class="answer answer-good"><strong>Antwort:</strong> ✓ korrekt</p>
+                </div>
+                <div class="pricing-card">
+                  <div class="plan-name">Pro</div>
+                  <div class="plan-price">$200</div>
+                  <div class="plan-period">pro Monat</div>
+                  <ul>
+                    <li>Alles aus Plus, plus:</li>
+                    <li>Unbegrenzter Zugang zu allen Modellen</li>
+                    <li>GPT-5 Pro (längeres Reasoning)</li>
+                    <li>Operator &amp; Deep Research priorisiert</li>
+                    <li>Erweiterte Sora-Limits</li>
+                  </ul>
                 </div>
               </div>
+              <p class="see-more">Aktuelle Preise: <a href="https://openai.com/chatgpt/pricing/" target="_blank" rel="noopener">openai.com/chatgpt/pricing</a></p>
             </div>
 
             <div data-tab-panel="gemini" hidden>
-              <div class="consequence-grid">
-                <div class="card">
-                  <div class="code-label">Strategie A — alles rein</div>
-                  <ul class="ctx-list">
-                    <li><span class="icon" data-icon="paperclip"></span>12 Datei-Uploads</li>
-                    <li><span class="icon" data-icon="file-text"></span>8 Personalization-Einträge</li>
-                    <li><span class="icon" data-icon="message-square"></span>Chat-Verlauf 50+ Nachrichten</li>
+              <div class="pricing-grid">
+                <div class="pricing-card">
+                  <div class="plan-name">Free</div>
+                  <div class="plan-price">$0</div>
+                  <div class="plan-period">kostenlos</div>
+                  <ul>
+                    <li>Zugriff auf Gemini mit Standard-Limits</li>
+                    <li>Integration in Google-Suche</li>
+                    <li>Basis-Bildgenerierung</li>
+                    <li>Saved Info &amp; Personalization</li>
+                    <li>Extensions für Google-Apps</li>
                   </ul>
-                  <hr>
-                  <p><strong>Frage:</strong> Was war Schritt 3?</p>
-                  <p class="answer answer-bad"><strong>Antwort:</strong> ✗ erfunden / falsch</p>
                 </div>
-
-                <div class="card">
-                  <div class="code-label">Strategie B — progressiv</div>
-                  <ul class="ctx-list">
-                    <li><span class="icon" data-icon="file-text"></span>Kernkontext (kurz)</li>
-                    <li><span class="icon" data-icon="paperclip"></span>nur relevanter Datei-Upload</li>
-                    <li><span class="icon" data-icon="message-square"></span>letzte 5 Nachrichten</li>
+                <div class="pricing-card featured">
+                  <span class="model-pill">Beliebtestes</span>
+                  <div class="plan-name">Google AI Pro</div>
+                  <div class="plan-price">$19.99</div>
+                  <div class="plan-period">pro Monat</div>
+                  <ul>
+                    <li>Alles aus Free, plus:</li>
+                    <li>Zugriff auf Gemini Pro (höchste Variante)</li>
+                    <li>Integration in Docs, Gmail, Sheets</li>
+                    <li>NotebookLM mit erweiterten Limits</li>
+                    <li>2 TB Google-Drive-Speicher</li>
                   </ul>
-                  <hr>
-                  <p><strong>Frage:</strong> Was war Schritt 3?</p>
-                  <p class="answer answer-good"><strong>Antwort:</strong> ✓ korrekt</p>
+                </div>
+                <div class="pricing-card">
+                  <div class="plan-name">Google AI Ultra</div>
+                  <div class="plan-price">$249.99</div>
+                  <div class="plan-period">pro Monat</div>
+                  <ul>
+                    <li>Alles aus Pro, plus:</li>
+                    <li>Höchste Limits auf Gemini-Modelle</li>
+                    <li>Veo &amp; Imagen (Video/Bild) priorisiert</li>
+                    <li>Project Mariner &amp; Agentic-Features</li>
+                    <li>30 TB Google-Drive-Speicher</li>
+                  </ul>
                 </div>
               </div>
+              <p class="see-more">Aktuelle Preise: <a href="https://gemini.google/subscriptions/" target="_blank" rel="noopener">gemini.google/subscriptions</a></p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Kapitel 4 — Context & Pflege -->
+      <section class="slide" data-slide-id="context-1" data-chapter="context">
+        <div class="slide-inner">
+          <div class="chapter-label">Kapitel 4 — Kontext & Pflege</div>
+          <h2>Context Window</h2>
+
+          <div class="consequence-grid">
+            <div class="card">
+              <div class="code-label">Strategie A — alles rein</div>
+              <ul class="ctx-list">
+                <li><span class="icon" data-icon="paperclip"></span>12 Anhänge</li>
+                <li><span class="icon" data-icon="file-text"></span>8 Vorab-Anweisungen</li>
+                <li><span class="icon" data-icon="message-square"></span>Chat-Verlauf 50+ Nachrichten</li>
+              </ul>
+              <hr>
+              <p><strong>Frage:</strong> Was war Schritt 3?</p>
+              <p class="answer answer-bad"><strong>Antwort:</strong> ✗ erfunden / falsch</p>
+            </div>
+
+            <div class="card">
+              <div class="code-label">Strategie B — progressiv</div>
+              <ul class="ctx-list">
+                <li><span class="icon" data-icon="file-text"></span>Kernkontext (kurz)</li>
+                <li><span class="icon" data-icon="paperclip"></span>nur relevanter Anhang</li>
+                <li><span class="icon" data-icon="message-square"></span>letzte 5 Nachrichten</li>
+              </ul>
+              <hr>
+              <p><strong>Frage:</strong> Was war Schritt 3?</p>
+              <p class="answer answer-good"><strong>Antwort:</strong> ✓ korrekt</p>
             </div>
           </div>
 
@@ -1641,7 +1675,7 @@ VERBOTEN
               </g>
 
               <g data-step="4">
-                <path d="M 640 200 Q 700 140, 760 60" fill="none" stroke="var(--success)" stroke-width="3" stroke-linecap="round" stroke-dasharray="6 4"/>
+                <path d="M 655 200 Q 700 140, 760 60" fill="none" stroke="var(--success)" stroke-width="3" stroke-linecap="round" stroke-dasharray="6 4"/>
                 <circle cx="780" cy="60" r="10" fill="var(--success)" stroke="var(--bg-base)" stroke-width="2"/>
                 <text x="780" y="40" font-size="13" font-weight="700" fill="var(--success)" text-anchor="middle" font-family="var(--font-sans)">Merge!</text>
               </g>
@@ -1699,46 +1733,126 @@ VERBOTEN
         <div class="slide-inner">
           <div class="chapter-label">Kapitel 7 — Next Level</div>
           <h2>Claude überall</h2>
-          <p class="lead">Vier Plattformen, derselbe Claude. Je nach Aufgabe und Kontext die richtige Wahl.</p>
+          <p class="lead">Vier Plattformen, derselbe AI-Assistent. Je nach Aufgabe die richtige Wahl.</p>
 
-          <div class="platforms-grid">
-            <div class="platform-card" data-step="1">
-              <div class="platform-logo">
-                <span class="icon platform-icon" data-icon="messages-square"></span>
+          <div class="llm-tabs" data-llm-tabs data-sync-group="llm">
+            <nav class="llm-tabs-nav">
+              <button data-tab="claude" class="active" type="button">Claude</button>
+              <button data-tab="chatgpt" type="button">ChatGPT</button>
+              <button data-tab="gemini" type="button">Gemini</button>
+            </nav>
+
+            <div data-tab-panel="claude" class="active">
+              <div class="platforms-grid">
+                <div class="platform-card" data-step="1">
+                  <div class="platform-logo">
+                    <span class="icon platform-icon" data-icon="messages-square"></span>
+                  </div>
+                  <div class="platform-name">Web</div>
+                  <div class="platform-tag">claude.ai</div>
+                  <div class="platform-desc">Browser-basierte Chat-Oberfläche. Kein Setup, sofort einsatzbereit. Projects, Artifacts, Deep Research.</div>
+                </div>
+                <div class="platform-card" data-step="2">
+                  <div class="platform-logo">
+                    <span class="icon platform-icon" data-icon="laptop"></span>
+                  </div>
+                  <div class="platform-name">Lokale App</div>
+                  <div class="platform-tag">Claude für Mac · Cowork · Claude Code</div>
+                  <div class="platform-desc">Native macOS-App mit Datei-Zugriff, Cowork-Workflows und integriertem Claude Code.</div>
+                </div>
+                <div class="platform-card" data-step="3">
+                  <div class="platform-logo">
+                    <span class="icon platform-icon" data-icon="code"></span>
+                  </div>
+                  <div class="platform-name">CLI</div>
+                  <div class="platform-tag">Claude Code</div>
+                  <div class="platform-desc">Claude direkt in der Shell. Volle lokale Kontrolle, Subagents, Git-Integration, MCP-Server.</div>
+                </div>
+                <div class="platform-card" data-step="4">
+                  <div class="platform-logo">
+                    <span class="icon platform-icon" data-icon="smartphone"></span>
+                  </div>
+                  <div class="platform-name">Mobile</div>
+                  <div class="platform-tag">iOS · Android</div>
+                  <div class="platform-desc">Claude unterwegs. Lesen, schnelle Fragen, Sprach-Eingabe.</div>
+                </div>
               </div>
-              <div class="platform-name">Web</div>
-              <div class="platform-tag">claude.ai</div>
-              <div class="platform-desc">Browser-basierte Chat-Oberfläche. Kein Setup, sofort einsatzbereit. Projects, Artifacts, Deep Research.</div>
             </div>
-            <div class="platform-card" data-step="2">
-              <div class="platform-logo">
-                <span class="icon platform-icon" data-icon="laptop"></span>
+
+            <div data-tab-panel="chatgpt" hidden>
+              <div class="platforms-grid">
+                <div class="platform-card">
+                  <div class="platform-logo">
+                    <span class="icon platform-icon" data-icon="messages-square"></span>
+                  </div>
+                  <div class="platform-name">Web</div>
+                  <div class="platform-tag">chatgpt.com</div>
+                  <div class="platform-desc">Browser-Oberfläche mit Projects, Custom GPTs, Canvas, Operator und Deep Research.</div>
+                </div>
+                <div class="platform-card">
+                  <div class="platform-logo">
+                    <span class="icon platform-icon" data-icon="laptop"></span>
+                  </div>
+                  <div class="platform-name">Lokale App</div>
+                  <div class="platform-tag">ChatGPT für Mac</div>
+                  <div class="platform-desc">Native macOS-App mit Screenshot-Input und Companion-Modus (Option+Space).</div>
+                </div>
+                <div class="platform-card">
+                  <div class="platform-logo">
+                    <span class="icon platform-icon" data-icon="code"></span>
+                  </div>
+                  <div class="platform-name">CLI</div>
+                  <div class="platform-tag">Codex CLI</div>
+                  <div class="platform-desc">OpenAIs Coding-Agent fürs Terminal. Lokal, mit Sandbox und Git-Integration.</div>
+                </div>
+                <div class="platform-card">
+                  <div class="platform-logo">
+                    <span class="icon platform-icon" data-icon="smartphone"></span>
+                  </div>
+                  <div class="platform-name">Mobile</div>
+                  <div class="platform-tag">iOS · Android</div>
+                  <div class="platform-desc">ChatGPT unterwegs. Voice-Mode, Bild-Input, schnelle Fragen.</div>
+                </div>
               </div>
-              <div class="platform-name">Lokale App</div>
-              <div class="platform-tag">Claude für Mac · Cowork · Claude Code</div>
-              <div class="platform-desc">Native macOS-App mit Datei-Zugriff, Cowork-Workflows und integriertem Claude Code.</div>
             </div>
-            <div class="platform-card" data-step="3">
-              <div class="platform-logo">
-                <span class="icon platform-icon" data-icon="code"></span>
+
+            <div data-tab-panel="gemini" hidden>
+              <div class="platforms-grid">
+                <div class="platform-card">
+                  <div class="platform-logo">
+                    <span class="icon platform-icon" data-icon="messages-square"></span>
+                  </div>
+                  <div class="platform-name">Web</div>
+                  <div class="platform-tag">gemini.google.com</div>
+                  <div class="platform-desc">Browser-Oberfläche mit NotebookLM-Anbindung, Canvas und Deep-Research-Workflows.</div>
+                </div>
+                <div class="platform-card">
+                  <div class="platform-logo">
+                    <span class="icon platform-icon" data-icon="laptop"></span>
+                  </div>
+                  <div class="platform-name">Lokale App</div>
+                  <div class="platform-tag">keine native Mac-App</div>
+                  <div class="platform-desc">Keine eigenständige Desktop-App. Stattdessen Integration in Chrome &amp; Workspace (Docs, Gmail, Sheets).</div>
+                </div>
+                <div class="platform-card">
+                  <div class="platform-logo">
+                    <span class="icon platform-icon" data-icon="code"></span>
+                  </div>
+                  <div class="platform-name">CLI</div>
+                  <div class="platform-tag">Antigravity · gemini-cli</div>
+                  <div class="platform-desc">Antigravity als IDE-Companion, gemini-cli als reines Terminal-Tool. Beide mit lokalem Datei-Zugriff.</div>
+                </div>
+                <div class="platform-card">
+                  <div class="platform-logo">
+                    <span class="icon platform-icon" data-icon="smartphone"></span>
+                  </div>
+                  <div class="platform-name">Mobile</div>
+                  <div class="platform-tag">iOS · Android</div>
+                  <div class="platform-desc">Gemini-App auf dem Smartphone. Live-Modus mit Kamera, Voice-Eingabe, Google-Apps-Integration.</div>
+                </div>
               </div>
-              <div class="platform-name">CLI</div>
-              <div class="platform-tag">Terminal · Claude Code</div>
-              <div class="platform-desc">Claude direkt in der Shell. Volle lokale Kontrolle, Subagents, Git-Integration, MCP-Server.</div>
-            </div>
-            <div class="platform-card" data-step="4">
-              <div class="platform-logo">
-                <span class="icon platform-icon" data-icon="smartphone"></span>
-              </div>
-              <div class="platform-name">Mobile</div>
-              <div class="platform-tag">iOS · Android</div>
-              <div class="platform-desc">Claude unterwegs. Lesen, schnelle Fragen, Sprach-Eingabe.</div>
             </div>
           </div>
-
-          <p class="platform-future-note">
-            <em>Später ergänzbar: ChatGPT · Codex · Gemini · Antigravity (offizielle Logos pflegen wir wenn verfügbar).</em>
-          </p>
         </div>
       </section>
     </div>
@@ -1750,6 +1864,6 @@ VERBOTEN
     </div>
   </main>
 
-  <script type="module" src="app.js"></script>
+  <script type="module" src="app.js?v=2026-05-15"></script>
 </body>
 </html>
