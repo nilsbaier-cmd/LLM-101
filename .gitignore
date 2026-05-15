@@ -23,3 +23,6 @@ coverage/
 # Logs / temp
 *.log
 *.tmp
+
+# Playwright MCP Test-Artefakte
+.playwright-mcp/
