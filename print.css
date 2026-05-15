@@ -1,0 +1,138 @@
+@page {
+  size: 16in 9in;
+  margin: 0;
+}
+
+@media print {
+  * {
+    animation: none !important;
+    transition: none !important;
+    text-shadow: none !important;
+    box-shadow: none !important;
+  }
+
+  html,
+  body {
+    width: 100%;
+    height: auto;
+    background: #ffffff !important;
+    color: #1f1a17 !important;
+    print-color-adjust: exact;
+    -webkit-print-color-adjust: exact;
+  }
+
+  .app-header,
+  .app-toc,
+  .app-controls,
+  .llm-tabs-nav,
+  .pp-controls,
+  .xray-controls,
+  .copy-btn {
+    display: none !important;
+  }
+
+  .app-main,
+  .app-deck {
+    display: block !important;
+    width: 100% !important;
+    height: auto !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    overflow: visible !important;
+    background: #ffffff !important;
+  }
+
+  .slide {
+    position: relative !important;
+    display: block !important;
+    width: 100vw !important;
+    height: 100vh !important;
+    min-height: 100vh !important;
+    padding: 0.55in 0.7in !important;
+    margin: 0 !important;
+    overflow: hidden !important;
+    opacity: 1 !important;
+    transform: none !important;
+    break-after: page;
+    page-break-after: always;
+    background: #ffffff !important;
+    border: 0 !important;
+  }
+
+  .slide:last-child {
+    break-after: auto;
+    page-break-after: auto;
+  }
+
+  .slide-inner {
+    display: block !important;
+    width: 100% !important;
+    max-width: none !important;
+    height: 100% !important;
+    max-height: none !important;
+    margin: 0 !important;
+    overflow: hidden !important;
+  }
+
+  body[data-layout="slide"] .slide,
+  body[data-layout="scroll"] .slide {
+    opacity: 1 !important;
+    pointer-events: auto !important;
+  }
+
+  .slide[data-stepped] [data-step],
+  body[data-layout="slide"] .slide[data-stepped] [data-step] {
+    opacity: 1 !important;
+    transform: none !important;
+    visibility: visible !important;
+  }
+
+  [hidden],
+  [data-tab-panel][hidden],
+  [data-prompt-view][hidden],
+  [data-xray-stack][hidden] {
+    display: none !important;
+  }
+
+  h1,
+  h2,
+  h3,
+  p,
+  li,
+  .chapter-label,
+  .lead,
+  .card,
+  .info-block,
+  .source-strip {
+    color: #1f1a17 !important;
+  }
+
+  .card,
+  .pricing-card,
+  .platform-card,
+  .exercise,
+  .info-block,
+  .source-strip,
+  .volatile-note {
+    background: #ffffff !important;
+    border-color: #d9d1c4 !important;
+  }
+
+  .cover-stage {
+    min-height: 6.4in !important;
+  }
+
+  .icon-cloud {
+    opacity: 0.35;
+  }
+
+  .ex-textarea {
+    min-height: 0.75in !important;
+    background: #ffffff !important;
+  }
+
+  a {
+    color: #9a3f2e !important;
+    text-decoration: underline !important;
+  }
+}

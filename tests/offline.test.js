@@ -35,6 +35,7 @@ describe('offline delivery shell', () => {
       './tokens.css',
       './app.css',
       './presentation.css',
+      './print.css',
       './app.js',
       './lib/storage.js',
       './lib/notes-export.js',

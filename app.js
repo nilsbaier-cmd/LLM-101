@@ -1,9 +1,9 @@
 // app.js — Haupteinstieg
-import { Storage } from './lib/storage.js?v=2026-05-16r';
-import { ModeManager } from './lib/mode.js?v=2026-05-16r';
-import { icon } from './lib/icons.js?v=2026-05-16r';
-import { initTabs } from './lib/tabs.js?v=2026-05-16r';
-import { Exercises } from './lib/exercises.js?v=2026-05-16r';
+import { Storage } from './lib/storage.js?v=2026-05-16s';
+import { ModeManager } from './lib/mode.js?v=2026-05-16s';
+import { icon } from './lib/icons.js?v=2026-05-16s';
+import { initTabs } from './lib/tabs.js?v=2026-05-16s';
+import { Exercises } from './lib/exercises.js?v=2026-05-16s';
 
 const NS = 'llm-101-v1';
 const storage = new Storage(NS);

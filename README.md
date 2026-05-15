@@ -29,6 +29,7 @@ python3 -m http.server 8765
 
 - `manifest.webmanifest` und `sw.js` machen die Präsentation nach dem ersten Laden offline-fähig. Der Service Worker funktioniert über HTTP(S), nicht direkt über `file://`.
 - Für ZIP-Nutzung: Repo/Ordner vollständig mit `index.html`, `meine-notizen.html`, `app.js`, `lib/`, `explainer/`, `assets/`, CSS-Dateien, `manifest.webmanifest` und `sw.js` ausliefern; lokal per HTTP-Server öffnen.
+- Für PDF/Handout: `index.html` im Browser öffnen und Drucken → Ziel „Als PDF sichern" wählen. `print.css` erzeugt 16:9-Seiten, zeigt alle Step-Reveals und blendet Navigations-UI aus.
 - Volatile Folien sind im HTML mit `data-volatile="true"` und `data-checked` markiert. Stand der Anbieter- und Governance-Quellen: 16.05.2026.
 - Offizielle Check-Links: [Claude-Pläne](https://support.claude.com/en/articles/11049762-choosing-a-claude-plan), [ChatGPT-Pläne](https://chatgpt.com/pricing/), [Gemini-Pläne](https://gemini.google/subscriptions/), [BK Kompetenznetzwerk KI](https://www.bk.admin.ch/bk/de/home/digitale-transformation-ikt-lenkung/kuenstliche_intelligenz/kinetzwerk.html), [SB021 KI-Teilstrategie](https://www.bk.admin.ch/bk/de/home/digitale-transformation-ikt-lenkung/vorgaben/sb021-strategie-einsatz-von-ki-systemen-in-der-bundesverwaltung.html).
 
