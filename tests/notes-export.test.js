@@ -26,4 +26,13 @@ describe('renderNotesMarkdown', () => {
     expect(md.match(/## Context/g).length).toBe(1);
     expect(md.match(/## Skills/g).length).toBe(1);
   });
+
+  it('rendert usecases-notizen mit lesbarer kapitelüberschrift', () => {
+    const md = renderNotesMarkdown([
+      { chapter: 'usecases', ex: 'r2', antwort: 'Prompt-Labor getestet.', ts: 4 }
+    ]);
+
+    expect(md).toContain('## Use Cases');
+    expect(md).not.toContain('## usecases');
+  });
 });

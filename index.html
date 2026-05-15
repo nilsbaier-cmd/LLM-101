@@ -7,9 +7,9 @@
   <meta http-equiv="Pragma" content="no-cache">
   <meta http-equiv="Expires" content="0">
   <title>Einführung Claude</title>
-  <link rel="stylesheet" href="tokens.css?v=2026-05-16g">
-  <link rel="stylesheet" href="app.css?v=2026-05-16g">
-  <link rel="stylesheet" href="presentation.css?v=2026-05-16g">
+  <link rel="stylesheet" href="tokens.css?v=2026-05-16n">
+  <link rel="stylesheet" href="app.css?v=2026-05-16n">
+  <link rel="stylesheet" href="presentation.css?v=2026-05-16n">
 </head>
 <body data-layout="slide">
   <header class="app-header">
@@ -1194,14 +1194,21 @@
             <li><span><strong>Analyse erhalten</strong> — Muster, Ausreißer, Trends</span></li>
             <li><span><strong>Visualisieren</strong> — Charts, Dashboards, Berichte</span></li>
           </ol>
+        </div>
+      </section>
 
+      <section class="slide" data-slide-id="usecase-lab" data-chapter="usecases">
+        <div class="slide-inner">
+          <div class="chapter-label">Kapitel 5 — Use Cases</div>
+          <h2>Übungs-Labor — eigener Use Case</h2>
+          <p class="pull-quote">Aus einer vagen Idee wird ein kleiner, sicher testbarer Arbeitsauftrag.</p>
           <div class="exercise reflection" data-learning-station data-chapter="usecases" data-exercise="r2">
             <div class="ex-header">
               <div>
                 <div class="ex-tag">Reflexion</div>
                 <p class="ex-objective">Du übersetzt die drei Use Cases in einen eigenen, sofort testbaren Arbeitsfall.</p>
               </div>
-              <div class="ex-duration">4 min</div>
+              <div class="ex-duration">6 min</div>
             </div>
             <p class="ex-prompt">Welcher der drei Use Cases (Sparringpartner, Ghostwriter, Data Analyst) löst dein größtes aktuelles Problem? Beschreib in einem Satz.</p>
             <ol class="ex-steps">
@@ -1209,9 +1216,39 @@
               <li>Schreibe den ersten Prompt als Arbeitsauftrag, nicht als Suchfrage.</li>
               <li>Notiere, woran du ein gutes Ergebnis erkennen würdest.</li>
             </ol>
+            <div class="prompt-lab" data-prompt-lab>
+              <div class="prompt-lab-title">Prompt-Labor</div>
+              <div class="prompt-lab-grid">
+                <div class="prompt-lab-step">
+                  <span class="prompt-lab-num">1</span>
+                  <strong>Rohidee</strong>
+                  <p>„Hilf mir mit einem Stakeholder-Update.“</p>
+                </div>
+                <div class="prompt-lab-step">
+                  <span class="prompt-lab-num">2</span>
+                  <strong>Arbeitsauftrag</strong>
+                  <p>Rolle, Kontext, Zielgruppe, Grenzen und Output-Format ergänzen.</p>
+                </div>
+                <div class="prompt-lab-step">
+                  <span class="prompt-lab-num">3</span>
+                  <strong>Musterbeobachtung</strong>
+                  <p>Besser wird es, wenn der Output prüfbar wird: klare Abschnitte, sichtbare Annahmen, nächster Schritt.</p>
+                </div>
+              </div>
+              <div class="code-label">Labor-Prompt zum Anpassen</div>
+              <div class="code-block prompt-lab-template" data-copy-source><button class="copy-btn">Kopieren</button>Ich möchte folgenden Arbeitsfall mit KI testen:
+[beschreibe Aufgabe und Zielgruppe in 1 Satz]
+
+Handle als [Rolle, z. B. kritischer Sparringpartner / Ghostwriter / Data Analyst].
+Nutze nur diesen Kontext: [relevante Fakten, keine Personendaten].
+Erstelle als Output: [Format, Länge, Struktur].
+Mache Unsicherheiten sichtbar und nenne den nächsten kleinen Test.</div>
+            </div>
             <textarea class="ex-textarea" placeholder="z. B. Sparringpartner — habe oft Entscheidungen, die ich noch mal challenge'n könnte …"></textarea>
-            <p class="ex-expected"><strong>Erwartbar:</strong> Ein konkreter Mini-Use-Case mit Aufgabe, KI-Rolle und Qualitätskriterium.</p>
-            <p class="ex-reflection"><strong>Reflexion:</strong> Was wäre der nächste kleine Test, den du ohne Risiko durchführen kannst?</p>
+            <div class="ex-outcome-grid">
+              <p class="ex-expected"><strong>Erwartbar:</strong> Ein konkreter Mini-Use-Case mit Aufgabe, KI-Rolle und Qualitätskriterium.</p>
+              <p class="ex-reflection"><strong>Reflexion:</strong> Was wäre der nächste kleine Test, den du ohne Risiko durchführen kannst?</p>
+            </div>
             <div class="ex-meta">
               <span class="ex-save-hint">✓ Lokal gespeichert — kein Server.</span>
               <a class="ex-notes-link" href="meine-notizen.html">→ Meine Notizen (<span class="ex-notes-count">0</span>)</a>
@@ -2087,6 +2124,6 @@ VERBOTEN
     </div>
   </main>
 
-  <script type="module" src="app.js?v=2026-05-16g"></script>
+  <script type="module" src="app.js?v=2026-05-16n"></script>
 </body>
 </html>
