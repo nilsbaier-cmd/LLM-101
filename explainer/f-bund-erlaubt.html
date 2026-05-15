@@ -20,7 +20,7 @@
   <main class="explainer-page">
     <div class="chapter-label">Concept-Explainer F</div>
     <h2>Erlaubt, bedingt, verboten?</h2>
-    <p class="lead">Praktische Beispiele aus dem Verwaltungs-Alltag, geprüft gegen das Merkblatt für generative KI. Klick auf einen Filter, um nur eine Kategorie zu sehen.</p>
+    <p class="lead">Praktische Beispiele aus dem Verwaltungs-Alltag, geprüft gegen die BK-Merkblätter, DeepL-Hinweise und die KI-Teilstrategie. Klick auf einen Filter, um nur eine Kategorie zu sehen.</p>
 
     <div class="erlaubt-filters">
       <button class="erlaubt-filter active" data-filter="all" type="button">Alle</button>
@@ -31,7 +31,11 @@
 
     <div class="erlaubt-list" id="erlaubt-list"></div>
 
-    <p class="erlaubt-footer-note">Verantwortlich für den korrekten Einsatz im Einzelfall bleibst <strong>du selbst</strong>. Im Zweifel: vorgesetzte Person oder Datenschutzbeauftragten fragen.</p>
+    <p class="erlaubt-footer-note">Verantwortlich für den korrekten Einsatz im Einzelfall bleibst <strong>du selbst</strong>. Im Zweifel: vorgesetzte Person, Datenschutzstelle oder KI-Anlaufstelle fragen.</p>
+    <p class="source-strip">
+      Quellen: <a href="https://www.bk.admin.ch/bk/de/home/digitale-transformation-ikt-lenkung/kuenstliche_intelligenz/kinetzwerk.html">BK Kompetenznetzwerk KI</a> ·
+      <a href="https://www.bk.admin.ch/bk/de/home/digitale-transformation-ikt-lenkung/vorgaben/sb021-strategie-einsatz-von-ki-systemen-in-der-bundesverwaltung.html">SB021 KI-Teilstrategie</a> · Stand 15.05.2026
+    </p>
 
     <p class="back-link">→ <a href="../index.html" id="back-link-bottom">Zurück zur Präsentation</a></p>
   </main>
@@ -63,16 +67,19 @@
     document.querySelectorAll('.toggle').forEach(b => { const _p = b.dataset.value === mode.get('theme'); b.classList.toggle('active', _p); b.setAttribute('aria-pressed', _p ? 'true' : 'false'); });
 
     const TASKS = [
-      { kind: 'ok', task: 'Öffentliches Schreiben strukturieren', reason: 'Brainstorming und Gliederung von Texten, die für die Öffentlichkeit bestimmt sind, ist explizit erlaubt.' },
-      { kind: 'ok', task: 'Sitzungsprotokoll aus öffentlichen Notizen zusammenfassen', reason: 'Zusammenfassen öffentlicher Texte ist erlaubt. Auf Faktenkorrektheit prüfen.' },
+      { kind: 'ok', task: 'Öffentliches Schreiben strukturieren', reason: 'Brainstorming und Gliederung von Texten, die für die Öffentlichkeit bestimmt sind, ist erlaubt. Ergebnis trotzdem fachlich prüfen.' },
+      { kind: 'ok', task: 'DeepL Pro Translate für veröffentlichte Texte nutzen', reason: 'Übersetzung öffentlicher Inhalte ist ein typischer erlaubter Einsatz. Keine sensiblen Zusatzinformationen mitschicken.' },
+      { kind: 'ok', task: 'Sitzungsprotokoll aus öffentlichen Notizen zusammenfassen', reason: 'Zusammenfassen öffentlicher Texte ist erlaubt. Fakten, Namen und Beschlüsse gegen Quelle prüfen.' },
       { kind: 'ok', task: 'Code-Snippet entwickeln (z.B. Excel-Makro)', reason: 'Inspiration für Code und Hilfestellung bei Entwicklung ist erlaubt.' },
       { kind: 'ok', task: 'Bilder für interne Präsentationen generieren', reason: 'Visuelle Hilfsmittel für Präsentationen sind erlaubt.' },
       { kind: 'warn', task: 'Verfassungstext analysieren', reason: 'Öffentlicher Text — erlaubt. Aber: Analyse muss durch dich überprüft werden, juristische Beurteilung bleibt menschlich.' },
       { kind: 'warn', task: 'Antwort an Bürger entwerfen', reason: 'Entwurf erstellen ist OK. Aber: keine Personendaten in den Prompt, und der finale Text muss von dir freigegeben werden.' },
       { kind: 'warn', task: 'Statistik aus internen Daten (nicht personenbezogen) erstellen', reason: 'Aggregierte, nicht-personenbezogene Daten sind grenzwertig — Klassifizierung im Einzelfall prüfen.' },
+      { kind: 'warn', task: 'DeepL Write für unkritische Formulierungen nutzen', reason: 'Sprachliche Verbesserung kann passen, solange keine Personendaten, klassifizierten Informationen oder Amtsgeheimnisse enthalten sind.' },
       { kind: 'no', task: 'Personendaten verarbeiten (Namen, Adressen, AHV-Nr.)', reason: 'Klares Verbot. Auch keine indirekt identifizierbaren Personendaten.' },
       { kind: 'no', task: 'Klassifizierte Informationen analysieren (z.B. VERTRAULICH)', reason: 'Klassifizierte Informationen jeglicher Stufe sind verboten.' },
       { kind: 'no', task: 'Amtsgeheimnisse weitergeben', reason: 'Amtsgeheimnisse fallen unter Verschwiegenheitspflicht — auch nicht in KI-Prompts.' },
+      { kind: 'no', task: 'DeepL Write mit Personaldossier füttern', reason: 'Personendaten und vertrauliche Personalinformationen gehören nicht in solche Werkzeuge.' },
       { kind: 'no', task: 'Vertrauliche Personalakte zusammenfassen', reason: 'Personendaten + interne Vertraulichkeit — doppeltes Tabu.' },
       { kind: 'no', task: 'Entscheidung über Bürger:innen automatisiert treffen', reason: 'Verwaltungsentscheidungen müssen menschlich verantwortet werden. KI darf vorbereiten, nicht entscheiden.' }
     ];

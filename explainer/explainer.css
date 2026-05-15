@@ -232,6 +232,19 @@
   color: var(--accent-strong);
 }
 
+.source-strip {
+  font-size: 12px;
+  color: var(--text-tertiary);
+  margin-top: var(--space-4);
+  line-height: 1.5;
+}
+.source-strip a {
+  color: var(--accent);
+  text-decoration: none;
+  font-weight: 500;
+}
+.source-strip a:hover { text-decoration: underline; }
+
 /* === Explainer B: Chat vs. Project === */
 .cvp-toggle {
   display: flex;
