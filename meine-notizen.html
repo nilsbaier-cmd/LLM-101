@@ -2,12 +2,15 @@
 <html lang="de">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate">
   <meta http-equiv="Pragma" content="no-cache">
   <meta http-equiv="Expires" content="0">
-  <title>Meine Notizen — Einführung Claude</title>
-  <link rel="stylesheet" href="tokens.css?v=2026-05-16q">
-  <link rel="stylesheet" href="app.css?v=2026-05-16q">
+  <meta name="theme-color" content="#C45A43">
+  <title>Meine Notizen — LLM 101</title>
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="stylesheet" href="tokens.css?v=2026-05-16r">
+  <link rel="stylesheet" href="app.css?v=2026-05-16r">
   <style>
     .notes-page { max-width: 760px; margin: 0 auto; padding: var(--space-7); }
     .note-item { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: var(--space-5); margin-bottom: var(--space-4); }
@@ -45,11 +48,11 @@
     </p>
   </main>
   <script type="module">
-    import { Storage } from './lib/storage.js?v=2026-05-16q';
-    import { ModeManager } from './lib/mode.js?v=2026-05-16q';
-    import { Exercises } from './lib/exercises.js?v=2026-05-16q';
-    import { icon } from './lib/icons.js?v=2026-05-16q';
-    import { renderNotesMarkdown, downloadMarkdown } from './lib/notes-export.js?v=2026-05-16q';
+    import { Storage } from './lib/storage.js?v=2026-05-16r';
+    import { ModeManager } from './lib/mode.js?v=2026-05-16r';
+    import { Exercises } from './lib/exercises.js?v=2026-05-16r';
+    import { icon } from './lib/icons.js?v=2026-05-16r';
+    import { renderNotesMarkdown, downloadMarkdown } from './lib/notes-export.js?v=2026-05-16r';
 
     const storage = new Storage('llm-101-v1');
     const mode = new ModeManager(storage);

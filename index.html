@@ -6,10 +6,12 @@
   <meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate">
   <meta http-equiv="Pragma" content="no-cache">
   <meta http-equiv="Expires" content="0">
+  <meta name="theme-color" content="#C45A43">
   <title>LLM 101</title>
-  <link rel="stylesheet" href="tokens.css?v=2026-05-16q">
-  <link rel="stylesheet" href="app.css?v=2026-05-16q">
-  <link rel="stylesheet" href="presentation.css?v=2026-05-16q">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="stylesheet" href="tokens.css?v=2026-05-16r">
+  <link rel="stylesheet" href="app.css?v=2026-05-16r">
+  <link rel="stylesheet" href="presentation.css?v=2026-05-16r">
 </head>
 <body data-layout="slide">
   <header class="app-header">
@@ -221,7 +223,7 @@
       </section>
 
       <!-- Kapitel 2 — Verwaltung & KI -->
-      <section class="slide" data-slide-id="verwaltung-1" data-chapter="verwaltung" data-stepped>
+      <section class="slide" data-slide-id="verwaltung-1" data-chapter="verwaltung" data-stepped data-volatile="true" data-checked="2026-05-16">
         <div class="slide-inner">
           <div class="chapter-label">Kapitel 2 — Verwaltung &amp; KI</div>
           <h2>Was sagt die Verwaltung zu KI?</h2>
@@ -275,7 +277,7 @@
             </div>
           </div>
           <p class="source-strip" data-step="4">
-            Quellen: <a href="https://www.bk.admin.ch/bk/de/home/digitale-transformation-ikt-lenkung/kuenstliche_intelligenz/kinetzwerk.html">BK Kompetenznetzwerk KI</a> ·
+            Quellen (Stand 16.05.2026): <a href="https://www.bk.admin.ch/bk/de/home/digitale-transformation-ikt-lenkung/kuenstliche_intelligenz/kinetzwerk.html">BK Kompetenznetzwerk KI</a> ·
             <a href="https://www.bk.admin.ch/bk/de/home/digitale-transformation-ikt-lenkung/vorgaben/sb021-strategie-einsatz-von-ki-systemen-in-der-bundesverwaltung.html">SB021 KI-Teilstrategie</a>
           </p>
           <p class="see-more">
@@ -284,7 +286,7 @@
         </div>
       </section>
 
-      <section class="slide" data-slide-id="verwaltung-2" data-chapter="verwaltung" data-stepped>
+      <section class="slide" data-slide-id="verwaltung-2" data-chapter="verwaltung" data-stepped data-volatile="true" data-checked="2026-05-16">
         <div class="slide-inner">
           <div class="chapter-label">Kapitel 2 — Verwaltung &amp; KI</div>
           <h2>Von Warnlogik zu Nutzungskompetenz</h2>
@@ -309,7 +311,7 @@
             Ziel: Kompetenzen aufbauen, Vertrauen verdienen und Effizienz steigern — mit klaren Grenzen.
           </div>
           <p class="source-strip" data-step="5">
-            Quellen: BK-Merkblätter, FAQs und SB021 KI-Teilstrategie, geprüft am 15.05.2026.
+            Quellen (Stand 16.05.2026): BK-Merkblätter, FAQs und SB021 KI-Teilstrategie, erstmals geprüft am 15.05.2026.
           </p>
 
           <div class="exercise reflection" data-learning-station data-chapter="verwaltung" data-exercise="r1">
@@ -338,8 +340,8 @@
       </section>
 
       <!-- Kapitel 3 — LLM-Tools 101 -->
-      <section class="slide" data-slide-id="claude-1" data-chapter="claude">
-        <!-- LLM-Mode-Refs (Stand Mai 2026): ChatGPT 5.5 · Gemini 3.1 -->
+      <section class="slide" data-slide-id="claude-1" data-chapter="claude" data-volatile="true" data-checked="2026-05-16">
+        <!-- LLM-Mode-Refs: volatile Produktbeispiele, aktuelle Quellen in der Quellenleiste prüfen. -->
         <div class="slide-inner">
           <div class="chapter-label">Kapitel 3 — LLM-Tools 101</div>
           <h2>Modellfamilien verstehen</h2>
@@ -355,45 +357,45 @@
               <div class="model-grid">
                 <div class="card model-card">
                   <span class="model-pill">Opus</span>
-                  <h3>Opus 4.7 — Stärkstes Modell</h3>
+                  <h3>Opus — stärkste Claude-Klasse</h3>
                   <p>Höchste Intelligenz und Tiefe. Ideal für komplexe Analysen, Forschung, mehrstufige Aufgaben und anspruchsvolles Coding.</p>
                 </div>
                 <div class="card model-card">
                   <span class="model-pill">Sonnet</span>
-                  <h3>Sonnet 4.6 — Ausgewogen</h3>
+                  <h3>Sonnet — ausgewogen</h3>
                   <p>Bester Kompromiss aus Geschwindigkeit und Qualität. Standard für die meisten Alltagsaufgaben und Programmierung.</p>
                 </div>
                 <div class="card model-card model-card-wide">
                   <span class="model-pill">Haiku</span>
-                  <h3>Haiku 4.5 — Schnell &amp; effizient</h3>
+                  <h3>Haiku — schnell &amp; effizient</h3>
                   <p>Schnellste Antworten, günstigster Preis (API). Für einfache Aufgaben, Zusammenfassungen und schnelle Abfragen.</p>
                 </div>
               </div>
               <div class="info-block">
-                <strong>Modellwahl im Chat</strong> — Im Chatfenster kann das Modell oben links per Dropdown gewechselt werden. Pro-User haben Zugang zu allen Modellen inkl. Opus. Free-User nutzen Sonnet (mit Limit) und Haiku als Fallback.
+                <strong>Modellwahl im Chat</strong> — Im Chatfenster kann das Modell oben links per Dropdown gewechselt werden. Welche Klassen sichtbar sind, hängt vom Plan, vom Rollout und von aktuellen Limits ab.
               </div>
             </div>
 
             <div data-tab-panel="chatgpt" hidden>
               <div class="model-grid">
                 <div class="card model-card">
-                  <span class="model-pill">GPT-5.5</span>
-                  <h3>GPT-5.5 — Topmodell</h3>
-                  <p>Für komplexe Reasoning-Aufgaben, mehrstufige Analysen und anspruchsvolles Coding. Stärkstes Modell der GPT-Familie.</p>
+                  <span class="model-pill">GPT-Flagship</span>
+                  <h3>GPT-Spitzenmodell</h3>
+                  <p>Für komplexe Reasoning-Aufgaben, mehrstufige Analysen und anspruchsvolles Coding. Die konkrete Modellbezeichnung ändert sich häufig.</p>
                 </div>
                 <div class="card model-card">
-                  <span class="model-pill">GPT-5</span>
-                  <h3>GPT-5 — Standard</h3>
+                  <span class="model-pill">GPT-Standard</span>
+                  <h3>GPT-Standardmodell</h3>
                   <p>Gutes Preis-Leistungs-Verhältnis. Standardmodell für die meisten Alltagsaufgaben und Programmierung.</p>
                 </div>
                 <div class="card model-card model-card-wide">
-                  <span class="model-pill">GPT-5 mini</span>
-                  <h3>GPT-5 mini — Schnell &amp; günstig</h3>
+                  <span class="model-pill">GPT-Fast</span>
+                  <h3>Schnelle GPT-Variante</h3>
                   <p>Schnellste und günstigste Variante. Für einfache Aufgaben, Zusammenfassungen und schnelle Abfragen.</p>
                 </div>
               </div>
               <div class="info-block">
-                <strong>Modellwahl im Chat</strong> — Im Chatfenster kann das Modell per Dropdown gewechselt werden. Plus/Pro-User haben Zugang zu allen Modellen inkl. GPT-5.5. Free-User nutzen GPT-5 (mit Limit) und GPT-5 mini als Fallback.
+                <strong>Modellwahl im Chat</strong> — Im Chatfenster kann das Modell per Dropdown gewechselt werden. Plus/Pro/Business unterscheiden sich vor allem bei Limits, Toolzugriff und Reasoning-Kapazität.
               </div>
             </div>
 
@@ -401,25 +403,32 @@
               <div class="model-grid">
                 <div class="card model-card">
                   <span class="model-pill">Pro</span>
-                  <h3>Gemini 3.1 Pro — Stärkstes Modell</h3>
+                  <h3>Gemini Pro — stärkste Klasse</h3>
                   <p>Höchste Intelligenz mit sehr großem Context-Fenster. Ideal für komplexe Analysen, lange Dokumente und mehrstufige Aufgaben.</p>
                 </div>
                 <div class="card model-card">
                   <span class="model-pill">Flash</span>
-                  <h3>Gemini 3.1 Flash — Schnell</h3>
+                  <h3>Gemini Flash — schnell</h3>
                   <p>Schnell und multimodal. Guter Kompromiss aus Geschwindigkeit und Qualität für die meisten Alltagsaufgaben.</p>
                 </div>
                 <div class="card model-card model-card-wide">
                   <span class="model-pill">Nano</span>
-                  <h3>Gemini 3.1 Nano — Lokal/Edge</h3>
+                  <h3>Gemini Nano — lokal/Edge</h3>
                   <p>Sehr klein, läuft lokal auf Endgeräten (Edge). Für schnelle, datenschutzfreundliche Abfragen ohne Cloud.</p>
                 </div>
               </div>
               <div class="info-block">
-                <strong>Modellwahl im Chat</strong> — Im Chatfenster kann das Modell per Dropdown gewechselt werden. AI-Pro/Ultra-User haben Zugang zu Pro. Free-User nutzen Flash (mit Limit), Nano kommt auf Pixel/Android-Geräten zum Einsatz.
+                <strong>Modellwahl im Chat</strong> — Im Chatfenster kann das Modell per Dropdown gewechselt werden. Google unterscheidet vor allem nach Zugriff auf Pro-Modelle, Limits und Einbettung in Google-Produkte.
               </div>
             </div>
           </div>
+
+          <p class="source-strip volatile-note">
+            <strong>Stand 16.05.2026:</strong> Modellnamen, Limits und Plan-Zugänge ändern sich häufig. Prüfe vor einer Schulung die offiziellen Seiten:
+            <a href="https://support.claude.com/en/articles/11049762-choosing-a-claude-plan" target="_blank" rel="noopener">Claude-Pläne</a>,
+            <a href="https://chatgpt.com/pricing/" target="_blank" rel="noopener">ChatGPT-Pläne</a>,
+            <a href="https://gemini.google/subscriptions/" target="_blank" rel="noopener">Gemini-Pläne</a>.
+          </p>
 
           <div class="exercise quiz" data-learning-station data-chapter="claude" data-exercise="q1"
                data-feedback="Korrekt — Haiku ist für einfache, klar umrissene Aufgaben das richtige Werkzeug. Sonnet wäre Overkill, Opus erst recht.">
@@ -436,9 +445,9 @@
               <li>Wähle die kleinste Modellklasse, die sauber genügt.</li>
             </ol>
             <div class="quiz-choices">
-              <button class="quiz-choice" data-correct="false" type="button">Opus 4.7 — Für maximale Qualität auch bei einfachen Aufgaben.</button>
-              <button class="quiz-choice" data-correct="false" type="button">Sonnet 4.6 — Standard für die meisten Alltagsaufgaben.</button>
-              <button class="quiz-choice" data-correct="true" type="button">Haiku 4.5 — Schnellste, günstigste Variante für einfache Aufgaben.</button>
+              <button class="quiz-choice" data-correct="false" type="button">Opus — Für maximale Qualität auch bei einfachen Aufgaben.</button>
+              <button class="quiz-choice" data-correct="false" type="button">Sonnet — Standard für die meisten Alltagsaufgaben.</button>
+              <button class="quiz-choice" data-correct="true" type="button">Haiku — Schnellste, günstigste Variante für einfache Aufgaben.</button>
             </div>
             <div class="quiz-feedback" hidden></div>
             <p class="ex-expected"><strong>Erwartbar:</strong> Haiku reicht, weil die Aufgabe kurz, klar und nicht strategisch heikel ist.</p>
@@ -854,7 +863,7 @@
         </div>
       </section>
 
-      <section class="slide" data-slide-id="claude-5" data-chapter="claude">
+      <section class="slide" data-slide-id="claude-5" data-chapter="claude" data-volatile="true" data-checked="2026-05-16">
         <div class="slide-inner">
           <div class="chapter-label">Kapitel 3 — LLM-Tools 101</div>
           <h2>Abos &amp; Preise</h2>
@@ -916,7 +925,7 @@
                   <div class="plan-price">$0</div>
                   <div class="plan-period">kostenlos</div>
                   <ul>
-                    <li>Zugriff auf GPT-5 mit Standard-Limits</li>
+                    <li>Zugriff auf das aktuelle GPT-Standardmodell mit Limits</li>
                     <li>Begrenzte Datei-Uploads &amp; Bildanalyse</li>
                     <li>Websuche &amp; Memory (Basis)</li>
                     <li>Custom GPTs nutzen</li>
@@ -930,7 +939,7 @@
                   <div class="plan-period">pro Monat</div>
                   <ul>
                     <li>Alles aus Free, plus:</li>
-                    <li>Höhere Limits auf GPT-5 &amp; Reasoning-Modelle</li>
+                    <li>Höhere Limits auf GPT-Modelle &amp; Reasoning-Funktionen</li>
                     <li>Erweiterter Memory &amp; Custom Instructions</li>
                     <li>Eigene GPTs erstellen</li>
                     <li>Sora-Videogenerierung (limitiert)</li>
@@ -943,7 +952,7 @@
                   <ul>
                     <li>Alles aus Plus, plus:</li>
                     <li>Unbegrenzter Zugang zu allen Modellen</li>
-                    <li>GPT-5 Pro (längeres Reasoning)</li>
+                    <li>Pro- und Reasoning-Modelle mit höheren Limits</li>
                     <li>Operator &amp; Deep Research priorisiert</li>
                     <li>Erweiterte Sora-Limits</li>
                   </ul>
@@ -976,7 +985,7 @@
                     <li>Zugriff auf Gemini Pro (höchste Variante)</li>
                     <li>Integration in Docs, Gmail, Sheets</li>
                     <li>NotebookLM mit erweiterten Limits</li>
-                    <li>2 TB Google-Drive-Speicher</li>
+                    <li>5 TB Google-One-Speicher</li>
                   </ul>
                 </div>
                 <div class="pricing-card">
@@ -987,14 +996,20 @@
                     <li>Alles aus Pro, plus:</li>
                     <li>Höchste Limits auf Gemini-Modelle</li>
                     <li>Veo &amp; Imagen (Video/Bild) priorisiert</li>
-                    <li>Project Mariner &amp; Agentic-Features</li>
-                    <li>30 TB Google-Drive-Speicher</li>
+                    <li>Agentic-Features und höchste Modell-Limits</li>
+                    <li>30 TB Google-One-Speicher</li>
                   </ul>
                 </div>
               </div>
               <p class="see-more">Aktuelle Preise: <a href="https://gemini.google/subscriptions/" target="_blank" rel="noopener">gemini.google/subscriptions</a></p>
             </div>
           </div>
+          <p class="source-strip volatile-note">
+            <strong>Stand 16.05.2026:</strong> Preise, Jahresrabatte, Speicherpakete und Feature-Bundles sind Momentaufnahmen. Für Einkauf oder Schulungseinladung immer die offiziellen Preisseiten öffnen:
+            <a href="https://support.claude.com/en/articles/11049762-choosing-a-claude-plan" target="_blank" rel="noopener">Claude</a>,
+            <a href="https://chatgpt.com/pricing/" target="_blank" rel="noopener">ChatGPT</a>,
+            <a href="https://gemini.google/subscriptions/" target="_blank" rel="noopener">Gemini</a>.
+          </p>
         </div>
       </section>
 
@@ -1990,7 +2005,7 @@ VERBOTEN
         </div>
       </section>
 
-      <section class="slide" data-slide-id="next-3" data-chapter="next-level" data-stepped>
+      <section class="slide" data-slide-id="next-3" data-chapter="next-level" data-stepped data-volatile="true" data-checked="2026-05-16">
         <div class="slide-inner">
           <div class="chapter-label">Kapitel 7 — Next Level</div>
           <h2>LLM überall</h2>
@@ -2114,6 +2129,9 @@ VERBOTEN
               </div>
             </div>
           </div>
+          <p class="source-strip volatile-note" data-step="5">
+            <strong>Stand 16.05.2026:</strong> Plattformnamen, Desktop-Apps, CLI-Funktionen und Mobile-Features ändern sich schneller als die Grundidee. Vor Live-Demos kurz im jeweiligen Produkt gegenprüfen.
+          </p>
         </div>
       </section>
     </div>
@@ -2125,6 +2143,6 @@ VERBOTEN
     </div>
   </main>
 
-  <script type="module" src="app.js?v=2026-05-16q"></script>
+  <script type="module" src="app.js?v=2026-05-16r"></script>
 </body>
 </html>

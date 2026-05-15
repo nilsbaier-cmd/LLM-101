@@ -309,6 +309,15 @@ body[data-layout="scroll"] .app-controls { display: none; }
   font-weight: 500;
 }
 .source-strip a:hover { text-decoration: underline; }
+.volatile-note {
+  padding: var(--space-3) var(--space-4);
+  border: 1px solid color-mix(in srgb, var(--accent) 24%, transparent);
+  border-radius: var(--radius-md);
+  background: color-mix(in srgb, var(--accent-soft) 62%, transparent);
+}
+.volatile-note strong {
+  color: var(--text-secondary);
+}
 
 /* Kapitel 2: Mythen-Tabelle */
 .myth-table {
@@ -2208,6 +2217,11 @@ body[data-exercises="off"] .exercise { display: none; }
   .pp-output-card,
   .xray-card {
     padding: var(--space-4);
+  }
+
+  .source-strip.volatile-note {
+    padding: var(--space-3);
+    font-size: 11px;
   }
 
   .xray-message {

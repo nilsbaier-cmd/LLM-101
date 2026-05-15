@@ -1,0 +1,19 @@
+{
+  "name": "LLM 101",
+  "short_name": "LLM 101",
+  "description": "Interaktive Einführung in Large Language Models mit Übungen und Concept-Explainern.",
+  "lang": "de-CH",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#F7F3EC",
+  "theme_color": "#C45A43",
+  "icons": [
+    {
+      "src": "assets/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-labelledby="title">
+  <title id="title">LLM 101</title>
+  <rect width="512" height="512" rx="88" fill="#F7F3EC"/>
+  <path d="M92 340V172h38v132h72v36H92Zm138 0V172h38v132h72v36H230Zm142 0V172h40l52 84 52-84h40v168h-38V235l-42 67h-24l-42-67v105h-38Z" fill="#2A2521"/>
+  <path d="M84 394h344" stroke="#C45A43" stroke-width="18" stroke-linecap="round"/>
+</svg>

@@ -1,14 +1,25 @@
 // app.js — Haupteinstieg
-import { Storage } from './lib/storage.js?v=2026-05-16q';
-import { ModeManager } from './lib/mode.js?v=2026-05-16q';
-import { icon } from './lib/icons.js?v=2026-05-16q';
-import { initTabs } from './lib/tabs.js?v=2026-05-16q';
-import { Exercises } from './lib/exercises.js?v=2026-05-16q';
+import { Storage } from './lib/storage.js?v=2026-05-16r';
+import { ModeManager } from './lib/mode.js?v=2026-05-16r';
+import { icon } from './lib/icons.js?v=2026-05-16r';
+import { initTabs } from './lib/tabs.js?v=2026-05-16r';
+import { Exercises } from './lib/exercises.js?v=2026-05-16r';
 
 const NS = 'llm-101-v1';
 const storage = new Storage(NS);
 const mode = new ModeManager(storage);
 const exercises = new Exercises(storage);
+
+function registerServiceWorker() {
+  if (!('serviceWorker' in navigator) || window.location.protocol === 'file:') return;
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('./sw.js').catch(() => {
+      // Offline-Support ist optional; die Präsentation bleibt ohne Service Worker nutzbar.
+    });
+  });
+}
+
+registerServiceWorker();
 
 // Theme-Buttons mit Icons befüllen
 document.querySelector('[data-mode="theme"][data-value="light"]').innerHTML = icon('sun');
