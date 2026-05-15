@@ -1263,6 +1263,16 @@ body[data-layout="scroll"] [data-step] {
   transform: none !important;
 }
 
+@media (prefers-reduced-motion: reduce) {
+  body[data-layout="slide"] .slide,
+  body[data-layout="slide"] .slide[data-stepped] [data-step],
+  .icon-cloud-item,
+  .platform-card {
+    transition: none !important;
+    transform: none !important;
+  }
+}
+
 /* Timeline (Folie 5 Phasen) */
 .timeline {
   position: relative;

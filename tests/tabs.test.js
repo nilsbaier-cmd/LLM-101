@@ -19,6 +19,10 @@ describe('initTabs', () => {
 
   it('zeigt initial den aktiven tab', () => {
     initTabs(document.body);
+    expect(document.querySelector('.llm-tabs-nav').getAttribute('role')).toBe('tablist');
+    expect(document.querySelector('[data-tab="claude"]').getAttribute('role')).toBe('tab');
+    expect(document.querySelector('[data-tab="claude"]').getAttribute('aria-selected')).toBe('true');
+    expect(document.querySelector('[data-tab-panel="claude"]').getAttribute('role')).toBe('tabpanel');
     expect(document.querySelector('[data-tab-panel="claude"]').hidden).toBe(false);
     expect(document.querySelector('[data-tab-panel="chatgpt"]').hidden).toBe(true);
   });
@@ -29,6 +33,8 @@ describe('initTabs', () => {
     expect(document.querySelector('[data-tab-panel="claude"]').hidden).toBe(true);
     expect(document.querySelector('[data-tab-panel="chatgpt"]').hidden).toBe(false);
     expect(document.querySelector('[data-tab="chatgpt"]').classList.contains('active')).toBe(true);
+    expect(document.querySelector('[data-tab="chatgpt"]').getAttribute('aria-selected')).toBe('true');
+    expect(document.querySelector('[data-tab="claude"]').tabIndex).toBe(-1);
   });
 
   it('synchronisiert mehrere tab-gruppen mit data-sync-group', () => {

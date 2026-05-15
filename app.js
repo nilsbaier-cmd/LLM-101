@@ -1,9 +1,9 @@
 // app.js — Haupteinstieg
-import { Storage } from './lib/storage.js?v=2026-05-16p';
-import { ModeManager } from './lib/mode.js?v=2026-05-16p';
-import { icon } from './lib/icons.js?v=2026-05-16p';
-import { initTabs } from './lib/tabs.js?v=2026-05-16p';
-import { Exercises } from './lib/exercises.js?v=2026-05-16p';
+import { Storage } from './lib/storage.js?v=2026-05-16q';
+import { ModeManager } from './lib/mode.js?v=2026-05-16q';
+import { icon } from './lib/icons.js?v=2026-05-16q';
+import { initTabs } from './lib/tabs.js?v=2026-05-16q';
+import { Exercises } from './lib/exercises.js?v=2026-05-16q';
 
 const NS = 'llm-101-v1';
 const storage = new Storage(NS);
@@ -206,7 +206,11 @@ function showSlide(idx) {
   const list = slides();
   if (idx < 0 || idx >= list.length) return;
   const goingForward = idx > currentIdx;
-  list.forEach((s, i) => s.classList.toggle('is-active', i === idx));
+  list.forEach((s, i) => {
+    const active = i === idx;
+    s.classList.toggle('is-active', active);
+    s.setAttribute('aria-hidden', active ? 'false' : 'true');
+  });
   const newSlide = list[idx];
   if (newSlide?.hasAttribute('data-stepped')) {
     if (goingForward) resetSteps(newSlide);
@@ -215,6 +219,7 @@ function showSlide(idx) {
   currentIdx = idx;
   document.getElementById('current').textContent = idx + 1;
   document.getElementById('total').textContent = list.length;
+  updateTOCCurrent(newSlide?.dataset.slideId);
 }
 
 function goNext() {
@@ -284,11 +289,22 @@ function rebuildTOC() {
     a.href = `#${id}`;
     a.textContent = label;
     a.dataset.slideId = id;
+    a.setAttribute('aria-label', `Zu Folie: ${label}`);
     li.appendChild(a);
     ol.appendChild(li);
   });
   toc.innerHTML = '';
   toc.appendChild(ol);
+  updateTOCCurrent(slides()[currentIdx]?.dataset.slideId);
+}
+
+function updateTOCCurrent(slideId) {
+  document.querySelectorAll('.app-toc a').forEach(a => {
+    const current = a.dataset.slideId === slideId;
+    a.classList.toggle('is-current', current);
+    if (current) a.setAttribute('aria-current', 'page');
+    else a.removeAttribute('aria-current');
+  });
 }
 
 // Scroll-Spy: markiere aktive Sektion im TOC
@@ -298,9 +314,7 @@ function setupScrollSpy() {
     for (const entry of entries) {
       if (entry.isIntersecting) {
         const id = entry.target.dataset.slideId;
-        document.querySelectorAll('.app-toc a').forEach(a => {
-          a.classList.toggle('is-current', a.dataset.slideId === id);
-        });
+        updateTOCCurrent(id);
       }
     }
   }, { threshold: 0.4 });
@@ -308,6 +322,8 @@ function setupScrollSpy() {
 }
 
 rebuildTOC();
+document.querySelector('.slide-counter')?.setAttribute('aria-live', 'polite');
+document.querySelector('.slide-counter')?.setAttribute('aria-label', 'Aktuelle Folie');
 setupScrollSpy();
 
 // IDs als Anker setzen für Hash-Navigation
