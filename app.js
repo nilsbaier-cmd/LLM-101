@@ -1,9 +1,9 @@
 // app.js — Haupteinstieg
-import { Storage } from './lib/storage.js?v=2026-05-16d';
-import { ModeManager } from './lib/mode.js?v=2026-05-16d';
-import { icon } from './lib/icons.js?v=2026-05-16d';
-import { initTabs } from './lib/tabs.js?v=2026-05-16d';
-import { Exercises } from './lib/exercises.js?v=2026-05-16d';
+import { Storage } from './lib/storage.js?v=2026-05-16g';
+import { ModeManager } from './lib/mode.js?v=2026-05-16g';
+import { icon } from './lib/icons.js?v=2026-05-16g';
+import { initTabs } from './lib/tabs.js?v=2026-05-16g';
+import { Exercises } from './lib/exercises.js?v=2026-05-16g';
 
 const NS = 'llm-101-v1';
 const storage = new Storage(NS);
@@ -116,6 +116,36 @@ function initPromptProduct(root = document) {
 }
 
 initPromptProduct();
+
+function initContextXray(root = document) {
+  root.querySelectorAll('[data-context-xray]').forEach(demo => {
+    const result = demo.querySelector('[data-xray-result]');
+    const stacks = demo.querySelectorAll('[data-xray-stack]');
+
+    function setMode(modeName) {
+      demo.querySelectorAll('[data-context-xray-mode]').forEach(btn => {
+        const active = btn.dataset.contextXrayMode === modeName;
+        btn.classList.toggle('active', active);
+        btn.setAttribute('aria-pressed', active ? 'true' : 'false');
+      });
+      stacks.forEach(stack => {
+        const active = stack.dataset.xrayStack === modeName;
+        stack.hidden = !active;
+        stack.classList.toggle('is-active', active);
+      });
+      const resultAttr = modeName === 'noisy' ? 'data-result-noisy' : 'data-result-clean';
+      if (result) result.textContent = result.getAttribute(resultAttr) || '';
+    }
+
+    demo.querySelectorAll('[data-context-xray-mode]').forEach(btn => {
+      btn.addEventListener('click', () => setMode(btn.dataset.contextXrayMode));
+    });
+
+    setMode('clean');
+  });
+}
+
+initContextXray();
 
 // Toggle-Verkabelung
 document.querySelectorAll('.toggle').forEach(btn => {

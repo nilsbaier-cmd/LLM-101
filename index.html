@@ -7,9 +7,9 @@
   <meta http-equiv="Pragma" content="no-cache">
   <meta http-equiv="Expires" content="0">
   <title>Einführung Claude</title>
-  <link rel="stylesheet" href="tokens.css?v=2026-05-16d">
-  <link rel="stylesheet" href="app.css?v=2026-05-16d">
-  <link rel="stylesheet" href="presentation.css?v=2026-05-16d">
+  <link rel="stylesheet" href="tokens.css?v=2026-05-16g">
+  <link rel="stylesheet" href="app.css?v=2026-05-16g">
+  <link rel="stylesheet" href="presentation.css?v=2026-05-16g">
 </head>
 <body data-layout="slide">
   <header class="app-header">
@@ -1281,6 +1281,82 @@ Freundliche Grüße</div>
         </div>
       </section>
 
+      <section class="slide" data-slide-id="usecase-5" data-chapter="usecases">
+        <div class="slide-inner">
+          <div class="chapter-label">Kapitel 5 — Use Cases</div>
+          <h2>Context Window X-Ray</h2>
+          <p class="pull-quote">Das Modell sieht nicht einfach „alles“. Es arbeitet mit dem Kontext, der gerade sichtbar, frisch und relevant genug ist.</p>
+
+          <div class="context-xray" data-context-xray>
+            <div class="xray-controls" role="toolbar" aria-label="Kontext-Qualität">
+              <button class="btn xray-mode active" data-context-xray-mode="clean" type="button" aria-pressed="true">sauberer Kontext</button>
+              <button class="btn xray-mode" data-context-xray-mode="noisy" type="button" aria-pressed="false">überfüllt</button>
+            </div>
+
+            <div class="xray-grid">
+              <div class="xray-card xray-chat">
+                <div class="uc-section-label">Chat-Kontext</div>
+
+                <div class="xray-stack is-active" data-xray-stack="clean">
+                  <div class="xray-message is-active">
+                    <span class="xray-state">aktiv</span>
+                    <strong>Ziel</strong>
+                    <span>Entscheidungsgrundlage für Pilotabschluss vorbereiten.</span>
+                  </div>
+                  <div class="xray-message is-active">
+                    <span class="xray-state">aktiv</span>
+                    <strong>Arbeitskontext</strong>
+                    <span>Verwaltung, vorsichtiger Rollout, klare Risiken.</span>
+                  </div>
+                  <div class="xray-message is-muted">
+                    <span class="xray-state">matt</span>
+                    <strong>Frühere Diskussion</strong>
+                    <span>Drei Optionen vergleichen, keine Verkaufsrhetorik.</span>
+                  </div>
+                </div>
+
+                <div class="xray-stack" data-xray-stack="noisy" hidden>
+                  <div class="xray-message is-active">
+                    <span class="xray-state">aktiv</span>
+                    <strong>Letzte Frage</strong>
+                    <span>Kannst du daraus bitte schnell eine Empfehlung machen?</span>
+                  </div>
+                  <div class="xray-message is-muted">
+                    <span class="xray-state">matt</span>
+                    <strong>Verwässert</strong>
+                    <span>Mehrere alte Varianten, Stilwechsel und Nebenfragen.</span>
+                  </div>
+                  <div class="xray-message is-lost">
+                    <span class="xray-state">verdrängt</span>
+                    <strong>Wichtig, aber weit hinten</strong>
+                    <span>Der Pilot ist abgeschlossen; Rollout in Etappen bevorzugt.</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="xray-card xray-scan-card">
+                <div class="uc-section-label">X-Ray-Scan</div>
+                <div class="xray-window" aria-hidden="true">
+                  <div class="xray-layer xray-hot">
+                    <span>sichtbar</span>
+                  </div>
+                  <div class="xray-layer xray-warm">
+                    <span>noch brauchbar</span>
+                  </div>
+                  <div class="xray-layer xray-cold">
+                    <span>fällt raus</span>
+                  </div>
+                </div>
+                <div class="xray-result"
+                     data-xray-result
+                     data-result-clean="Antwortqualität: fokussiert. Das Modell nutzt Ziel, Rolle, Grenzen und Entscheidlogik."
+                     data-result-noisy="Antwortqualität: zufälliger. Das Modell greift auf die letzte Frage zurück und verliert ältere, wichtige Annahmen.">Antwortqualität: fokussiert. Das Modell nutzt Ziel, Rolle, Grenzen und Entscheidlogik.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       <section class="slide" data-slide-id="skills-1" data-chapter="skills">
         <div class="slide-inner">
           <div class="chapter-label">Kapitel 6 — Skills</div>
@@ -2011,6 +2087,6 @@ VERBOTEN
     </div>
   </main>
 
-  <script type="module" src="app.js?v=2026-05-16d"></script>
+  <script type="module" src="app.js?v=2026-05-16g"></script>
 </body>
 </html>

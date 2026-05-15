@@ -849,6 +849,144 @@ body[data-layout="scroll"] .app-controls { display: none; }
 }
 .pp-product-note strong { color: var(--text-primary); }
 
+/* Context Window X-Ray */
+.context-xray {
+  margin-top: var(--space-5);
+}
+.xray-controls {
+  display: flex;
+  gap: var(--space-2);
+  margin-bottom: var(--space-4);
+}
+.xray-mode.active {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+}
+.xray-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(320px, 0.82fr);
+  gap: var(--space-4);
+  align-items: stretch;
+}
+.xray-card {
+  background: var(--bg-tint);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-5);
+}
+.xray-stack {
+  display: grid;
+  gap: var(--space-3);
+}
+.xray-stack[hidden] {
+  display: none;
+}
+.xray-message {
+  display: grid;
+  grid-template-columns: 82px 1fr;
+  gap: var(--space-2) var(--space-3);
+  align-items: start;
+  min-height: 82px;
+  padding: var(--space-3);
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--accent);
+  border-radius: var(--radius-md);
+}
+.xray-message strong {
+  font-size: 14px;
+  line-height: 1.35;
+}
+.xray-message span:last-child {
+  grid-column: 2;
+  color: var(--text-secondary);
+  font-size: 14px;
+  line-height: 1.45;
+}
+.xray-state {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 24px;
+  padding: 3px 8px;
+  border-radius: 999px;
+  background: var(--accent-soft);
+  color: var(--accent-strong);
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+.xray-message.is-muted {
+  opacity: 0.72;
+  border-left-color: rgba(220, 150, 40, 0.75);
+}
+.xray-message.is-muted .xray-state {
+  background: rgba(220, 150, 40, 0.14);
+  color: #9a5b00;
+}
+.xray-message.is-lost {
+  opacity: 0.48;
+  border-left-color: rgba(210, 70, 70, 0.75);
+  filter: saturate(0.72);
+}
+.xray-message.is-lost .xray-state {
+  background: rgba(210, 70, 70, 0.12);
+  color: #9b2f2f;
+}
+.xray-window {
+  display: grid;
+  gap: var(--space-3);
+  min-height: 268px;
+  margin-top: var(--space-2);
+  padding: var(--space-4);
+  background:
+    linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px),
+    linear-gradient(180deg, rgba(255,255,255,0.04) 1px, transparent 1px),
+    #172027;
+  background-size: 22px 22px;
+  border: 1px solid rgba(255,255,255,0.14);
+  border-radius: var(--radius-lg);
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,0.04);
+}
+.xray-layer {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding: var(--space-3);
+  border-radius: var(--radius-md);
+  color: rgba(255,255,255,0.9);
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+.xray-layer:before {
+  content: '';
+  position: absolute;
+  left: var(--space-3);
+  right: 42%;
+  height: 8px;
+  border-radius: 999px;
+  background: currentColor;
+  opacity: 0.68;
+  box-shadow: 0 0 22px currentColor;
+}
+.xray-hot { background: rgba(91, 180, 139, 0.24); color: #8df1bd; }
+.xray-warm { background: rgba(237, 178, 84, 0.2); color: #ffd18b; }
+.xray-cold { background: rgba(220, 82, 82, 0.18); color: #ff9a9a; }
+.xray-cold:before { right: 68%; opacity: 0.38; }
+.xray-result {
+  margin-top: var(--space-3);
+  padding: var(--space-3);
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  color: var(--text-secondary);
+  font-size: 14px;
+  line-height: 1.5;
+}
+
 /* Kapitel 6: Skills */
 
 /* Demo Time */
@@ -1851,6 +1989,7 @@ body[data-exercises="off"] .exercise { display: none; }
   .uc-steps,
   .uc-prompts,
   .pp-grid,
+  .xray-grid,
   .next-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
@@ -1901,6 +2040,7 @@ body[data-exercises="off"] .exercise { display: none; }
   .uc-steps,
   .uc-prompts,
   .pp-grid,
+  .xray-grid,
   .next-grid,
   .github-terms-grid,
   [data-slide-id="claude-4"] .settings-grid,
@@ -1912,9 +2052,27 @@ body[data-exercises="off"] .exercise { display: none; }
     flex-wrap: wrap;
   }
 
+  .xray-controls {
+    flex-wrap: wrap;
+  }
+
   .pp-prompt-card,
-  .pp-output-card {
+  .pp-output-card,
+  .xray-card {
     padding: var(--space-4);
+  }
+
+  .xray-message {
+    grid-template-columns: 1fr;
+    min-height: auto;
+  }
+
+  .xray-message span:last-child {
+    grid-column: 1;
+  }
+
+  .xray-window {
+    min-height: 220px;
   }
 
   .myth-table {
