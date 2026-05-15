@@ -1,10 +1,10 @@
 # LLM 101 — Interaktive Präsentation
 
-Hybrid Slide/Scroll-Präsentation als Einführung in Large Language Models am Beispiel von Claude. Statisches HTML/CSS/JS, kein Build-Step, self-hosted Fonts, DSGVO-konform.
+Hybrid Slide/Scroll-Präsentation als Einführung in Large Language Models mit konkreten Beispielen aus Claude, ChatGPT und Gemini. Statisches HTML/CSS/JS, kein Build-Step, self-hosted Fonts, DSGVO-konform.
 
 ## Inhalt
 
-- `index.html` — Hauptpräsentation, 22 Folien in 7 Kapiteln, Vortrags- und Lesemodus, Hell/Dunkel/Auto-Theme, optional LLM-agnostische Tabs (Claude / ChatGPT / Gemini) und Übungen
+- `index.html` — Hauptpräsentation, 25 Folien in 7 Kapiteln, Vortrags- und Lesemodus, Hell/Dunkel/Auto-Theme, optional LLM-agnostische Tabs (Claude, ChatGPT und Gemini) und Übungen
 - `meine-notizen.html` — Sammelseite für eigene Reflexionsantworten mit Markdown-Export
 - `explainer/*.html` — Sieben standalone Concept-Explainer (A–G):
   - A — Context Window Simulator
