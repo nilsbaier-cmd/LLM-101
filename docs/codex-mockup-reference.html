@@ -1,0 +1,1444 @@
+<!DOCTYPE html>
+<html lang="de" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LLM 101 — Designstudie C · Codex (Iteration 2)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,500&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    /* ============================================================
+       VARIANTE C · ITERATION 2 — Codex, fokussiert.
+       Änderungen vs. v1:
+       - Confidence-Meter entfernt
+       - Folio nur noch im Footer (mit Lernpfad-Fortschritt)
+       - Header zeigt Kapitel + Unterthema mit Icon
+       - Annotations-Spalte entfernt → mehr Raum für Kerninhalt
+       - Konsistentes Icon-Set (inline SVG, Lucide-Stil)
+       ============================================================ */
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --font-sans: 'Hanken Grotesk', system-ui, -apple-system, sans-serif;
+      --font-mono: 'JetBrains Mono', ui-monospace, 'SF Mono', monospace;
+
+      /* Codex Palette — Light */
+      --paper: #fafaf6;
+      --paper-tint: #f3f2ec;
+      --ink: #0a0a0c;
+      --ink-soft: #44464b;
+      --ink-mute: #8c8e96;
+      --rule: #0a0a0c1c;
+      --rule-soft: #0a0a0c10;
+      --acid: #c5e818;
+      --acid-glow: #d4f52640;
+      --acid-deep: #758c00;
+      --cobalt: #1f3df0;
+      --cobalt-soft: #1f3df012;
+      --crimson: #c4304a;
+      --signal: #16a674;
+      --warn: #d68410;
+      --shadow-page: 0 1px 0 #0a0a0c08, 0 24px 70px #0a0a0c14;
+    }
+
+    [data-theme="dark"] {
+      --paper: #0c0c0e;
+      --paper-tint: #131316;
+      --ink: #f0eee6;
+      --ink-soft: #b4b4ba;
+      --ink-mute: #6e6e76;
+      --rule: #f0eee61c;
+      --rule-soft: #f0eee610;
+      --acid: #d4f526;
+      --acid-glow: #d4f5263a;
+      --acid-deep: #b8d800;
+      --cobalt: #7f95ff;
+      --cobalt-soft: #7f95ff18;
+      --crimson: #e8627c;
+      --signal: #56d6a8;
+      --warn: #f0b54a;
+      --shadow-page: 0 1px 0 #00000050, 0 24px 70px #00000080;
+    }
+
+    html, body {
+      background: var(--paper);
+      color: var(--ink);
+      font-family: var(--font-sans);
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+      min-height: 100vh;
+    }
+
+    /* ============================================================
+       Icon helper
+       ============================================================ */
+    .ic { width: 16px; height: 16px; flex-shrink: 0; stroke: currentColor; fill: none; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; vertical-align: -3px; }
+    .ic.sm { width: 12px; height: 12px; vertical-align: -2px; stroke-width: 1.8; }
+    .ic.lg { width: 20px; height: 20px; vertical-align: -4px; }
+    .ic.xl { width: 28px; height: 28px; vertical-align: -6px; stroke-width: 1.4; }
+
+    /* ============================================================
+       Top steering bar (variant nav)
+       ============================================================ */
+    .topbar {
+      position: sticky; top: 0; z-index: 50;
+      display: flex; align-items: center; justify-content: space-between; gap: 16px;
+      padding: 12px clamp(20px, 4vw, 56px);
+      background: color-mix(in srgb, var(--paper) 90%, transparent);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--rule);
+      font-family: var(--font-mono);
+    }
+    .topbar .run {
+      display: flex; align-items: center; gap: 14px;
+      font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--ink-mute);
+    }
+    .topbar .run .id {
+      padding: 5px 9px; background: var(--ink); color: var(--paper);
+      border-radius: 3px; letter-spacing: 0.16em; font-weight: 600;
+    }
+    .topbar .run .id::before { content: "▸ "; color: var(--acid); }
+    .topbar .run b { color: var(--ink); font-weight: 600; letter-spacing: 0.06em; }
+    .topbar .run em {
+      font-style: normal; color: var(--ink); position: relative;
+      padding-right: 12px;
+    }
+    .topbar .run em::after {
+      content: ""; position: absolute; right: 0; top: 50%;
+      transform: translateY(-50%);
+      width: 7px; height: 13px;
+      background: var(--ink);
+      animation: blink 1.05s steps(2) infinite;
+    }
+    @keyframes blink { to { opacity: 0; } }
+    .topbar nav { display: flex; gap: 6px; align-items: center; }
+    .topbar a, .topbar button {
+      font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--ink-soft); text-decoration: none;
+      padding: 7px 11px; border: 1px solid var(--rule); border-radius: 3px;
+      background: transparent; cursor: pointer; font-weight: 500;
+    }
+    .topbar a:hover, .topbar button:hover {
+      color: var(--ink); border-color: var(--ink); background: var(--paper-tint);
+    }
+
+    /* ============================================================
+       Deck
+       ============================================================ */
+    .deck {
+      width: min(1340px, calc(100% - 32px));
+      margin: 28px auto 80px;
+      display: grid; gap: 28px;
+    }
+
+    .slide {
+      background: var(--paper);
+      border: 1px solid var(--rule);
+      box-shadow: var(--shadow-page);
+      overflow: hidden;
+      aspect-ratio: 16 / 9;
+      min-height: 620px;
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+      position: relative;
+    }
+
+    /* ============================================================
+       Header — Kapitel + Unterthema
+       ============================================================ */
+    .head {
+      display: grid; grid-template-columns: 1fr auto;
+      align-items: center;
+      padding: 16px clamp(28px, 3.4vw, 48px);
+      border-bottom: 1px solid var(--rule);
+      background: var(--paper-tint);
+    }
+    .head .crumb {
+      display: flex; align-items: center; gap: 12px;
+      min-width: 0;
+    }
+    .head .crumb .icon-pill {
+      display: inline-grid; place-items: center;
+      width: 32px; height: 32px;
+      border: 1px solid var(--rule);
+      border-radius: 6px;
+      background: var(--paper);
+      color: var(--ink);
+      flex-shrink: 0;
+    }
+    .head .crumb .chap {
+      font-family: var(--font-mono); font-size: 11px; font-weight: 600;
+      letter-spacing: 0.22em; text-transform: uppercase;
+      color: var(--ink-soft);
+      white-space: nowrap;
+    }
+    .head .crumb .sep {
+      color: var(--ink-mute);
+      display: inline-flex; align-items: center;
+    }
+    .head .crumb .topic {
+      font-family: var(--font-sans); font-size: 16px; font-weight: 700;
+      letter-spacing: -0.012em;
+      color: var(--ink);
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
+    /* ===== Slide-Header Toolbar (Schulungs-Controls) ===== */
+    .head .toolbar {
+      display: flex; align-items: center; gap: 4px;
+      flex-shrink: 0;
+    }
+    .head .toolbar .group {
+      display: inline-flex; align-items: center; gap: 2px;
+    }
+    .head .toolbar .div {
+      display: inline-block;
+      width: 1px; height: 18px;
+      background: var(--rule);
+      margin: 0 8px;
+    }
+    .head .toolbar .tool {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 6px 12px;
+      border-radius: 6px;
+      border: 1px solid transparent;
+      background: transparent;
+      color: var(--ink-soft);
+      font-family: var(--font-sans);
+      font-size: 13px; font-weight: 500;
+      letter-spacing: -0.005em;
+      cursor: pointer;
+      transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+    }
+    .head .toolbar .tool:hover {
+      color: var(--ink);
+      background: var(--paper);
+      border-color: var(--rule);
+    }
+    .head .toolbar .tool.icon-only { padding: 6px 8px; }
+    .head .toolbar .tool .ic {
+      width: 15px; height: 15px;
+      vertical-align: 0;
+      stroke-width: 1.7;
+    }
+    .head .toolbar .tool.active {
+      background: var(--acid-glow);
+      border-color: color-mix(in srgb, var(--acid) 60%, transparent);
+      color: var(--ink);
+      font-weight: 600;
+    }
+    /* Theme-aware active state for theme group */
+    [data-theme="light"] .head .toolbar [data-action="theme-light"],
+    [data-theme="dark"] .head .toolbar [data-action="theme-dark"] {
+      background: var(--acid-glow);
+      border-color: color-mix(in srgb, var(--acid) 60%, transparent);
+      color: var(--ink);
+      font-weight: 600;
+    }
+
+    /* ============================================================
+       Body
+       ============================================================ */
+    .body {
+      padding: clamp(32px, 4.4vw, 64px) clamp(36px, 4.4vw, 72px);
+      display: flex; flex-direction: column; gap: 24px;
+      min-width: 0; overflow: hidden;
+    }
+
+    .kicker {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-family: var(--font-mono); font-size: 11px; font-weight: 500;
+      letter-spacing: 0.22em; text-transform: uppercase;
+      color: var(--ink-mute);
+      padding-bottom: 8px; margin-bottom: 0;
+      border-bottom: 1px solid var(--rule);
+      align-self: start;
+      white-space: nowrap;
+    }
+    .kicker.acid { color: var(--acid-deep); border-color: var(--acid); }
+
+    /* Title-row: Kicker + Lede in einer Zeile (Folien 2–5) */
+    .title-row {
+      display: grid;
+      grid-template-columns: minmax(0, auto) 1fr;
+      gap: clamp(20px, 3vw, 40px);
+      align-items: baseline;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--rule);
+    }
+    .title-row .kicker {
+      border-bottom: none;
+      padding-bottom: 0;
+    }
+    .title-row h2.lede { max-width: 36ch; }
+
+    h1.display {
+      font-size: clamp(48px, 6.4vw, 96px);
+      font-weight: 800; letter-spacing: -0.035em; line-height: 0.92;
+      color: var(--ink);
+      max-width: 18ch;
+    }
+    h1.display em { font-style: italic; font-weight: 400; }
+    h1.display .caret {
+      display: inline-block; width: 0.5em; height: 0.85em;
+      background: var(--acid); margin-left: 0.06em; vertical-align: -0.04em;
+      animation: blink 1.05s steps(2) infinite;
+    }
+    @media (prefers-reduced-motion: reduce) {
+      h1.display .caret, .topbar .run em::after { animation: none; opacity: 0.5; }
+    }
+
+    h2.lede {
+      font-size: clamp(22px, 2.4vw, 32px);
+      font-weight: 700; letter-spacing: -0.02em; line-height: 1.15;
+      color: var(--ink);
+      max-width: 28ch;
+    }
+    h2.lede em { font-style: italic; font-weight: 400; color: var(--ink-soft); }
+
+    .lead {
+      font-size: clamp(18px, 1.6vw, 23px);
+      line-height: 1.5;
+      color: var(--ink-soft);
+      max-width: 64ch;
+    }
+
+    /* Token pill */
+    .tok {
+      display: inline-flex; align-items: center; gap: 4px;
+      padding: 1px 9px; margin: 0 1px;
+      border-radius: 999px;
+      background: var(--acid-glow);
+      border: 1px solid color-mix(in srgb, var(--acid) 70%, transparent);
+      color: var(--ink);
+      font-weight: 600;
+      font-size: 0.94em;
+      letter-spacing: -0.005em;
+      cursor: default;
+      transition: background 0.15s ease, border-color 0.15s ease;
+    }
+    .tok:hover { background: var(--acid); border-color: var(--acid); }
+    .tok .ic { width: 11px; height: 11px; stroke-width: 2; color: var(--acid-deep); }
+    [data-theme="dark"] .tok .ic { color: var(--acid); }
+    .tok.cobalt {
+      background: var(--cobalt-soft);
+      border-color: color-mix(in srgb, var(--cobalt) 60%, transparent);
+    }
+    .tok.cobalt .ic { color: var(--cobalt); }
+    .tok.warn {
+      background: color-mix(in srgb, var(--crimson) 12%, transparent);
+      border-color: color-mix(in srgb, var(--crimson) 60%, transparent);
+    }
+    .tok.warn .ic { color: var(--crimson); }
+
+    /* ============================================================
+       Footer — Pfad-Fortschritt + Navigation
+       ============================================================ */
+    .foot {
+      display: grid; grid-template-columns: auto 1fr auto;
+      align-items: center; gap: 24px;
+      padding: 12px clamp(28px, 3vw, 48px);
+      border-top: 1px solid var(--rule);
+      background: var(--paper-tint);
+    }
+    .foot .nav-btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 8px 14px;
+      background: var(--paper);
+      border: 1px solid var(--rule);
+      color: var(--ink);
+      font-family: var(--font-mono); font-size: 11px; font-weight: 600;
+      letter-spacing: 0.14em; text-transform: uppercase;
+      text-decoration: none;
+      cursor: pointer;
+      transition: border-color 0.15s ease, background 0.15s ease;
+    }
+    .foot .nav-btn:hover { border-color: var(--ink); background: var(--paper-tint); }
+    .foot .nav-btn[aria-disabled="true"] { opacity: 0.35; cursor: not-allowed; pointer-events: none; }
+    .foot .nav-btn .ic { color: var(--ink-soft); }
+    .foot .nav-btn:hover .ic { color: var(--ink); }
+
+    .foot .center {
+      justify-self: center;
+      display: flex; align-items: center; gap: 22px;
+      font-family: var(--font-mono); font-size: 11px;
+      color: var(--ink-mute);
+      letter-spacing: 0.08em;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .foot .center .group { display: inline-flex; align-items: center; gap: 8px; }
+    .foot .center .group .ic { color: var(--ink-mute); }
+    .foot .center .group b {
+      color: var(--ink); font-weight: 600;
+      font-family: var(--font-sans); letter-spacing: 0;
+    }
+    .foot .center .sep {
+      display: inline-block; width: 4px; height: 4px; border-radius: 50%;
+      background: var(--ink-mute); opacity: 0.45;
+    }
+    .foot .center .path-dots {
+      display: inline-flex; align-items: center; gap: 4px;
+    }
+    .foot .center .path-dots i {
+      width: 16px; height: 4px; border-radius: 2px;
+      background: var(--rule);
+    }
+    .foot .center .path-dots i.done { background: var(--signal); }
+    .foot .center .path-dots i.here { background: var(--acid); box-shadow: 0 0 0 2px var(--acid-glow); }
+
+    /* ============================================================
+       SLIDE 01 — COVER
+       ============================================================ */
+    .cover .body {
+      gap: 28px;
+      justify-content: center;
+    }
+    .cover .meta-stamp {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase;
+      color: var(--ink-mute);
+    }
+    .cover .colophon {
+      margin-top: auto;
+      display: grid; grid-template-columns: repeat(4, auto) 1fr auto;
+      gap: 36px; align-items: end;
+      padding-top: 20px; border-top: 1px solid var(--rule);
+      font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--ink-mute);
+    }
+    .cover .colophon div b {
+      display: block; font-family: var(--font-sans); font-size: 15px; font-weight: 700; letter-spacing: -0.01em;
+      color: var(--ink); margin-bottom: 2px;
+    }
+    .cover .colophon div .ic { color: var(--ink-mute); margin-bottom: 4px; }
+    .cover .colophon .seal {
+      justify-self: end;
+      width: 64px; height: 64px;
+      border: 2px solid var(--ink); border-radius: 50%;
+      display: grid; place-items: center;
+      font-family: var(--font-sans); font-weight: 800; font-size: 15px;
+      color: var(--ink); position: relative;
+      letter-spacing: -0.01em;
+    }
+    .cover .colophon .seal::before {
+      content: ""; position: absolute; inset: -8px;
+      border: 1px dashed var(--rule); border-radius: 50%;
+    }
+    .cover .colophon .seal::after {
+      content: "v2.4 · ed."; position: absolute;
+      bottom: -18px; left: 50%; transform: translateX(-50%);
+      font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.14em;
+      color: var(--ink-mute); white-space: nowrap;
+    }
+
+    /* ============================================================
+       SLIDE 02 — ANATOMIE EINES PROMPTS
+       ============================================================ */
+    .anatomy .body { gap: 22px; }
+    .anatomy .compare {
+      display: grid; grid-template-columns: 1fr 1fr;
+      border: 1px solid var(--rule);
+    }
+    .anatomy .compare > div { padding: 22px 26px; min-width: 0; }
+    .anatomy .compare > div:first-child {
+      border-right: 1px solid var(--rule);
+      background: var(--paper-tint);
+    }
+    .anatomy .compare .label {
+      display: flex; align-items: center; gap: 10px;
+      font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase;
+      color: var(--ink-mute); margin-bottom: 14px;
+    }
+    .anatomy .compare > div:first-child .label .ic { color: var(--crimson); }
+    .anatomy .compare > div:last-child .label .ic { color: var(--signal); }
+    .anatomy .compare p {
+      font-family: var(--font-mono); font-size: 14px; line-height: 1.65;
+      color: var(--ink);
+    }
+    .anatomy .compare p .strike { text-decoration: line-through; color: var(--ink-mute); }
+    .anatomy .ledger {
+      display: grid; grid-template-columns: repeat(6, 1fr);
+      border: 1px solid var(--rule);
+      border-top: none;
+    }
+    .anatomy .ledger > div {
+      padding: 14px 18px;
+      border-right: 1px solid var(--rule-soft);
+      display: flex; flex-direction: column; gap: 6px;
+    }
+    .anatomy .ledger > div:last-child { border-right: none; }
+    .anatomy .ledger b {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-family: var(--font-mono); font-size: 9px; font-weight: 600;
+      letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--ink-mute);
+    }
+    .anatomy .ledger b .num { color: var(--acid-deep); font-weight: 700; }
+    [data-theme="dark"] .anatomy .ledger b .num { color: var(--acid); }
+    .anatomy .ledger span.val { font-size: 15px; font-weight: 600; color: var(--ink); letter-spacing: -0.01em; }
+
+    /* ============================================================
+       SLIDE 03 — CONTEXT WINDOW
+       ============================================================ */
+    .context .body { gap: 22px; }
+    .context .convo {
+      flex: 1; min-height: 0;
+      border: 1px solid var(--rule);
+      display: grid; grid-template-rows: auto 1fr auto;
+      overflow: hidden;
+    }
+    .context .convo header {
+      display: grid; grid-template-columns: 1fr auto auto;
+      gap: 18px; align-items: center;
+      padding: 12px 20px;
+      background: var(--paper-tint);
+      border-bottom: 1px solid var(--rule);
+      font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--ink-mute);
+    }
+    .context .convo header b { color: var(--ink); font-weight: 600; }
+    .context .convo header .filename {
+      display: inline-flex; align-items: center; gap: 8px;
+    }
+    .context .convo header .meter {
+      width: 260px; height: 6px; background: var(--rule); border-radius: 3px; overflow: hidden;
+      position: relative;
+    }
+    .context .convo header .meter i {
+      position: absolute; left: 0; top: 0; bottom: 0; width: 42%;
+      background: linear-gradient(90deg, var(--signal), var(--acid));
+    }
+    .context .convo header .meter i::after {
+      content: ""; position: absolute; right: -1px; top: -3px; bottom: -3px; width: 2px;
+      background: var(--ink);
+    }
+    .context .convo .tape {
+      display: grid; grid-template-columns: 70px 1fr;
+      align-items: stretch;
+      overflow: hidden;
+    }
+    .context .convo .tape .lines {
+      border-right: 1px solid var(--rule-soft);
+      padding: 20px 12px;
+      font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.06em;
+      color: var(--ink-mute);
+      text-align: right;
+      background: var(--paper-tint);
+      display: flex; flex-direction: column; gap: 6px;
+    }
+    .context .convo .tape .lines span:nth-child(2) { color: var(--ink); font-weight: 600; }
+    .context .convo .tape .lines span.dropped { text-decoration: line-through; color: var(--ink-mute); opacity: 0.4; }
+    .context .convo .tape .roll {
+      padding: 20px 28px;
+      font-family: var(--font-mono); font-size: 14px; line-height: 1.85;
+      color: var(--ink);
+      display: flex; flex-direction: column; gap: 8px;
+    }
+    .context .convo .tape .roll .who {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-weight: 600; color: var(--cobalt); font-size: 11px; letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    .context .convo .tape .roll .who.user { color: var(--acid-deep); }
+    [data-theme="dark"] .context .convo .tape .roll .who.user { color: var(--acid); }
+    .context .convo .tape .roll .dropped { text-decoration: line-through; color: var(--ink-mute); opacity: 0.45; }
+    .context .convo footer {
+      display: grid; grid-template-columns: auto 1fr auto auto;
+      gap: 18px; align-items: center;
+      padding: 12px 20px;
+      background: var(--paper-tint);
+      border-top: 1px solid var(--rule);
+      font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--ink-mute);
+    }
+    .context .convo footer b { color: var(--ink); font-weight: 600; }
+    .context .convo footer .pill {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 4px 10px; border: 1px solid var(--rule); border-radius: 999px;
+      background: var(--paper); color: var(--ink);
+    }
+    .context .convo footer .pill .ic { color: var(--acid-deep); }
+    [data-theme="dark"] .context .convo footer .pill .ic { color: var(--acid); }
+    .context .convo footer .pill.warn { color: var(--crimson); }
+    .context .convo footer .pill.warn .ic { color: var(--crimson); }
+    .context .rule-callout {
+      display: grid; grid-template-columns: auto 1fr;
+      gap: 16px; align-items: center;
+      padding: 14px 20px;
+      background: var(--paper-tint);
+      border: 1px solid var(--rule);
+    }
+    .context .rule-callout .icon-cell {
+      display: grid; place-items: center;
+      width: 36px; height: 36px;
+      background: var(--paper); border: 1px solid var(--rule); border-radius: 6px;
+      color: var(--ink);
+    }
+    .context .rule-callout p {
+      font-size: 15px; line-height: 1.5; color: var(--ink); font-weight: 500;
+    }
+    .context .rule-callout p em { color: var(--ink-soft); font-style: italic; font-weight: 400; }
+
+    /* ============================================================
+       SLIDE 04 — DATENAMPEL
+       ============================================================ */
+    .ampel .body { gap: 22px; }
+    .ampel .articles {
+      display: grid; grid-template-columns: 1fr 1fr 1fr;
+      border: 1px solid var(--rule);
+      flex: 1; min-height: 0;
+    }
+    .ampel .articles > article {
+      padding: 22px 24px 22px;
+      border-right: 1px solid var(--rule);
+      display: flex; flex-direction: column; gap: 14px;
+      position: relative;
+    }
+    .ampel .articles > article:last-child { border-right: none; }
+    .ampel .articles .num {
+      display: flex; align-items: center; justify-content: space-between;
+      font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase;
+      color: var(--ink-mute);
+    }
+    .ampel .articles .num b {
+      color: var(--ink); font-weight: 600;
+      display: inline-flex; align-items: center; gap: 8px;
+    }
+    .ampel .articles .num .status {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-family: var(--font-mono); font-size: 9px; font-weight: 700;
+      padding: 4px 9px; border-radius: 3px; letter-spacing: 0.14em;
+    }
+    .ampel .articles .ok .num .status   { background: var(--signal); color: var(--paper); }
+    .ampel .articles .warn .num .status { background: var(--warn); color: #0a0a0c; }
+    .ampel .articles .stop .num .status { background: var(--crimson); color: var(--paper); }
+    .ampel .articles h3 {
+      font-size: clamp(26px, 2.8vw, 36px); font-weight: 700; letter-spacing: -0.022em; line-height: 1.05;
+    }
+    .ampel .articles .body-text {
+      font-family: var(--font-mono); font-size: 13px; line-height: 1.55;
+      color: var(--ink); padding-top: 8px; border-top: 1px solid var(--rule-soft);
+    }
+    .ampel .articles ul {
+      list-style: none;
+      display: grid; gap: 8px;
+      padding-top: 4px;
+      font-size: 13.5px; line-height: 1.45;
+      color: var(--ink-soft);
+    }
+    .ampel .articles ul li {
+      display: grid; grid-template-columns: 18px 1fr; gap: 8px;
+      align-items: baseline;
+    }
+    .ampel .articles ul li .ic {
+      color: var(--ink-mute);
+      width: 13px; height: 13px;
+    }
+    .ampel .articles .ok ul li .ic { color: var(--signal); }
+    .ampel .articles .warn ul li .ic { color: var(--warn); }
+    .ampel .articles .stop ul li .ic { color: var(--crimson); }
+    .ampel .articles .marginal-cite {
+      margin-top: auto;
+      padding-top: 12px; border-top: 1px dashed var(--rule);
+      display: inline-flex; align-items: center; gap: 6px;
+      font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.06em;
+      color: var(--cobalt);
+    }
+    .ampel .footer-rule {
+      display: grid; grid-template-columns: auto 1fr auto;
+      gap: 18px; align-items: center;
+      padding: 14px 20px;
+      border: 1px solid var(--rule);
+      background: var(--paper-tint);
+      font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--ink-mute);
+    }
+    .ampel .footer-rule .icon-cell {
+      display: inline-grid; place-items: center;
+      width: 32px; height: 32px;
+      background: var(--paper); border: 1px solid var(--rule); border-radius: 6px;
+      color: var(--ink);
+    }
+    .ampel .footer-rule b {
+      color: var(--ink); font-weight: 600;
+      font-family: var(--font-sans); letter-spacing: -0.01em;
+      font-size: 15px;
+      text-transform: none;
+    }
+    .ampel .footer-rule .escalate {
+      display: inline-flex; align-items: center; gap: 8px;
+      color: var(--cobalt);
+    }
+    .ampel .footer-rule .escalate b { color: var(--cobalt); }
+
+    /* ============================================================
+       SLIDE 05 — SKILL LADDER
+       ============================================================ */
+    .ladder .body { gap: 18px; }
+    .ladder .ledger {
+      flex: 1; min-height: 0;
+      border: 1px solid var(--rule);
+      display: grid; grid-template-rows: auto repeat(7, 1fr);
+      overflow: hidden;
+    }
+    .ladder .ledger .lhead {
+      display: grid; grid-template-columns: 90px 1fr 220px 140px 130px;
+      gap: 18px; padding: 12px 20px;
+      background: var(--paper-tint); border-bottom: 1px solid var(--rule);
+      font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase;
+      color: var(--ink-mute);
+    }
+    .ladder .ledger .row {
+      display: grid; grid-template-columns: 90px 1fr 220px 140px 130px;
+      gap: 18px; align-items: center;
+      padding: 12px 20px;
+      border-bottom: 1px solid var(--rule-soft);
+      font-size: 14px;
+    }
+    .ladder .ledger .row:last-child { border-bottom: none; }
+    .ladder .ledger .row .ed {
+      font-family: var(--font-mono); font-size: 11px; font-weight: 600; letter-spacing: 0.12em;
+      color: var(--ink-soft);
+    }
+    .ladder .ledger .row .title {
+      font-weight: 700; letter-spacing: -0.015em; font-size: 17px;
+      display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap;
+    }
+    .ladder .ledger .row .title em {
+      font-style: normal; color: var(--ink-mute); font-weight: 400; font-size: 13px;
+    }
+    .ladder .ledger .row .req {
+      font-family: var(--font-mono); font-size: 11.5px; color: var(--ink-soft); line-height: 1.4;
+    }
+    .ladder .ledger .row .runs {
+      font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.04em;
+      color: var(--ink-mute);
+      display: flex; gap: 4px; align-items: center;
+    }
+    .ladder .ledger .row .runs i {
+      width: 14px; height: 6px; background: var(--rule); border-radius: 1px;
+    }
+    .ladder .ledger .row .runs i.done { background: var(--signal); }
+    .ladder .ledger .row .runs i.here { background: var(--acid); box-shadow: 0 0 0 2px var(--acid-glow); }
+    .ladder .ledger .row .status {
+      justify-self: end;
+      display: inline-flex; align-items: center; gap: 6px;
+      font-family: var(--font-mono); font-size: 9px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase;
+      padding: 5px 9px; border-radius: 3px;
+      border: 1px solid var(--rule); color: var(--ink-mute);
+    }
+    .ladder .ledger .row.published .status { background: var(--signal); color: var(--paper); border-color: var(--signal); }
+    .ladder .ledger .row.current { background: linear-gradient(90deg, var(--acid-glow), transparent 70%); }
+    .ladder .ledger .row.current .status { background: var(--ink); color: var(--acid); border-color: var(--ink); }
+    .ladder .ledger .row.current .title::before {
+      content: ""; display: inline-block; width: 0; height: 0;
+      border-top: 6px solid transparent; border-bottom: 6px solid transparent; border-left: 8px solid var(--acid-deep);
+    }
+    [data-theme="dark"] .ladder .ledger .row.current .title::before { border-left-color: var(--acid); }
+    .ladder .ledger .row.revision .status { background: var(--cobalt-soft); color: var(--cobalt); border-color: var(--cobalt); }
+    .ladder .ledger .row.draft .status { opacity: 0.7; }
+
+    .ladder .errata {
+      display: grid; grid-template-columns: auto 1fr auto;
+      gap: 18px; align-items: center;
+      padding: 14px 20px;
+      background: var(--paper-tint);
+      border: 1px solid var(--rule);
+    }
+    .ladder .errata .label {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase;
+      color: var(--crimson); font-weight: 600;
+    }
+    .ladder .errata p { font-family: var(--font-mono); font-size: 13px; color: var(--ink); line-height: 1.45; }
+    .ladder .errata a {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--cobalt); text-decoration: none; font-weight: 600;
+      padding: 8px 14px; border: 1px solid var(--cobalt); border-radius: 3px;
+    }
+    .ladder .errata a:hover { background: var(--cobalt); color: var(--paper); }
+    .ladder .errata a:hover .ic { color: var(--paper); }
+
+    /* ============================================================
+       Responsive
+       ============================================================ */
+    @media (max-width: 980px) {
+      .slide { aspect-ratio: auto; min-height: 0; }
+      .anatomy .compare, .anatomy .ledger { grid-template-columns: 1fr; }
+      .anatomy .ledger > div, .anatomy .compare > div:first-child { border-right: none; border-bottom: 1px solid var(--rule-soft); }
+      .ampel .articles { grid-template-columns: 1fr; }
+      .ampel .articles > article { border-right: none; border-bottom: 1px solid var(--rule); }
+      .head .crumb .chap, .head .crumb .topic { font-size: 12px; }
+      .foot { grid-template-columns: 1fr; gap: 12px; justify-items: center; }
+      .ladder .ledger .lhead, .ladder .ledger .row {
+        grid-template-columns: 60px 1fr 100px;
+      }
+      .ladder .ledger .lhead > :nth-child(3), .ladder .ledger .row > :nth-child(3),
+      .ladder .ledger .lhead > :nth-child(4), .ladder .ledger .row > :nth-child(4) { display: none; }
+    }
+    @media (max-width: 600px) {
+      .head { grid-template-columns: 1fr; gap: 10px; }
+      .cover .colophon { grid-template-columns: 1fr 1fr; gap: 18px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation: none !important; transition: none !important; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ============================================================
+       ICON SPRITE — Lucide-Stil, currentColor, 24×24 viewBox
+       ============================================================ -->
+  <svg style="position:absolute; width:0; height:0; overflow:hidden" aria-hidden="true">
+    <defs>
+      <symbol id="i-book-open" viewBox="0 0 24 24"><path d="M2 4h7a3 3 0 0 1 3 3v13a2 2 0 0 0-2-2H2z"/><path d="M22 4h-7a3 3 0 0 0-3 3v13a2 2 0 0 1 2-2h8z"/></symbol>
+      <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 2 4 5v6c0 5 3.5 9.5 8 11 4.5-1.5 8-6 8-11V5z"/></symbol>
+      <symbol id="i-shield-check" viewBox="0 0 24 24"><path d="M12 2 4 5v6c0 5 3.5 9.5 8 11 4.5-1.5 8-6 8-11V5z"/><path d="m9 12 2 2 4-4"/></symbol>
+      <symbol id="i-sparkles" viewBox="0 0 24 24"><path d="m12 3-1.9 5.8L4 11l6.1 2.2L12 19l1.9-5.8L20 11l-6.1-2.2z"/><path d="m5 20 1-1"/><path d="m18 5-1 1"/></symbol>
+      <symbol id="i-eye" viewBox="0 0 24 24"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/></symbol>
+      <symbol id="i-layers" viewBox="0 0 24 24"><path d="m12 2 10 6-10 6L2 8z"/><path d="m2 14 10 6 10-6"/></symbol>
+      <symbol id="i-route" viewBox="0 0 24 24"><circle cx="6" cy="19" r="3"/><path d="M9 19h6a4 4 0 0 0 0-8H9a4 4 0 0 1 0-8h6"/><circle cx="18" cy="5" r="3"/></symbol>
+      <symbol id="i-arrow-left" viewBox="0 0 24 24"><path d="M19 12H5M5 12l7-7M5 12l7 7"/></symbol>
+      <symbol id="i-arrow-right" viewBox="0 0 24 24"><path d="M5 12h14M19 12l-7-7M19 12l-7 7"/></symbol>
+      <symbol id="i-chevron-right" viewBox="0 0 24 24"><path d="m9 6 6 6-6 6"/></symbol>
+      <symbol id="i-check" viewBox="0 0 24 24" stroke-width="2.2"><path d="m5 12 5 5L20 7"/></symbol>
+      <symbol id="i-x" viewBox="0 0 24 24" stroke-width="2.2"><path d="M6 6 18 18 M6 18 18 6"/></symbol>
+      <symbol id="i-globe" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15 15 0 0 1 0 20"/><path d="M12 2a15 15 0 0 0 0 20"/></symbol>
+      <symbol id="i-alert-triangle" viewBox="0 0 24 24"><path d="M10.3 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><path d="M12 9v4"/><path d="M12 17h0"/></symbol>
+      <symbol id="i-octagon" viewBox="0 0 24 24"><path d="M7.86 2h8.28L22 7.86v8.28L16.14 22H7.86L2 16.14V7.86z"/><path d="M9 9l6 6 M9 15l6-6"/></symbol>
+      <symbol id="i-lock" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></symbol>
+      <symbol id="i-edit" viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="m18.5 2.5 3 3L12 15l-4 1 1-4z"/></symbol>
+      <symbol id="i-circle-dashed" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" stroke-dasharray="3 3"/></symbol>
+      <symbol id="i-bookmark" viewBox="0 0 24 24"><path d="m19 21-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></symbol>
+      <symbol id="i-compass" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polygon points="16 8 10 10 8 16 14 14"/></symbol>
+      <symbol id="i-message-square" viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></symbol>
+      <symbol id="i-quote" viewBox="0 0 24 24" stroke-width="1.8"><path d="M6 9h3v6H4V11a2 2 0 0 1 2-2zM15 9h3v6h-5V11a2 2 0 0 1 2-2z"/></symbol>
+      <symbol id="i-zap" viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10"/></symbol>
+      <symbol id="i-play" viewBox="0 0 24 24" stroke-width="0" fill="currentColor"><polygon points="6 4 20 12 6 20"/></symbol>
+      <symbol id="i-circle-help" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.1 9a3 3 0 0 1 5.8 1c0 2-3 3-3 3"/><path d="M12 17h0"/></symbol>
+      <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m4.93 19.07 1.41-1.41"/><path d="m17.66 6.34 1.41-1.41"/></symbol>
+      <symbol id="i-moon" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3a7 7 0 0 0 9.79 9.79z"/></symbol>
+      <symbol id="i-list" viewBox="0 0 24 24"><path d="M8 6h13"/><path d="M8 12h13"/><path d="M8 18h13"/><path d="M3 6h.01"/><path d="M3 12h.01"/><path d="M3 18h.01"/></symbol>
+      <symbol id="i-book" viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20V2H6.5A2.5 2.5 0 0 0 4 4.5z"/></symbol>
+      <symbol id="i-target" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.5"/></symbol>
+    </defs>
+  </svg>
+
+  <header class="topbar" role="banner">
+    <div class="run">
+      <span class="id">LLM-101</span>
+      <span>Run <b>2026.05.16-A</b></span>
+      <span>Edition <b>v 2.4</b></span>
+      <span>Status <em>live</em></span>
+    </div>
+    <nav aria-label="Steuerung">
+      <a href="index.html">↩ Übersicht</a>
+      <a href="variant-editorial.html">A</a>
+      <a href="variant-analytics.html">B</a>
+      <a href="variant-codex.html">C · v1</a>
+    </nav>
+  </header>
+
+  <main class="deck">
+
+    <!-- ============================================================
+         SLIDE 01 — COVER
+         ============================================================ -->
+    <section class="slide cover" aria-labelledby="slide-01">
+      <div class="head">
+        <div class="crumb">
+          <span class="icon-pill"><svg class="ic lg"><use href="#i-bookmark"/></svg></span>
+          <span class="chap">Einstieg</span>
+          <span class="sep"><svg class="ic sm"><use href="#i-chevron-right"/></svg></span>
+          <span class="topic">Welcome &amp; Edition Notes</span>
+        </div>
+        <div class="toolbar" role="toolbar" aria-label="Schulungs-Steuerung">
+          <div class="group">
+            <button class="tool active" type="button">Vortrag</button>
+            <button class="tool" type="button">Lesen</button>
+          </div>
+          <span class="div" aria-hidden="true"></span>
+          <div class="group">
+            <button class="tool icon-only" data-action="theme-light" type="button" aria-label="Light"><svg class="ic"><use href="#i-sun"/></svg></button>
+            <button class="tool icon-only" data-action="theme-dark" type="button" aria-label="Dark"><svg class="ic"><use href="#i-moon"/></svg></button>
+            <button class="tool" data-action="theme-auto" type="button">Auto</button>
+          </div>
+          <span class="div" aria-hidden="true"></span>
+          <div class="group">
+            <button class="tool" type="button">LLM-Tabs</button>
+            <button class="tool active" type="button">Übungen</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="body">
+        <span class="kicker acid">
+          <svg class="ic sm"><use href="#i-sparkles"/></svg>
+          A commented introduction · SREGE · Frühling 2026
+        </span>
+        <h1 id="slide-01" class="display">
+          Sprach&shy;modelle, <em>kommentiert</em>.<span class="caret" aria-hidden="true"></span>
+        </h1>
+        <p class="lead">
+          Eine 90-minütige Einführung zu <span class="tok"><svg class="ic"><use href="#i-message-square"/></svg>Claude</span>,
+          <span class="tok"><svg class="ic"><use href="#i-message-square"/></svg>ChatGPT</span> und
+          <span class="tok"><svg class="ic"><use href="#i-message-square"/></svg>Gemini</span> —
+          vom ersten <span class="tok cobalt"><svg class="ic"><use href="#i-zap"/></svg>Prompt</span>
+          zum kontrollierten <span class="tok cobalt"><svg class="ic"><use href="#i-route"/></svg>Workflow</span>.
+        </p>
+
+        <div class="colophon">
+          <div>
+            <svg class="ic"><use href="#i-bookmark"/></svg>
+            <b>Nils Baier</b>
+            <span>Trainer</span>
+          </div>
+          <div>
+            <svg class="ic"><use href="#i-play"/></svg>
+            <b>90 min</b>
+            <span>Dauer</span>
+          </div>
+          <div>
+            <svg class="ic"><use href="#i-layers"/></svg>
+            <b>30 Folien</b>
+            <span>+ 7 Explainer</span>
+          </div>
+          <div>
+            <svg class="ic"><use href="#i-route"/></svg>
+            <b>4 Pfade</b>
+            <span>Einsteiger → Governance</span>
+          </div>
+          <div></div>
+          <span class="seal" aria-hidden="true">LLM</span>
+        </div>
+      </div>
+
+      <div class="foot">
+        <a class="nav-btn" href="#" aria-disabled="true">
+          <svg class="ic"><use href="#i-arrow-left"/></svg> zurück
+        </a>
+        <div class="center">
+          <span class="group"><svg class="ic"><use href="#i-bookmark"/></svg> Folie <b>01 / 30</b></span>
+          <span class="sep" aria-hidden="true"></span>
+          <span class="group"><svg class="ic"><use href="#i-compass"/></svg> Lernpfad <b>Übersicht</b></span>
+        </div>
+        <a class="nav-btn" href="#">
+          weiter <svg class="ic"><use href="#i-arrow-right"/></svg>
+        </a>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         SLIDE 02 — ANATOMIE EINES PROMPTS
+         ============================================================ -->
+    <section class="slide anatomy" aria-labelledby="slide-02">
+      <div class="head">
+        <div class="crumb">
+          <span class="icon-pill"><svg class="ic lg"><use href="#i-sparkles"/></svg></span>
+          <span class="chap">Prompt-Labor</span>
+          <span class="sep"><svg class="ic sm"><use href="#i-chevron-right"/></svg></span>
+          <span class="topic">Anatomie eines Prompts</span>
+        </div>
+        <div class="toolbar" role="toolbar" aria-label="Schulungs-Steuerung">
+          <div class="group">
+            <button class="tool active" type="button">Vortrag</button>
+            <button class="tool" type="button">Lesen</button>
+          </div>
+          <span class="div" aria-hidden="true"></span>
+          <div class="group">
+            <button class="tool icon-only" data-action="theme-light" type="button" aria-label="Light"><svg class="ic"><use href="#i-sun"/></svg></button>
+            <button class="tool icon-only" data-action="theme-dark" type="button" aria-label="Dark"><svg class="ic"><use href="#i-moon"/></svg></button>
+            <button class="tool" data-action="theme-auto" type="button">Auto</button>
+          </div>
+          <span class="div" aria-hidden="true"></span>
+          <div class="group">
+            <button class="tool" type="button">LLM-Tabs</button>
+            <button class="tool active" type="button">Übungen</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="body">
+        <div class="title-row">
+          <span class="kicker">
+            <svg class="ic sm"><use href="#i-zap"/></svg>
+            Vom Wunsch zum Arbeitsauftrag
+          </span>
+          <h2 id="slide-02" class="lede">
+            Sechs Bausteine — die Reihen&shy;folge entscheidet selten,
+            das Vorhanden&shy;sein <em>immer</em>.
+          </h2>
+        </div>
+
+        <div class="compare">
+          <div>
+            <div class="label">
+              <svg class="ic"><use href="#i-x"/></svg>
+              Roh · vor der Annotation
+            </div>
+            <p><span class="strike">„Schreib mir eine gute E-Mail zum Projekt."</span></p>
+          </div>
+          <div>
+            <div class="label">
+              <svg class="ic"><use href="#i-check"/></svg>
+              Annotiert · sechs Bausteine sichtbar
+            </div>
+            <p>
+              „Schreibe eine <span class="tok"><svg class="ic"><use href="#i-zap"/></svg>Entscheidungs-E-Mail</span>
+              an die <span class="tok cobalt"><svg class="ic"><use href="#i-bookmark"/></svg>Projektleitung</span>
+              zum <span class="tok"><svg class="ic"><use href="#i-zap"/></svg>Pilotabschluss</span> —
+              <span class="tok cobalt"><svg class="ic"><use href="#i-layers"/></svg>max. 180 Wörter</span>, sachlich,
+              mit drei klaren Optionen.
+              <span class="tok warn"><svg class="ic"><use href="#i-alert-triangle"/></svg>Keine internen Namen.</span>"
+            </p>
+          </div>
+        </div>
+
+        <div class="ledger">
+          <div><b><span class="num">01</span> Ziel</b><span class="val">Entscheidung herbeiführen</span></div>
+          <div><b><span class="num">02</span> Kontext</b><span class="val">Pilotabschluss · Mai 26</span></div>
+          <div><b><span class="num">03</span> Rolle</b><span class="val">Projektleitung</span></div>
+          <div><b><span class="num">04</span> Grenzen</b><span class="val">keine internen Namen</span></div>
+          <div><b><span class="num">05</span> Stil</b><span class="val">sachlich · drei Optionen</span></div>
+          <div><b><span class="num">06</span> Output</b><span class="val">E-Mail · 180 Wörter</span></div>
+        </div>
+      </div>
+
+      <div class="foot">
+        <a class="nav-btn" href="#">
+          <svg class="ic"><use href="#i-arrow-left"/></svg> zurück
+        </a>
+        <div class="center">
+          <span class="group"><svg class="ic"><use href="#i-bookmark"/></svg> Folie <b>12 / 30</b></span>
+          <span class="sep" aria-hidden="true"></span>
+          <span class="group">
+            <svg class="ic"><use href="#i-route"/></svg>
+            Lernpfad <b>Praxis</b>
+          </span>
+          <span class="sep" aria-hidden="true"></span>
+          <span class="group">
+            <span class="path-dots" aria-hidden="true">
+              <i class="done"></i><i class="done"></i><i class="here"></i><i></i><i></i>
+            </span>
+            Schritt <b>3 von 5</b>
+          </span>
+        </div>
+        <a class="nav-btn" href="#">
+          weiter <svg class="ic"><use href="#i-arrow-right"/></svg>
+        </a>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         SLIDE 03 — CONTEXT WINDOW
+         ============================================================ -->
+    <section class="slide context" aria-labelledby="slide-03">
+      <div class="head">
+        <div class="crumb">
+          <span class="icon-pill"><svg class="ic lg"><use href="#i-eye"/></svg></span>
+          <span class="chap">Kontext &amp; Pflege</span>
+          <span class="sep"><svg class="ic sm"><use href="#i-chevron-right"/></svg></span>
+          <span class="topic">Context Window X-Ray</span>
+        </div>
+        <div class="toolbar" role="toolbar" aria-label="Schulungs-Steuerung">
+          <div class="group">
+            <button class="tool active" type="button">Vortrag</button>
+            <button class="tool" type="button">Lesen</button>
+          </div>
+          <span class="div" aria-hidden="true"></span>
+          <div class="group">
+            <button class="tool icon-only" data-action="theme-light" type="button" aria-label="Light"><svg class="ic"><use href="#i-sun"/></svg></button>
+            <button class="tool icon-only" data-action="theme-dark" type="button" aria-label="Dark"><svg class="ic"><use href="#i-moon"/></svg></button>
+            <button class="tool" data-action="theme-auto" type="button">Auto</button>
+          </div>
+          <span class="div" aria-hidden="true"></span>
+          <div class="group">
+            <button class="tool" type="button">LLM-Tabs</button>
+            <button class="tool active" type="button">Übungen</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="body">
+        <div class="title-row">
+          <span class="kicker">
+            <svg class="ic sm"><use href="#i-eye"/></svg>
+            Was bleibt sichtbar?
+          </span>
+          <h2 id="slide-03" class="lede">
+            Das Modell sieht nicht alles — <em>nur was gerade hell ist.</em>
+          </h2>
+        </div>
+
+        <div class="convo" role="figure" aria-label="Konversationsverlauf mit Token-Status">
+          <header>
+            <span class="filename"><svg class="ic"><use href="#i-message-square"/></svg> <b>conversation.md</b> · Sonnet 4.5</span>
+            <span>Tokens · <b>84'226 / 200'000</b></span>
+            <div class="meter" aria-hidden="true"><i></i></div>
+          </header>
+          <div class="tape">
+            <div class="lines" aria-hidden="true">
+              <span class="dropped">112</span>
+              <span class="dropped">113</span>
+              <span class="dropped">114</span>
+              <span>171</span>
+              <span>172</span>
+              <span>173</span>
+              <span>174</span>
+              <span>175</span>
+              <span>176</span>
+              <span>177</span>
+              <span>178</span>
+              <span>179</span>
+              <span>180</span>
+            </div>
+            <div class="roll">
+              <span class="who user"><svg class="ic"><use href="#i-message-square"/></svg> User · 11:22</span>
+              <span>Vergiss bitte <span class="dropped">die Liste der alten Migrationsverfahren</span> — nur der <span class="tok"><svg class="ic"><use href="#i-zap"/></svg>Pilotabschluss</span> zählt jetzt.</span>
+              <span class="who"><svg class="ic"><use href="#i-sparkles"/></svg> Claude · 11:22</span>
+              <span>Klar. Ich arbeite mit:
+                <span class="tok cobalt"><svg class="ic"><use href="#i-bookmark"/></svg>Adressat = Projektleitung</span>,
+                <span class="tok cobalt"><svg class="ic"><use href="#i-bookmark"/></svg>Stil = sachlich</span>,
+                <span class="tok cobalt"><svg class="ic"><use href="#i-layers"/></svg>Max = 180 Wörter</span>.
+                Drei Optionen?</span>
+              <span class="who user"><svg class="ic"><use href="#i-message-square"/></svg> User · 11:23</span>
+              <span>Ja — <span class="tok"><svg class="ic"><use href="#i-check"/></svg>A: Pilot verlängern</span>,
+                <span class="tok"><svg class="ic"><use href="#i-route"/></svg>B: Roll-out 27</span>,
+                <span class="tok warn"><svg class="ic"><use href="#i-octagon"/></svg>C: Stopp</span>.
+                <span class="dropped">[Anhang: alte Mail 03/24, FAQ-Stub, Excel-Dump]</span></span>
+              <span class="who"><svg class="ic"><use href="#i-sparkles"/></svg> Claude · 11:23</span>
+              <span>Verstanden — die drei Anhänge blende ich aus, sie wären <span class="dropped">Rauschen</span>. Schreibe jetzt.</span>
+            </div>
+          </div>
+          <footer>
+            <span>Status</span>
+            <span style="justify-self: end; display:inline-flex; gap:8px;">
+              <span class="pill"><svg class="ic sm"><use href="#i-check"/></svg> 3 Tokens hell</span>
+              <span class="pill warn"><svg class="ic sm"><use href="#i-alert-triangle"/></svg> 3 verdrängt</span>
+            </span>
+            <b>signal-to-noise · 0.74</b>
+          </footer>
+        </div>
+
+        <div class="rule-callout">
+          <span class="icon-cell"><svg class="ic lg"><use href="#i-quote"/></svg></span>
+          <p><b>Faustregel:</b> Nur einfügen, was die Antwort konkret prägt — auch bei 1M-Kontext wird Wichtiges <em>unten</em> wiederholt.</p>
+        </div>
+      </div>
+
+      <div class="foot">
+        <a class="nav-btn" href="#">
+          <svg class="ic"><use href="#i-arrow-left"/></svg> zurück
+        </a>
+        <div class="center">
+          <span class="group"><svg class="ic"><use href="#i-bookmark"/></svg> Folie <b>14 / 30</b></span>
+          <span class="sep" aria-hidden="true"></span>
+          <span class="group"><svg class="ic"><use href="#i-route"/></svg> Lernpfad <b>Praxis</b></span>
+          <span class="sep" aria-hidden="true"></span>
+          <span class="group">
+            <span class="path-dots" aria-hidden="true">
+              <i class="done"></i><i class="done"></i><i class="done"></i><i class="here"></i><i></i>
+            </span>
+            Schritt <b>4 von 5</b>
+          </span>
+        </div>
+        <a class="nav-btn" href="#">
+          weiter <svg class="ic"><use href="#i-arrow-right"/></svg>
+        </a>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         SLIDE 04 — DATENAMPEL
+         ============================================================ -->
+    <section class="slide ampel" aria-labelledby="slide-04">
+      <div class="head">
+        <div class="crumb">
+          <span class="icon-pill"><svg class="ic lg"><use href="#i-shield-check"/></svg></span>
+          <span class="chap">Verwaltung &amp; KI</span>
+          <span class="sep"><svg class="ic sm"><use href="#i-chevron-right"/></svg></span>
+          <span class="topic">Datenampel · §§ 1–3</span>
+        </div>
+        <div class="toolbar" role="toolbar" aria-label="Schulungs-Steuerung">
+          <div class="group">
+            <button class="tool active" type="button">Vortrag</button>
+            <button class="tool" type="button">Lesen</button>
+          </div>
+          <span class="div" aria-hidden="true"></span>
+          <div class="group">
+            <button class="tool icon-only" data-action="theme-light" type="button" aria-label="Light"><svg class="ic"><use href="#i-sun"/></svg></button>
+            <button class="tool icon-only" data-action="theme-dark" type="button" aria-label="Dark"><svg class="ic"><use href="#i-moon"/></svg></button>
+            <button class="tool" data-action="theme-auto" type="button">Auto</button>
+          </div>
+          <span class="div" aria-hidden="true"></span>
+          <div class="group">
+            <button class="tool" type="button">LLM-Tabs</button>
+            <button class="tool active" type="button">Übungen</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="body">
+        <div class="title-row">
+          <span class="kicker">
+            <svg class="ic sm"><use href="#i-shield"/></svg>
+            Drei Klassen, drei Regeln
+          </span>
+          <h2 id="slide-04" class="lede">
+            Was darf in <em>welches Tool?</em>
+          </h2>
+        </div>
+
+        <div class="articles">
+          <article class="ok">
+            <div class="num">
+              <b><svg class="ic"><use href="#i-globe"/></svg> § 1 · Öffentlich</b>
+              <span class="status"><svg class="ic sm"><use href="#i-check"/></svg> FREI</span>
+            </div>
+            <h3>DeepL Pro &amp; Co.</h3>
+            <div class="body-text">
+              Texte aus dem Internet, eigene Schulungs&shy;notizen,
+              Strukturierungs&shy;hilfen für externe Beiträge.
+            </div>
+            <ul>
+              <li><svg class="ic"><use href="#i-check"/></svg>Übersetzungen &amp; Wording-Optionen</li>
+              <li><svg class="ic"><use href="#i-check"/></svg>Recherche zu publizierten Quellen</li>
+              <li><svg class="ic"><use href="#i-check"/></svg>Struktur von Agenda-Punkten</li>
+            </ul>
+            <span class="marginal-cite"><svg class="ic sm"><use href="#i-bookmark"/></svg> vgl. SB021 Art. 4 (a) · BK 2025</span>
+          </article>
+
+          <article class="warn">
+            <div class="num">
+              <b><svg class="ic"><use href="#i-alert-triangle"/></svg> § 2 · Intern</b>
+              <span class="status"><svg class="ic sm"><use href="#i-alert-triangle"/></svg> PRÜFEN</span>
+            </div>
+            <h3>Mit Augenmaß</h3>
+            <div class="body-text">
+              Frei&shy;gegebene Notizen, interne Agenda-Punkte,
+              allgemeine Vorgangs&shy;beschreibungen.
+            </div>
+            <ul>
+              <li><svg class="ic"><use href="#i-edit"/></svg><span class="tok"><svg class="ic"><use href="#i-edit"/></svg>Anonymisieren</span> vor dem Einfügen</li>
+              <li><svg class="ic"><use href="#i-circle-help"/></svg>Eskalation bei sensiblen Themen</li>
+              <li><svg class="ic"><use href="#i-bookmark"/></svg>Outputs lokal speichern</li>
+            </ul>
+            <span class="marginal-cite"><svg class="ic sm"><use href="#i-bookmark"/></svg> vgl. SB021 Art. 4 (b) · DSG Art. 5</span>
+          </article>
+
+          <article class="stop">
+            <div class="num">
+              <b><svg class="ic"><use href="#i-lock"/></svg> § 3 · Personenbezug</b>
+              <span class="status"><svg class="ic sm"><use href="#i-x"/></svg> TABU</span>
+            </div>
+            <h3>Nicht eingeben</h3>
+            <div class="body-text">
+              Namen, Geburts&shy;daten, Dossier-IDs, Verfahrens&shy;informationen,
+              medizinische Details.
+            </div>
+            <ul>
+              <li><svg class="ic"><use href="#i-octagon"/></svg><span class="tok warn"><svg class="ic"><use href="#i-alert-triangle"/></svg>Anonymisieren ≠ Pseudonymisieren</span></li>
+              <li><svg class="ic"><use href="#i-eye"/></svg>Auch in Bildern &amp; Headern prüfen</li>
+              <li><svg class="ic"><use href="#i-circle-help"/></svg>Im Zweifel: DSB / DPO fragen</li>
+            </ul>
+            <span class="marginal-cite"><svg class="ic sm"><use href="#i-bookmark"/></svg> vgl. SB021 Art. 4 (c) · DSG Art. 31</span>
+          </article>
+        </div>
+
+        <div class="footer-rule">
+          <span class="icon-cell"><svg class="ic lg"><use href="#i-quote"/></svg></span>
+          <b>Faustregel — Wenn du es nicht auf eine Postkarte schreiben würdest, schreib es nicht in den Prompt.</b>
+          <span class="escalate"><svg class="ic"><use href="#i-arrow-right"/></svg> Eskalation <b>DSB SREGE</b></span>
+        </div>
+      </div>
+
+      <div class="foot">
+        <a class="nav-btn" href="#">
+          <svg class="ic"><use href="#i-arrow-left"/></svg> zurück
+        </a>
+        <div class="center">
+          <span class="group"><svg class="ic"><use href="#i-bookmark"/></svg> Folie <b>06 / 30</b></span>
+          <span class="sep" aria-hidden="true"></span>
+          <span class="group"><svg class="ic"><use href="#i-route"/></svg> Lernpfad <b>Governance</b></span>
+          <span class="sep" aria-hidden="true"></span>
+          <span class="group">
+            <span class="path-dots" aria-hidden="true">
+              <i class="done"></i><i class="here"></i><i></i><i></i>
+            </span>
+            Schritt <b>2 von 4</b>
+          </span>
+        </div>
+        <a class="nav-btn" href="#">
+          weiter <svg class="ic"><use href="#i-arrow-right"/></svg>
+        </a>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         SLIDE 05 — SKILL LADDER
+         ============================================================ -->
+    <section class="slide ladder" aria-labelledby="slide-05">
+      <div class="head">
+        <div class="crumb">
+          <span class="icon-pill"><svg class="ic lg"><use href="#i-layers"/></svg></span>
+          <span class="chap">Vertiefung</span>
+          <span class="sep"><svg class="ic sm"><use href="#i-chevron-right"/></svg></span>
+          <span class="topic">Skill-Ladder · Ausgabenindex</span>
+        </div>
+        <div class="toolbar" role="toolbar" aria-label="Schulungs-Steuerung">
+          <div class="group">
+            <button class="tool active" type="button">Vortrag</button>
+            <button class="tool" type="button">Lesen</button>
+          </div>
+          <span class="div" aria-hidden="true"></span>
+          <div class="group">
+            <button class="tool icon-only" data-action="theme-light" type="button" aria-label="Light"><svg class="ic"><use href="#i-sun"/></svg></button>
+            <button class="tool icon-only" data-action="theme-dark" type="button" aria-label="Dark"><svg class="ic"><use href="#i-moon"/></svg></button>
+            <button class="tool" data-action="theme-auto" type="button">Auto</button>
+          </div>
+          <span class="div" aria-hidden="true"></span>
+          <div class="group">
+            <button class="tool" type="button">LLM-Tabs</button>
+            <button class="tool active" type="button">Übungen</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="body">
+        <div class="title-row">
+          <span class="kicker">
+            <svg class="ic sm"><use href="#i-layers"/></svg>
+            Sieben Ausgaben
+          </span>
+          <h2 id="slide-05" class="lede">
+            Wo stehst du heute — und welche Auflage ist <em>als Nächstes</em> dran?
+          </h2>
+        </div>
+
+        <div class="ledger">
+          <div class="lhead">
+            <span>Ed.</span><span>Titel</span><span>Voraus&shy;setzung</span><span>Gruppe (n=42)</span><span>Status</span>
+          </div>
+          <div class="row published">
+            <span class="ed">1<sup>st</sup> ed.</span>
+            <span class="title">Prompter <em>· Chat als Suchmaschine</em></span>
+            <span class="req">Account, Browser-Reflex</span>
+            <span class="runs">8 · <i class="done"></i><i class="done"></i><i class="done"></i><i class="done"></i></span>
+            <span class="status"><svg class="ic sm"><use href="#i-check"/></svg> published</span>
+          </div>
+          <div class="row published">
+            <span class="ed">2<sup>nd</sup> ed.</span>
+            <span class="title">Conversationalist <em>· echter Dialog</em></span>
+            <span class="req">Iteration, Folgefragen</span>
+            <span class="runs">14 · <i class="done"></i><i class="done"></i><i class="done"></i></span>
+            <span class="status"><svg class="ic sm"><use href="#i-check"/></svg> published</span>
+          </div>
+          <div class="row current">
+            <span class="ed">3<sup>rd</sup> ed.</span>
+            <span class="title">Power User <em>· System Prompts, Projects</em></span>
+            <span class="req">Persistenter Kontext, Custom GPTs</span>
+            <span class="runs">15 · <i class="done"></i><i class="here"></i><i></i></span>
+            <span class="status"><svg class="ic sm"><use href="#i-bookmark"/></svg> current ed.</span>
+          </div>
+          <div class="row revision">
+            <span class="ed">4<sup>th</sup> ed.</span>
+            <span class="title">Workflow Designer <em>· Skills &amp; Instructions</em></span>
+            <span class="req">3 wiederkehrende Aufgaben, Templates</span>
+            <span class="runs">3 · <i></i><i></i><i></i></span>
+            <span class="status"><svg class="ic sm"><use href="#i-edit"/></svg> in revision</span>
+          </div>
+          <div class="row draft">
+            <span class="ed">5<sup>th</sup> ed.</span>
+            <span class="title">System Builder <em>· Skill-Architektur</em></span>
+            <span class="req">Tests, progressive disclosure</span>
+            <span class="runs">2 · <i></i><i></i></span>
+            <span class="status"><svg class="ic sm"><use href="#i-circle-dashed"/></svg> in draft</span>
+          </div>
+          <div class="row draft">
+            <span class="ed">6<sup>th</sup> ed.</span>
+            <span class="title">Agentic Operator <em>· Claude Code, MCP</em></span>
+            <span class="req">Repo-Zugriff, Sandbox</span>
+            <span class="runs">0 · <i></i></span>
+            <span class="status"><svg class="ic sm"><use href="#i-circle-dashed"/></svg> scheduled</span>
+          </div>
+          <div class="row draft">
+            <span class="ed">7<sup>th</sup> ed.</span>
+            <span class="title">Platform Architect <em>· Governance, Schulung</em></span>
+            <span class="req">Adoption-Konzept, KPI, Datenrechte</span>
+            <span class="runs">0 · <i></i></span>
+            <span class="status"><svg class="ic sm"><use href="#i-circle-dashed"/></svg> scheduled</span>
+          </div>
+        </div>
+
+        <div class="errata">
+          <span class="label">
+            <svg class="ic sm"><use href="#i-alert-triangle"/></svg>
+            Errata · v 2.4
+          </span>
+          <p>4<sup>th</sup> ed. „Workflow Designer" — Voraus&shy;setzung neu:
+            drei wieder&shy;kehrende Aufgaben statt zwei.
+            Zwei Mittwoch&shy;nachmittage Aufwand sind realistisch.</p>
+          <a href="#">
+            Lernpfad starten <svg class="ic"><use href="#i-arrow-right"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <div class="foot">
+        <a class="nav-btn" href="#">
+          <svg class="ic"><use href="#i-arrow-left"/></svg> zurück
+        </a>
+        <div class="center">
+          <span class="group"><svg class="ic"><use href="#i-bookmark"/></svg> Folie <b>23 / 30</b></span>
+          <span class="sep" aria-hidden="true"></span>
+          <span class="group"><svg class="ic"><use href="#i-route"/></svg> Lernpfad <b>Power-User</b></span>
+          <span class="sep" aria-hidden="true"></span>
+          <span class="group">
+            <span class="path-dots" aria-hidden="true">
+              <i class="done"></i><i class="done"></i><i class="done"></i><i class="here"></i><i></i>
+            </span>
+            Schritt <b>4 von 5</b>
+          </span>
+        </div>
+        <a class="nav-btn" href="#">
+          weiter <svg class="ic"><use href="#i-arrow-right"/></svg>
+        </a>
+      </div>
+    </section>
+
+  </main>
+
+  <script>
+    (function () {
+      const root = document.documentElement;
+      const stored = localStorage.getItem('llm-101-mockup-theme');
+      if (stored && stored !== 'auto') root.dataset.theme = stored;
+
+      // Event-Delegation für alle 5 Slide-Toolbars
+      document.body.addEventListener('click', (e) => {
+        const t = e.target.closest('[data-action]');
+        if (!t) return;
+        const a = t.dataset.action;
+        if (a === 'theme-light') {
+          root.dataset.theme = 'light';
+          localStorage.setItem('llm-101-mockup-theme', 'light');
+        } else if (a === 'theme-dark') {
+          root.dataset.theme = 'dark';
+          localStorage.setItem('llm-101-mockup-theme', 'dark');
+        } else if (a === 'theme-auto') {
+          // Auto = OS-Präferenz; im Mockup als „kein expliziter Override" implementiert
+          const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+          root.dataset.theme = prefersDark ? 'dark' : 'light';
+          localStorage.setItem('llm-101-mockup-theme', 'auto');
+        }
+      });
+    })();
+  </script>
+</body>
+</html>

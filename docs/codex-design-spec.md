@@ -1126,10 +1126,23 @@ Subagent darf den Test NICHT „grün-fixen" durch Anpassung der Erwartung, sond
 
 ## Anhang A · Mockup-Referenz
 
-Quelle der Codex-DNA: `Resources/design-mockups/variant-codex-v2.html` im Workstation-Vault unter
-`/Users/Nils/Library/Mobile Documents/iCloud~md~obsidian/Documents/Work/00-LLM Context/Workstations/Claude-Schulung SREGE/Resources/design-mockups/`.
+Die Codex-DNA liegt als **Spec-Asset im Repo** unter `docs/codex-mockup-reference.html` (selfcontained HTML, Inline-CSS, alle 5 Mockup-Folien: Cover, Anatomie, Context-Window-X-Ray, Datenampel, Skill-Ladder).
 
-Bei Implementations-Zweifeln: dort nachschlagen, Pixel-genau übernehmen.
+Bei Implementations-Zweifeln: dort nachschlagen, Pixel-genau übernehmen. Im Browser öffnen:
+
+```bash
+open /tmp/LLM-101/docs/codex-mockup-reference.html
+```
+
+Layout-Slide-Zuordnung Mockup → Schulungs-Folien:
+
+| Mockup-Slide | Layout-Pattern | Anwendung in Schulung |
+|---|---|---|
+| Cover | `.cover` mit `h1.display` + Caret + Colophon | `einstieg-1` |
+| Anatomie | `.compare` 2-Spalten + `.ledger` 6-Spalten | `usecase-4` (Prompt wird Produkt), `claude-2` (Chat vs. Project) |
+| Context Window X-Ray | `.convo` mit Token-Tape, Signal-Pills | `usecase-5` |
+| Datenampel | `.status-card` (×3) + `.callout` Faustregel | `verwaltung-1`, `verwaltung-2` |
+| Skill-Ladder | `.ledger` 5-Spalten + `.errata` | `einstieg-3` |
 
 ## Anhang B · Inventar-Kurzform
 
