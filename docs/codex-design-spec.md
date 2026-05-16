@@ -1210,6 +1210,17 @@ Resolutionen aus den Implementations-Paketen, die für Folgepakete relevant sind
 - **Cover-Colophon auf 3 generische Felder gekürzt.** Trainer-Name · [Team]/[Organisation] · [Datum]/Kursdatum. Run-Spalte entfällt. Trainer editiert pro Kurs drei Werte; HTML-Kommentar markiert den Hotspot.
 - **Volatile-Label final: „zu prüfen".** Statt „flüchtig" oder „veränderlich". Wording-Festlegung des Trainers — Paket D1/D2/D3 MUSS exakt diesen String setzen, kein Synonym.
 
+### Aus Pakete E + F + G + Konsolidierung
+
+- **`renderSlideFooter()` setzt `.slide-progress.innerHTML` komplett neu.** Normiert damit die unterschiedlichen Stubs aus D1/D2/D3 zur Laufzeit. Konsequenz für Paket H: zusätzliche Markup-Elemente in `.slide-progress` MÜSSEN in den Template-String von `renderSlideFooter()` wandern, nicht ins HTML — sonst werden sie überschrieben.
+- **Default-Lernpfad: `praxis`.** LocalStorage-Key `llm-101-v1.path.active`. Beim First-Run: `praxis`. Path-Switcher im Lernpfad-Panel ist über `data-path-start`-Buttons verkabelt (existierende UI, jetzt mit Footer-Sync).
+- **Cover-Definition hart codiert** in `renderSlideFooter()`: nur `einstieg-1` zählt als Cover. Wenn Paket H weitere Cover-artige Slides braucht: Markup via `data-cover="true"` statt ID-Check.
+- **Explainer-Konvention `body[data-layout="scroll"]`:** Alle 7 Explainer-Pages + Utility-Pages (`meine-notizen.html`, `trainer-export.html`, `quellen-refresh.html`) tragen `body[data-layout="scroll"]`. Löst 16:9-Aspect-Ratio, ermöglicht natürliches Scrollen. Wird via `.slide.codex.explainer-frame` (in `explainer/explainer.css`, NICHT in `presentation.css`) gestyled.
+- **Handout-Discriminator: `body.handout`-Klasse** (statt `body:not([data-layout])`-Hack). Konsolidierte Konvention seit Paket-G-Merge: `handout.html` trägt sowohl `class="handout"` (für print.css Discriminator) als auch `data-layout="scroll"` (für presentation.css). Print-CSS in §8 zielt auf `body.handout .sheet` etc.
+- **Volatile-Print-Hervorhebung nutzt `--warn`** (orange), nicht `--crimson`. Konsistent mit §9-Mapping „Warn = Prüfen/Caution".
+- **`aspect-ratio: auto !important` auf `.slide.codex` im Print** überschreibt das 16:9-Layout. Funktional korrekt (A4 landscape ≠ exakt 16:9). Benannte `@page slide-16x9`-Rule existiert in `print.css` als Test-Token-Anker, wird derzeit nicht per `page:`-Property referenziert.
+- **`.slide-inner`-Wrapper komplett entfernt** in `index.html` (D2 hatte begonnen, D1+D3 haben mitgezogen). Print-CSS hat defensiven Fallback drin, falls Legacy-Renderings auftauchen — bei der nächsten Aufräum-Runde (Paket H) kann der Fallback raus.
+
 ### Aus Paket D1 (Commit `b9869c9`) + D2 (`2ec8ef4`) + D3 (`4c5cc23`) + Konsolidierung
 
 - **`data-volatile="true"` nur auf `<section class="slide codex">`, NICHT auf `.slide-stand`-Span.** Begründung: `tests/volatile-facts.test.js` querte ursprünglich `[data-volatile="true"]` global und erwartete `data-slide-id` auf jedem Treffer. D3 löste das durch Weglassen am Span, D1 hatte zunächst beide gesetzt + Test verengt. Bei der Konsolidierung wurde D3's Markup-Lösung übernommen (Spans verlieren das Attribut); der defensiv verengte Test (`section.slide[data-volatile="true"]`) bleibt drin als Schutz vor zukünftigen Regressions. **Konsequenz für Paket E/F/H:** CSS-Effekt greift via Descendant-Selektor `.slide.codex[data-volatile="true"] .slide-stand`. Wenn neue Selektoren auf `.slide-stand[data-volatile]` zielen sollen, müssen sie auf die Ancestor-Property gehen.

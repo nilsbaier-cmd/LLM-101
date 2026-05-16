@@ -310,11 +310,11 @@
 
   /* ------------------------------------------------------------
      Handout-spezifisches Layout: portrait, 1 Folie pro Seite.
-     handout.html hat KEIN `data-layout` am body. Wir nutzen das
-     als Discriminator: alles unter `.sheet` (Handout-Container)
-     bekommt portrait-freundliche Regeln.
+     handout.html trägt `<body class="handout">` (Konvention seit
+     Paket F+G Konsolidierung). Alles unter `.sheet` (Handout-
+     Container) bekommt portrait-freundliche Regeln.
      ------------------------------------------------------------ */
-  body:not([data-layout]) .sheet,
+  body.handout .sheet,
   .handout-page {
     page: handout;
     max-width: none !important;
@@ -322,14 +322,14 @@
     margin: 0 !important;
   }
 
-  body:not([data-layout]) .sheet-card,
+  body.handout .sheet-card,
   .handout-page .sheet-card {
     break-inside: avoid;
     background: var(--bg-card, #ffffff) !important;
     border: 1px solid var(--border, #0a0a0c1c) !important;
   }
 
-  body:not([data-layout]) .sheet-head,
+  body.handout .sheet-head,
   .handout-page .sheet-head {
     border-bottom: 2px solid var(--accent, #c5e818) !important;
     print-color-adjust: exact !important;
