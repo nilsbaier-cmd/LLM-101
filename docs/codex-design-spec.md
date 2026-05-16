@@ -1,9 +1,18 @@
 # LLM-101 · Codex Redesign — Design-Spezifikation
 
-**Version:** 1.0
+**Version:** 1.1
 **Stand:** 2026-05-16
 **Branch:** `redesign/codex-v2`
 **Status:** Draft — bereit für Subagent-Implementation
+
+**v1.1 Changelog (gegenüber v1.0):**
+- §4.1: Sprite ist bereits als `docs/codex-sprite.svg` im Repo; Paket A kopiert nur.
+- §4.3: `.ic`-Helper-Class explizit Paket B zugeordnet.
+- §4.5 (NEU): `renderIcon()` API-Vertrag mit JSDoc.
+- §2.1.2: `--bg-card` Dark fest auf `#1a1a1d`.
+- §11-D: aufgeteilt in D1 (Slides 01–11) + D2 (Slides 12–22) + D3 (Slides 23–30) mit harten Folien-Listen.
+- §11-H: Acceptance-Checkliste mit 10 konkreten Prüfpunkten + `docs/codex-release-qa.md` als Deliverable.
+- §11.X: Merge-Strategie für D1/D2/D3 explizit.
 
 ---
 
@@ -89,7 +98,7 @@ In `tokens.css` ersetzen. Variablen-Namen bleiben **rückwärtskompatibel**, Wer
 | Variable | Wert |
 |---|---|
 | `--bg-base` | `#0c0c0e` |
-| `--bg-card` | `#1a1714` → behalten falls passend, sonst `#1a1a1d` |
+| `--bg-card` | `#1a1a1d` |
 | `--bg-tint` | `#131316` |
 | `--border` | `#f0eee61c` |
 | `--border-soft` | `#f0eee610` |
@@ -473,11 +482,31 @@ CSS: `display: grid; grid-template-columns: auto 1fr auto; gap: 16px; align-item
 
 ### 4.1 Datei
 
-**NEU:** `assets/icons.svg` — SVG-Sprite mit allen Icons als `<symbol>`. Wird per `<svg>` mit `<use href="assets/icons.svg#i-NAME"/>` oder über inline-include in `<head>` referenziert.
+**Spec-Asset vorhanden:** `docs/codex-sprite.svg` enthält bereits alle 41 Icons als `<symbol>` (28 neu + 11 Bestands-Icons aus `lib/icons.js`). Paket A MUSS dieses File **nach `assets/icons.svg` kopieren** (oder verschieben) und nicht neu erstellen.
 
-**Empfehlung:** Inline-Include über kleine `lib/icons-sprite.js`, die bei DOMContentLoaded das Sprite per `fetch + innerHTML` ins Body-Top einfügt (vermeidet CORS-Probleme bei file:// und Service-Worker-Caching erleichtert).
+**Sprite-Einbindung (MUST):** Inline-Include über `lib/icons-sprite.js` (NEU). Dieses Modul wird in `app.js` möglichst früh (vor allem anderen UI) als ES-Modul importiert und fügt das Sprite-Markup als erstes Kind ins `<body>` ein:
 
-Alternative: `lib/icons.js` (existiert bereits, war mask-image-basiert) refactoren — die Funktion `renderIcon(name)` MUSS jetzt ein `<svg><use href="#i-{name}"/></svg>` rendern.
+```js
+// lib/icons-sprite.js
+const SPRITE_URL = new URL('../assets/icons.svg', import.meta.url);
+export async function initSprite() {
+  if (document.getElementById('codex-icon-sprite')) return;
+  const res = await fetch(SPRITE_URL);
+  const text = await res.text();
+  const wrapper = document.createElement('div');
+  wrapper.id = 'codex-icon-sprite';
+  wrapper.setAttribute('aria-hidden', 'true');
+  wrapper.style.cssText = 'position:absolute;width:0;height:0;overflow:hidden';
+  wrapper.innerHTML = text;
+  document.body.prepend(wrapper);
+}
+```
+
+Referenz im DOM: `<svg class="ic"><use href="#i-NAME"/></svg>` (relative href, weil Sprite inline ist).
+
+### 4.1.1 Fallback ohne JS
+
+Für `noscript`/Server-Rendering-Tests MUSS die Sprite-Datei zusätzlich per direktem `<svg><use href="assets/icons.svg#i-NAME"/></svg>` ladbar sein (gleiche IDs, gleiche viewBox). Service Worker MUSS `assets/icons.svg` in den Pre-Cache aufnehmen.
 
 ### 4.2 Icon-Liste (MUST)
 
@@ -493,7 +522,9 @@ i-edit, i-quote, i-zap, i-play, i-message-square, i-list, i-target
 
 Alle SVG-Pfade sind im Mockup `Resources/design-mockups/variant-codex-v2.html` vorhanden — kopierbar.
 
-### 4.3 Helper-Class
+### 4.3 Helper-Class (gehört zu Paket B)
+
+Die Helper-Class `.ic` wird in `app.css` definiert (Teil von Paket B — Chrome). Paket A liefert Sprite und JS-Loader; Paket B macht die CSS-Helper:
 
 ```css
 .ic { width: 16px; height: 16px; flex-shrink: 0; stroke: currentColor; fill: none; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; vertical-align: -3px; }
@@ -504,7 +535,42 @@ Alle SVG-Pfade sind im Mockup `Resources/design-mockups/variant-codex-v2.html` v
 
 ### 4.4 Migration der existierenden `lib/icons.js`
 
-Existierende Icons (brain, code, file-text, lightbulb, search, database, workflow, git-branch, package, play-circle, messages-square) MÜSSEN als SVG-Symbol nachgezogen werden — entweder im selben Sprite oder als zusätzliche Datei. Test `tests/icons.test.js` MUSS grün bleiben.
+Existierende Icons (brain, code, file-text, lightbulb, search, database, workflow, git-branch, package, play-circle, messages-square) sind **bereits im `docs/codex-sprite.svg` enthalten** und werden somit zu `assets/icons.svg` mitkopiert. Test `tests/icons.test.js` MUSS grün bleiben.
+
+### 4.5 `renderIcon()` API-Vertrag
+
+`lib/icons.js` exportiert weiterhin `renderIcon(name, attrs = {})`. **Vertrag (MUST):**
+
+```js
+/**
+ * Rendert ein Icon als SVG-Element via Sprite-Reference.
+ * @param {string} name - Symbol-Name OHNE Präfix, z.B. 'sun', 'check'.
+ *                        Die Funktion fügt 'i-' selbst hinzu.
+ * @param {Object} attrs - Optionale HTML-Attribute, die auf das <svg>-Element
+ *                          gesetzt werden. Behandelte Keys:
+ *                          - class: Default 'ic'. Wenn gegeben, wird angehängt
+ *                            (NICHT überschrieben), damit '.ic' immer drin ist.
+ *                          - aria-label: setzt zusätzlich role="img" auf SVG
+ *                            und entfernt aria-hidden.
+ *                          - title: rendert als <title>-Child für Tooltip.
+ *                          - Alle anderen: direkt als Attribut auf SVG.
+ *                          Wenn weder aria-label noch title gegeben: SVG bekommt
+ *                          aria-hidden="true".
+ * @returns {SVGElement}
+ *
+ * @example
+ *   renderIcon('sun')
+ *   // <svg class="ic" aria-hidden="true"><use href="#i-sun"/></svg>
+ *
+ *   renderIcon('check', { 'aria-label': 'Erledigt' })
+ *   // <svg class="ic" role="img" aria-label="Erledigt"><use href="#i-check"/></svg>
+ *
+ *   renderIcon('zap', { class: 'ic lg' })
+ *   // <svg class="ic lg" aria-hidden="true"><use href="#i-zap"/></svg>
+ */
+```
+
+Wenn `name` nicht im Sprite existiert: `console.warn` + leeres `<svg>` zurückgeben (für Test-Stabilität).
 
 ---
 
@@ -714,14 +780,15 @@ Die Pakete sind so geschnitten, dass max. 2 parallel laufen können (Token-Layer
 
 ### Paket A · Token-Layer + Icon-Sprite (**Foundation**)
 
-**Dateien:** `tokens.css`, `assets/icons.svg` (neu), `lib/icons.js` (refactor), evtl. `lib/icons-sprite.js` (neu).
+**Dateien:** `tokens.css`, `assets/icons.svg` (kopieren), `lib/icons.js` (refactor), `lib/icons-sprite.js` (neu).
 
 **Aufgaben:**
 
-1. `tokens.css` gemäß §2.1 / §2.2 / §2.4 / §2.5 / §2.6 aktualisieren. Variablen-Namen beibehalten, **NEUE** Variablen hinzufügen (`--cobalt`, `--crimson`, `--signal`, `--warn`, `--fs-*`, `--ease-*`, `--duration-*`, `--shadow-page`, `--border-soft`).
-2. `assets/icons.svg` neu anlegen mit allen 28 Icons aus §4.2 (SVG-Pfade aus `Resources/design-mockups/variant-codex-v2.html` kopieren — Pfad-Ende ist `<defs>...</defs>`).
-3. `lib/icons.js`: `renderIcon(name, attrs)` rendert `<svg class="ic"><use href="#i-{name}"/></svg>`. Sprite wird beim App-Boot inline ins Body-Top eingefügt (entweder per fetch oder durch HTML-Include).
-4. Tests: `tests/icons.test.js` MUSS weiter grün — falls Selektoren ändern, hier mitziehen.
+1. `tokens.css` gemäß §2.1 / §2.2 / §2.4 / §2.5 / §2.6 aktualisieren. Variablen-Namen beibehalten, **NEUE** Variablen hinzufügen (`--cobalt`, `--cobalt-soft`, `--crimson`, `--signal`, `--warn`, `--border-soft`, `--fs-display`, `--fs-lede`, `--fs-h3`, `--fs-body`, `--fs-small`, `--fs-mono-label`, `--fs-mono-tiny`, `--duration-fast`, `--duration-base`, `--duration-slow`, `--ease-out`, `--ease-in-out`, `--shadow-page`).
+2. **Sprite kopieren:** `cp docs/codex-sprite.svg assets/icons.svg` (Spec-Asset → Production-Asset). KEIN Neuschreiben — die 41 Symbole sind bereits final.
+3. `lib/icons.js`: `renderIcon(name, attrs)`-Vertrag gemäß §4.5 implementieren. Existierende API-Aufrufer (in app.js, ggf. presentation-Komponenten) MÜSSEN weiterhin funktionieren — bei Verhaltensänderungen alte Aufrufstellen identifizieren und anpassen.
+4. **`lib/icons-sprite.js` (NEU):** Implementiere `initSprite()` gemäß §4.1. In `app.js` als erstes nach dem Modul-Import aufrufen (vor allen anderen Initialisierungen).
+5. Tests: `tests/icons.test.js` MUSS weiter grün — falls Test-Erwartungen vom alten mask-image-Verhalten ausgehen, in diesem Paket Test mitziehen (siehe §12.3-Regel).
 
 **Acceptance Criteria:**
 
@@ -776,27 +843,88 @@ cd /tmp/LLM-101 && npm test -- icons mode
 
 ### Paket D · index.html Slide-Migration (**Content**)
 
-**Dateien:** `index.html` (alle 30 Slides).
-
 **Voraussetzung:** Paket A + B + C fertig.
+
+**Aufteilung in drei Sub-Pakete** — jedes ist eigenständig dispatchbar, da Folien-Migrationen pro Slide unabhängig sind. Jeder Subagent erhält **nur seinen Bereich** plus die gemeinsame Spec.
+
+#### Paket D1 · Slides 01–11 (Kapitel `einstieg` + `verwaltung` + `claude`)
+
+**Datei:** `index.html` (Slides mit `id="slide-einstieg-{1..4}"`, `slide-verwaltung-{1,2}`, `slide-claude-{1..5}`).
+
+**Folien (11):**
+
+| Folio | Slide-ID | Chapter | Folientyp | Besonderheit |
+|---|---|---|---|---|
+| 01 | einstieg-1 | einstieg | Cover | nutzt `.cover` statt `.title-row` (§3.5) |
+| 02 | einstieg-2 | einstieg | Timeline (5 Phasen) | `data-stepped`; `.timeline` Migration (§3.6) |
+| 03 | einstieg-3 | einstieg | Skill-Ladder | `data-stepped`; `.ladder-list` → `.ledger` |
+| 04 | einstieg-4 | einstieg | Agenda | `.agenda-list` Migration |
+| 05 | verwaltung-1 | verwaltung | Governance | `data-volatile="true"`, `data-checked="2026-05-16"`; `.policy-card` → `.status-card` (§3.7) |
+| 06 | verwaltung-2 | verwaltung | Merkblatt Erlaubt/Verboten | volatile; `.status-card` 3-Spalten |
+| 07 | claude-1 | claude | Modell-Features | volatile; LLM-Tabs |
+| 08 | claude-2 | claude | Chat vs. Project | — |
+| 09 | claude-3 | claude | Skills & Code | — |
+| 10 | claude-4 | claude | Live-Demo | — |
+| 11 | claude-5 | claude | Claude für Verwaltung | volatile |
 
 **Aufgaben:**
 
-1. Jede Folie auf neue Frame-Struktur (siehe §3.2) bringen:
-   - `data-slide`, `data-chapter`, `data-folio` setzen.
-   - `.slide-head` mit Crumb + Stand-Stamp einfügen.
-   - Body-Inhalte in `.slide-body` mit `.title-row` (außer Cover) und Komponenten aus §3.6.
-   - `.slide-foot` mit `.slide-nav` und `.slide-progress` (Progress wird per JS gefüllt).
-2. Volatile-Folien: `data-volatile="true" data-checked="2026-05-16"` an `.slide-stand`.
-3. Existierende interaktive Komponenten (LLM-Tabs, Übungen, Quiz, Prompt-Product, Context-Xray) im Markup behalten — nur Visual durch CSS.
+1. Jede der 11 Folien auf Frame-Struktur §3.2 bringen: `data-slide`, `data-chapter`, `data-folio` setzen.
+2. `.slide-head` mit Crumb (Chapter-Icon aus §3.2-Mapping + Kapitel-Name + Topic) + `.slide-stand`.
+3. `.slide-body` mit `.title-row` (außer Cover) → Kicker + Lede, dann Inhalts-Komponenten.
+4. `.slide-foot` mit `.slide-nav` (prev/next) und leerem `.slide-progress` (wird in Paket E gefüllt).
+5. Volatile-Stamps gemäß §3.2.
 
 **Acceptance Criteria:**
 
-- `tests/deck-integrity.test.js`, `tests/volatile-facts.test.js`, `tests/learning-stations.test.js` grün.
-- `tests/responsive-css.test.js` grün.
-- Alle 30 Folien sind im Browser navigierbar (Vor/Zurück + Hash).
+- `npm test -- deck-integrity volatile-facts responsive-css` grün.
+- Slides navigieren via Hash (`#slide-einstieg-1` → `#slide-claude-5`).
+- Visual: Slide 01 (Cover) entspricht Mockup-Slide 1; Slide 05/06 (Datenampel) Mockup-Slide 4.
 
-**Empfehlung:** Paket D in 3 Sub-Pakete teilen (Kapitel 1–3, 4–5, 6–7), falls Context zu eng wird.
+#### Paket D2 · Slides 12–22 (Kapitel `context` + `usecases`)
+
+**Folien (11):**
+
+| Folio | Slide-ID | Chapter | Folientyp | Besonderheit |
+|---|---|---|---|---|
+| 12 | context-1 | context | Grundlagen | — |
+| 13 | context-2 | context | X-Ray Demo | `.context-xray` → Conversation-Tape (§3.6) |
+| 14 | usecase-1 | usecases | Intro | — |
+| 15 | usecase-2 | usecases | Brainstorm | — |
+| 16 | usecase-3 | usecases | Draft | — |
+| 17 | usecase-lab | usecases | Interaktives Labor | `[data-prompt-product]` Migration |
+| 18 | usecase-4 | usecases | Iterieren | — |
+| 19 | usecase-5 | usecases | Output-Qualität | `.before-after-grid` |
+| 20 | usecase-6 | usecases | Output-Qualität (2) | `.case-library-grid` |
+| 21 | usecase-7 | usecases | Output-Qualität (3) | Quiz |
+| 22 | usecase-8 | usecases | Output-Qualität (4) | `.ex-reflection-prompt` |
+
+**Aufgaben:** wie D1, plus die interaktiven Komponenten (Prompt-Product, Context-Xray) MÜSSEN funktional erhalten bleiben — JS-Bindings testen.
+
+**Acceptance Criteria:**
+
+- `npm test -- prompt-product prompt-lab context-xray output-quality-and-cases exercises` grün.
+- Live im Browser: usecase-lab Prompt-Editor funktioniert.
+
+#### Paket D3 · Slides 23–30 (Kapitel `skills` + `next-level`)
+
+**Folien (8):**
+
+| Folio | Slide-ID | Chapter | Folientyp | Besonderheit |
+|---|---|---|---|---|
+| 23 | skills-1 | skills | Intro | — |
+| 24 | skills-2 | skills | Progressive Disclosure | — |
+| 25 | skills-3 | skills | Komplette Demo | — |
+| 26 | next-1 | next-level | Repository-Frage | — |
+| 27 | next-2 | next-level | Governance-Framework | `data-stepped` |
+| 28 | next-3 | next-level | Claude Code & Agenten | `data-stepped`, volatile |
+| 29 | next-5 | next-level | 7-Tage-Experiment | — |
+| 30 | next-4 | next-level | Transfer Anchor | Letzte Slide |
+
+**Acceptance Criteria:**
+
+- `npm test -- transfer-and-visual-qa workshop-readiness` grün.
+- Letzte Slide (next-4): `.slide-nav.next` zeigt entweder nichts oder Link zum Notizen-Export.
 
 ### Paket E · Lernpfad-Footer-Logik (**Logic**)
 
@@ -865,28 +993,46 @@ cd /tmp/LLM-101 && npm test -- icons mode
 4. `npm run visual:qa` — Screenshots prüfen.
 5. Commit + Push auf `redesign/codex-v2`.
 
-**Acceptance Criteria:**
+**Acceptance Criteria — harte Checkliste:**
 
 - `npm test` exit code 0.
-- Visual QA: keine offensichtlichen Regressionen.
+- `npm run visual:qa` exit code 0; `.visual-qa/` enthält Screenshots für alle Targets aus `lib/visual-qa-targets.js`.
+- **Manuelle Visual-QA-Checkliste** (Subagent durchläuft + dokumentiert pro Punkt OK/FAIL mit Screenshot-Datei):
+  1. `index.html` lädt ohne Console-Errors (DevTools-Network-Tab + Console clean).
+  2. Theme-Toggle funktioniert auf allen drei Werten (light, dark, auto) — visuell sichtbar an `.slide` Hintergrund.
+  3. Layout-Toggle (Vortrag/Lesen) wechselt zwischen Single-Slide und Scroll-Layout.
+  4. Hash-Routing: `index.html#slide-usecase-lab` lädt direkt diese Folie.
+  5. Lernpfad-Panel öffnet, alle vier Pfade sind klickbar, Wechsel aktualisiert `.slide-progress`.
+  6. `index.html?trainer=1` zeigt Trainer-Toggle in Header; Panel öffnet mit Cockpit-Inhalt.
+  7. Volatile-Folien zeigen `.slide-stand` mit `data-checked`-Datum.
+  8. Print-Preview (Chrome): A4 landscape, alle 30 Folien lesbar, keine abgeschnittenen Token-Pills.
+  9. Reduced-Motion: in macOS-Settings „Bewegung reduzieren" aktiviert → Caret blinkt nicht.
+  10. Mobile 375px (DevTools): keine horizontale Scroll-Bar, Toolbar wrappt sauber.
+
+Subagent dokumentiert die Checkliste in `docs/codex-release-qa.md` (NEU), die als Teil des PRs committed wird.
 
 ### 11.X Reihenfolge & Parallelität
 
 ```
 Paket A (Foundation)
-   ├──> Paket B (Chrome) ─┐
-   ├──> Paket C (Atoms) ──┤
-   │                       ├──> Paket D (Content) ──> Paket E (Logic)
-   │                       │                       └──> Paket F (Outliers)
-   │                       └──> Paket G (Print)
-   └─────────────────────────────────────────────────> Paket H (Release)
+   ├──> Paket B (Chrome) ──┐
+   ├──> Paket C (Atoms) ───┤
+   │                        ├──> Paket D1 (Slides 01–11) ──┐
+   │                        ├──> Paket D2 (Slides 12–22) ──┤
+   │                        ├──> Paket D3 (Slides 23–30) ──┤
+   │                        │                              ├──> Paket E (Logic)
+   │                        │                              └──> Paket F (Outliers)
+   │                        └──> Paket G (Print)
+   └────────────────────────────────────────────────────────────> Paket H (Release)
 ```
 
-- **Paket A** zuerst (alleine).
-- **Paket B + C** parallel.
-- **Paket D** sequenziell nach B+C.
+- **Paket A** zuerst (alleine, blockt alles).
+- **Paket B + C** parallel nach A.
+- **Paket D1 + D2 + D3** parallel nach B+C — sie ändern verschiedene Slide-Blöcke in `index.html` (Merge-Konflikt-Risiko: niedrig, da Slide-Blöcke disjunkt; trotzdem im Sub-Branch arbeiten und sauber mergen).
 - **Paket E + F + G** parallel nach D.
 - **Paket H** zuletzt.
+
+**Merge-Strategie für D1/D2/D3:** Jedes Sub-Paket arbeitet auf einem feature-branch `redesign/codex-v2-d1` etc., öffnet PR gegen `redesign/codex-v2`. Reihenfolge der Merges: D1 → D2 → D3 (Konflikt-Wahrscheinlichkeit niedrig, aber so deterministisch).
 
 ---
 
