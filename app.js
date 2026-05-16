@@ -1,10 +1,10 @@
 // app.js — Haupteinstieg
-import { Storage } from './lib/storage.js?v=2026-05-16ae';
-import { ModeManager } from './lib/mode.js?v=2026-05-16ae';
-import { icon } from './lib/icons.js?v=2026-05-16ae';
-import { initTabs } from './lib/tabs.js?v=2026-05-16ae';
-import { Exercises } from './lib/exercises.js?v=2026-05-16ae';
-import { LEARNING_PATHS, TRAINER_NOTES, TRAINER_VARIANTS } from './lib/learning-paths.js?v=2026-05-16ae';
+import { Storage } from './lib/storage.js?v=2026-05-16af';
+import { ModeManager } from './lib/mode.js?v=2026-05-16af';
+import { icon } from './lib/icons.js?v=2026-05-16af';
+import { initTabs } from './lib/tabs.js?v=2026-05-16af';
+import { Exercises } from './lib/exercises.js?v=2026-05-16af';
+import { LEARNING_PATHS, TRAINER_NOTES, TRAINER_VARIANTS } from './lib/learning-paths.js?v=2026-05-16af';
 
 const NS = 'llm-101-v1';
 const storage = new Storage(NS);
@@ -342,6 +342,7 @@ function renderPathPanel() {
   `;
 
   pathPanelBody.innerHTML = `
+    ${renderPathManagement(activePath)}
     <section class="path-grid">${cards}</section>
     ${activeDetail}
   `;
@@ -362,6 +363,23 @@ function renderPathPanel() {
     renderPathPanel();
     updatePathStatus();
   });
+  pathPanelBody.querySelector('[data-path-pause]')?.addEventListener('click', pauseActivePath);
+  pathPanelBody.querySelector('[data-path-reset-all]')?.addEventListener('click', resetAllPaths);
+}
+
+function renderPathManagement(activePath) {
+  return `
+    <section class="path-management">
+      <div>
+        <h3>Pfad-Verwaltung</h3>
+        <p>${activePath ? `Aktiv: ${escapeHtml(activePath.title)}` : 'Kein Lernpfad aktiv.'}</p>
+      </div>
+      <div class="path-management-actions">
+        ${activePath ? '<button class="btn" data-path-pause type="button">Aktiven Pfad pausieren</button>' : ''}
+        <button class="btn btn-ghost danger-action" data-path-reset-all type="button">Alle Fortschritte zurücksetzen</button>
+      </div>
+    </section>
+  `;
 }
 
 function renderActivePath(path, activeSlideId) {
@@ -405,6 +423,23 @@ function startPath(pathId) {
   refreshToggleStates();
   markActivePathSlide(slides()[currentIdx]);
   navigateToSlide(path.stations.find(id => !completedFor(path.id).has(id)) || path.stations[0]);
+  renderPathPanel();
+  updatePathStatus();
+}
+
+function pauseActivePath() {
+  pathState.activePathId = null;
+  savePathState();
+  renderPathPanel();
+  updatePathStatus();
+}
+
+function resetAllPaths() {
+  const confirmed = window.confirm('Alle Lernpfad-Fortschritte zurücksetzen? Diese Aktion kann nicht rückgängig gemacht werden.');
+  if (!confirmed) return;
+  pathState.activePathId = null;
+  pathState.completed = {};
+  savePathState();
   renderPathPanel();
   updatePathStatus();
 }
