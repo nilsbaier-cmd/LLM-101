@@ -1,9 +1,15 @@
 # LLM-101 · Codex Redesign — Design-Spezifikation
 
-**Version:** 1.1
+**Version:** 1.2
 **Stand:** 2026-05-16
 **Branch:** `redesign/codex-v2`
 **Status:** Draft — bereit für Subagent-Implementation
+
+**v1.2 Changelog (gegenüber v1.1):**
+- §3.2: Attribut-Namen an Realität angepasst — Slide nutzt `data-slide-id` (nicht `data-slide`); `id` ist gleich `data-slide-id` (nicht `slide-{id}`-prefixed); Hash-Format ist `#{slideId}` (nicht `#slide-{slideId}`).
+- §6.3: Footer-Navigation-`href` auf echtes Hash-Format korrigiert.
+- §11-D1/D2/D3: alle Folien-Tabellen anhand `grep`-verifizierter Realität neu geschrieben — interaktive Komponenten korrekt zugeordnet (`[data-prompt-product]` auf usecase-4, `[data-context-xray]` auf usecase-5), Quiz-Annahme entfernt (existieren als Markup nicht, nur Reflexionsboxen).
+- §3.2: `data-stepped` Slides dokumentiert (einstieg-2, einstieg-3, verwaltung-1, verwaltung-2, next-2, next-3).
 
 **v1.1 Changelog (gegenüber v1.0):**
 - §4.1: Sprite ist bereits als `docs/codex-sprite.svg` im Repo; Paket A kopiert nur.
@@ -253,7 +259,14 @@ Jede Komponente ist als **Mini-Spec** dokumentiert: HTML-Struktur, CSS-Klassen, 
 **Struktur:**
 
 ```html
-<section class="slide" id="slide-{slideId}" data-slide="{slideId}" data-chapter="{chapter}" data-folio="{NN}">
+<section class="slide"
+         id="{slideId}"
+         data-slide-id="{slideId}"
+         data-chapter="{chapter}"
+         data-folio="{NN}"
+         data-stepped
+         data-volatile="true"
+         data-checked="2026-05-16">
   <div class="slide-head">
     <div class="slide-crumb">
       <span class="slide-crumb-icon"><svg class="ic lg"><use href="#i-{chapterIcon}"/></svg></span>
@@ -261,7 +274,7 @@ Jede Komponente ist als **Mini-Spec** dokumentiert: HTML-Struktur, CSS-Klassen, 
       <span class="slide-crumb-sep"><svg class="ic sm"><use href="#i-chevron-right"/></svg></span>
       <span class="slide-crumb-topic">{Unterthema}</span>
     </div>
-    <span class="slide-stand" data-volatile="{true|false}" data-checked="{YYYY-MM-DD}">
+    <span class="slide-stand">
       <svg class="ic sm"><use href="#i-bookmark"/></svg>
       Stand 16.05.26
     </span>
@@ -270,7 +283,7 @@ Jede Komponente ist als **Mini-Spec** dokumentiert: HTML-Struktur, CSS-Klassen, 
     {Inhalt}
   </div>
   <div class="slide-foot">
-    <a class="slide-nav prev" href="#slide-{prevId}">
+    <a class="slide-nav prev" href="#{prevSlideId}">
       <svg class="ic"><use href="#i-arrow-left"/></svg> zurück
     </a>
     <div class="slide-progress">
@@ -283,12 +296,22 @@ Jede Komponente ist als **Mini-Spec** dokumentiert: HTML-Struktur, CSS-Klassen, 
         Schritt <b>{n} von {m}</b>
       </span>
     </div>
-    <a class="slide-nav next" href="#slide-{nextId}">
+    <a class="slide-nav next" href="#{nextSlideId}">
       weiter <svg class="ic"><use href="#i-arrow-right"/></svg>
     </a>
   </div>
 </section>
 ```
+
+**Attribut-Konventionen (MUST):**
+
+- `data-slide-id="{slideId}"` — der **echte** Identifier (z.B. `einstieg-1`, `usecase-4`). Verifizierbar in `tests/*` (z.B. `tests/prompt-product.test.js` queryt `[data-slide-id="usecase-4"]`).
+- `id="{slideId}"` — gleicher Wert wie `data-slide-id`, KEIN `slide-`-Prefix. `app.js` setzt diesen automatisch falls leer (Zeile 695: `if (s.dataset.slideId && !s.id) s.id = s.dataset.slideId;`).
+- Hash-Routing: `#einstieg-1`, NICHT `#slide-einstieg-1`.
+- `data-chapter`: existiert bereits, bleibt.
+- `data-folio="NN"`: **NEU** — zweistellige Folio-Nr (01–30) manuell gepflegt, deterministisch.
+- `data-stepped`: existiert auf den 6 stepped Folien (einstieg-2, einstieg-3, verwaltung-1, verwaltung-2, next-2, next-3) — MUSS erhalten bleiben.
+- `data-volatile="true"` + `data-checked="2026-05-16"`: existiert auf 5 Folien (verwaltung-1, verwaltung-2, claude-1, claude-5, next-3) — MUSS erhalten bleiben.
 
 **Visuell:**
 
@@ -849,23 +872,23 @@ cd /tmp/LLM-101 && npm test -- icons mode
 
 #### Paket D1 · Slides 01–11 (Kapitel `einstieg` + `verwaltung` + `claude`)
 
-**Datei:** `index.html` (Slides mit `id="slide-einstieg-{1..4}"`, `slide-verwaltung-{1,2}`, `slide-claude-{1..5}`).
+**Datei:** `index.html` (Slides mit `data-slide-id` aus Liste unten).
 
-**Folien (11):**
+**Folien (11) — verifiziert gegen `index.html`:**
 
-| Folio | Slide-ID | Chapter | Folientyp | Besonderheit |
-|---|---|---|---|---|
-| 01 | einstieg-1 | einstieg | Cover | nutzt `.cover` statt `.title-row` (§3.5) |
-| 02 | einstieg-2 | einstieg | Timeline (5 Phasen) | `data-stepped`; `.timeline` Migration (§3.6) |
-| 03 | einstieg-3 | einstieg | Skill-Ladder | `data-stepped`; `.ladder-list` → `.ledger` |
-| 04 | einstieg-4 | einstieg | Agenda | `.agenda-list` Migration |
-| 05 | verwaltung-1 | verwaltung | Governance | `data-volatile="true"`, `data-checked="2026-05-16"`; `.policy-card` → `.status-card` (§3.7) |
-| 06 | verwaltung-2 | verwaltung | Merkblatt Erlaubt/Verboten | volatile; `.status-card` 3-Spalten |
-| 07 | claude-1 | claude | Modell-Features | volatile; LLM-Tabs |
-| 08 | claude-2 | claude | Chat vs. Project | — |
-| 09 | claude-3 | claude | Skills & Code | — |
-| 10 | claude-4 | claude | Live-Demo | — |
-| 11 | claude-5 | claude | Claude für Verwaltung | volatile |
+| Folio | data-slide-id | Chapter | Titel (kurz) | Bestehende Komponenten | Flags |
+|---|---|---|---|---|---|
+| 01 | `einstieg-1` | einstieg | LLM 101 (Cover) | — | nutzt `.cover` statt `.title-row` (§3.5) |
+| 02 | `einstieg-2` | einstieg | Die fünf Phasen der KI-Nutzung | `.timeline` | `data-stepped` |
+| 03 | `einstieg-3` | einstieg | 7-Level Skill-Ladder | `.ladder-list` | `data-stepped` |
+| 04 | `einstieg-4` | einstieg | Agenda | `.agenda-list` | — |
+| 05 | `verwaltung-1` | verwaltung | Was sagt die Verwaltung zu KI? | `.policy-card` | `data-stepped` + `data-volatile="true"` + `data-checked="2026-05-16"` |
+| 06 | `verwaltung-2` | verwaltung | Von Warnlogik zu Nutzungskompetenz | `[data-exercise]` | `data-stepped` + `data-volatile="true"` + `data-checked="2026-05-16"` |
+| 07 | `claude-1` | claude | Modellfamilien verstehen | `[data-llm-tabs]` + `[data-exercise]` | `data-volatile="true"` + `data-checked="2026-05-16"` |
+| 08 | `claude-2` | claude | Chat-Optionen | `[data-llm-tabs]` | — |
+| 09 | `claude-3` | claude | Einstellungen | `[data-llm-tabs]` | — |
+| 10 | `claude-4` | claude | Menü & Navigation | — | — |
+| 11 | `claude-5` | claude | Abos & Preise | `[data-llm-tabs]` | `data-volatile="true"` + `data-checked="2026-05-16"` |
 
 **Aufgaben:**
 
@@ -883,48 +906,57 @@ cd /tmp/LLM-101 && npm test -- icons mode
 
 #### Paket D2 · Slides 12–22 (Kapitel `context` + `usecases`)
 
-**Folien (11):**
+**Folien (11) — verifiziert gegen `index.html` und Tests:**
 
-| Folio | Slide-ID | Chapter | Folientyp | Besonderheit |
-|---|---|---|---|---|
-| 12 | context-1 | context | Grundlagen | — |
-| 13 | context-2 | context | X-Ray Demo | `.context-xray` → Conversation-Tape (§3.6) |
-| 14 | usecase-1 | usecases | Intro | — |
-| 15 | usecase-2 | usecases | Brainstorm | — |
-| 16 | usecase-3 | usecases | Draft | — |
-| 17 | usecase-lab | usecases | Interaktives Labor | `[data-prompt-product]` Migration |
-| 18 | usecase-4 | usecases | Iterieren | — |
-| 19 | usecase-5 | usecases | Output-Qualität | `.before-after-grid` |
-| 20 | usecase-6 | usecases | Output-Qualität (2) | `.case-library-grid` |
-| 21 | usecase-7 | usecases | Output-Qualität (3) | Quiz |
-| 22 | usecase-8 | usecases | Output-Qualität (4) | `.ex-reflection-prompt` |
+| Folio | data-slide-id | Chapter | Titel (kurz) | Bestehende Komponenten | Flags |
+|---|---|---|---|---|---|
+| 12 | `context-1` | context | Context Window | — | — |
+| 13 | `context-2` | context | Wie pflegt man das Context Window? | `[data-exercise]` | — |
+| 14 | `usecase-1` | usecases | Use Case — Sparringpartner | — | — |
+| 15 | `usecase-2` | usecases | Use Case — Ghostwriter | — | — |
+| 16 | `usecase-3` | usecases | Use Case — Data Analyst | — | — |
+| 17 | `usecase-lab` | usecases | Übungs-Labor — eigener Use Case | `[data-exercise]` (Prompt-Lab) | — |
+| 18 | `usecase-4` | usecases | **Prompt wird Produkt** | `[data-prompt-product]` + `[data-prompt-product-mode]` (×2) | — |
+| 19 | `usecase-5` | usecases | **Context Window X-Ray** | `[data-context-xray]` + `[data-context-xray-mode]` (×2) | — |
+| 20 | `usecase-6` | usecases | Output prüfen | `[data-exercise]` | — |
+| 21 | `usecase-7` | usecases | Mini-Fallbibliothek | `.case-library-grid` | — |
+| 22 | `usecase-8` | usecases | Vorher / Nachher | `.before-after-grid` | — |
 
-**Aufgaben:** wie D1, plus die interaktiven Komponenten (Prompt-Product, Context-Xray) MÜSSEN funktional erhalten bleiben — JS-Bindings testen.
+**Kritische Aufgaben:**
+
+1. **`usecase-4` (Prompt wird Produkt):** `[data-prompt-product]` und beide `[data-prompt-product-mode]` MÜSSEN funktional bleiben. JS-Init in `app.js` (`initPromptProduct`) bindet diese — nicht umbenennen. Visual: Anatomie-Block + Output-Preview als `.compare`-Layout aus Mockup (siehe §3.6 → before-after-grid Migration anwenden).
+2. **`usecase-5` (Context Window X-Ray):** `[data-context-xray]` mit beiden `[data-context-xray-mode]` MUSS funktional bleiben. JS-Init `initContextXray`. Visual: Migration zu „Conversation-Tape"-Layout aus Mockup Slide 3.
+3. **`usecase-lab` (Prompt-Lab):** Interaktive Lernstation — Test `tests/prompt-lab.test.js` MUSS grün bleiben. Editor und Submission-Logik nicht ändern.
 
 **Acceptance Criteria:**
 
-- `npm test -- prompt-product prompt-lab context-xray output-quality-and-cases exercises` grün.
-- Live im Browser: usecase-lab Prompt-Editor funktioniert.
+- `npm test -- prompt-product prompt-lab context-xray output-quality-and-cases exercises deck-integrity responsive-css` exit code 0.
+- Live im Browser:
+  - `#usecase-4` → Weak/Strong-Toggle schaltet Output-Preview.
+  - `#usecase-5` → Clean/Noisy-Toggle schaltet Stack-Visualisierung.
+  - `#usecase-lab` → Prompt-Editor reagiert, Persist via `lib/exercises.js`.
 
 #### Paket D3 · Slides 23–30 (Kapitel `skills` + `next-level`)
 
-**Folien (8):**
+**Folien (8) — verifiziert gegen `index.html`:**
 
-| Folio | Slide-ID | Chapter | Folientyp | Besonderheit |
-|---|---|---|---|---|
-| 23 | skills-1 | skills | Intro | — |
-| 24 | skills-2 | skills | Progressive Disclosure | — |
-| 25 | skills-3 | skills | Komplette Demo | — |
-| 26 | next-1 | next-level | Repository-Frage | — |
-| 27 | next-2 | next-level | Governance-Framework | `data-stepped` |
-| 28 | next-3 | next-level | Claude Code & Agenten | `data-stepped`, volatile |
-| 29 | next-5 | next-level | 7-Tage-Experiment | — |
-| 30 | next-4 | next-level | Transfer Anchor | Letzte Slide |
+| Folio | data-slide-id | Chapter | Titel (kurz) | Bestehende Komponenten | Flags |
+|---|---|---|---|---|---|
+| 23 | `skills-1` | skills | Was ist ein Skill? | `[data-llm-tabs]` | — |
+| 24 | `skills-2` | skills | Skill-Lifecycle | — | — |
+| 25 | `skills-3` | skills | Demo Time! | `[data-exercise]` | — |
+| 26 | `next-1` | next-level | Team-Repo als zentrale Wissensbasis | — | — |
+| 27 | `next-2` | next-level | GitHub 101 | — | `data-stepped` |
+| 28 | `next-3` | next-level | LLM überall | `[data-llm-tabs]` | `data-stepped` + `data-volatile="true"` + `data-checked="2026-05-16"` |
+| 29 | `next-5` | next-level | Chat, Project oder Codex? | — | — |
+| 30 | `next-4` | next-level | Dein nächster Schritt | — | Letzte Slide |
+
+**Reihenfolge im DOM:** Folio 29 = `next-5`, Folio 30 = `next-4` (reordered — `next-4` ist Abschluss-Anker).
 
 **Acceptance Criteria:**
 
-- `npm test -- transfer-and-visual-qa workshop-readiness` grün.
-- Letzte Slide (next-4): `.slide-nav.next` zeigt entweder nichts oder Link zum Notizen-Export.
+- `npm test -- transfer-and-visual-qa workshop-readiness deck-integrity volatile-facts responsive-css` exit code 0.
+- Letzte Slide (`next-4`): `.slide-nav.next` zeigt Link zum Notizen-Export (`meine-notizen.html`) ODER ist visuell deaktiviert (`aria-disabled="true"`).
 
 ### Paket E · Lernpfad-Footer-Logik (**Logic**)
 
