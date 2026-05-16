@@ -55,6 +55,12 @@ npm run visual:qa  # QA-Screenshots in .visual-qa/ erzeugen
 
 Auslieferung bleibt build-frei. `node_modules/` und `tests/` sind Dev-Artefakte.
 
+## Deployment
+
+- GitHub Pages wird über `.github/workflows/pages.yml` ausgeliefert, nicht mehr über den Legacy-Branch-Build.
+- Der Workflow nutzt Node 24 (`FORCE_JAVASCRIPT_ACTIONS_TO_NODE24=true`, `node-version: 24`) und aktuelle first-party Actions.
+- Vor dem Upload läuft `npm test`; veröffentlicht wird nur das statische Paket in `_site/` mit HTML, CSS, JS, `assets/`, `lib/`, `explainer/`, Manifest und README.
+
 ## Visuelle QA
 
 - `lib/visual-qa-targets.js` definiert die wichtigsten Prüfansichten für manuelle oder browsergestützte Sichtkontrolle: Cover, X-Ray, Prompt-Labor auf Phone, Output-Qualitätscheck, Mini-Fallbibliothek, Vorher/Nachher, Codex-Brücke, Handout, Quellencheck, Trainer-Cockpit, Lernpfad-Panel und Dark Mode.
