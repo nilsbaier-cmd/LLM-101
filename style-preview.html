@@ -3,496 +3,773 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Style-Preview — Phase 1</title>
+  <title>Codex v2 — Component Library</title>
+  <link rel="stylesheet" href="tokens.css">
+  <link rel="stylesheet" href="presentation.css">
   <style>
-    /* === tokens.css (inline) === */
-    /* Self-hosted fonts */
-    /* latin-ext */
-    @font-face {
-      font-family: 'Hanken Grotesk';
-      font-style: italic;
-      font-weight: 400;
-      font-display: swap;
-      src: url('assets/fonts/hanken-grotesk-variable-italic-latin-ext.woff2') format('woff2');
-      unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
-    }
-    /* latin */
-    @font-face {
-      font-family: 'Hanken Grotesk';
-      font-style: italic;
-      font-weight: 400;
-      font-display: swap;
-      src: url('assets/fonts/hanken-grotesk-variable-italic-latin.woff2') format('woff2');
-      unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-    }
-    /* latin-ext */
-    @font-face {
-      font-family: 'Hanken Grotesk';
-      font-style: italic;
-      font-weight: 500;
-      font-display: swap;
-      src: url('assets/fonts/hanken-grotesk-variable-italic-latin-ext.woff2') format('woff2');
-      unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
-    }
-    /* latin */
-    @font-face {
-      font-family: 'Hanken Grotesk';
-      font-style: italic;
-      font-weight: 500;
-      font-display: swap;
-      src: url('assets/fonts/hanken-grotesk-variable-italic-latin.woff2') format('woff2');
-      unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-    }
-    /* latin-ext */
-    @font-face {
-      font-family: 'Hanken Grotesk';
-      font-style: normal;
-      font-weight: 400;
-      font-display: swap;
-      src: url('assets/fonts/hanken-grotesk-variable-normal-latin-ext.woff2') format('woff2');
-      unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
-    }
-    /* latin */
-    @font-face {
-      font-family: 'Hanken Grotesk';
-      font-style: normal;
-      font-weight: 400;
-      font-display: swap;
-      src: url('assets/fonts/hanken-grotesk-variable-normal-latin.woff2') format('woff2');
-      unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-    }
-    /* latin-ext */
-    @font-face {
-      font-family: 'Hanken Grotesk';
-      font-style: normal;
-      font-weight: 500;
-      font-display: swap;
-      src: url('assets/fonts/hanken-grotesk-variable-normal-latin-ext.woff2') format('woff2');
-      unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
-    }
-    /* latin */
-    @font-face {
-      font-family: 'Hanken Grotesk';
-      font-style: normal;
-      font-weight: 500;
-      font-display: swap;
-      src: url('assets/fonts/hanken-grotesk-variable-normal-latin.woff2') format('woff2');
-      unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-    }
-    /* latin-ext */
-    @font-face {
-      font-family: 'Hanken Grotesk';
-      font-style: normal;
-      font-weight: 600;
-      font-display: swap;
-      src: url('assets/fonts/hanken-grotesk-variable-normal-latin-ext.woff2') format('woff2');
-      unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
-    }
-    /* latin */
-    @font-face {
-      font-family: 'Hanken Grotesk';
-      font-style: normal;
-      font-weight: 600;
-      font-display: swap;
-      src: url('assets/fonts/hanken-grotesk-variable-normal-latin.woff2') format('woff2');
-      unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-    }
-    /* latin-ext */
-    @font-face {
-      font-family: 'Hanken Grotesk';
-      font-style: normal;
-      font-weight: 700;
-      font-display: swap;
-      src: url('assets/fonts/hanken-grotesk-variable-normal-latin-ext.woff2') format('woff2');
-      unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
-    }
-    /* latin */
-    @font-face {
-      font-family: 'Hanken Grotesk';
-      font-style: normal;
-      font-weight: 700;
-      font-display: swap;
-      src: url('assets/fonts/hanken-grotesk-variable-normal-latin.woff2') format('woff2');
-      unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-    }
-    /* latin-ext */
-    @font-face {
-      font-family: 'JetBrains Mono';
-      font-style: normal;
-      font-weight: 400;
-      font-display: swap;
-      src: url('assets/fonts/jetbrains-mono-variable-normal-latin-ext.woff2') format('woff2');
-      unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
-    }
-    /* latin */
-    @font-face {
-      font-family: 'JetBrains Mono';
-      font-style: normal;
-      font-weight: 400;
-      font-display: swap;
-      src: url('assets/fonts/jetbrains-mono-variable-normal-latin.woff2') format('woff2');
-      unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-    }
-    /* latin-ext */
-    @font-face {
-      font-family: 'JetBrains Mono';
-      font-style: normal;
-      font-weight: 500;
-      font-display: swap;
-      src: url('assets/fonts/jetbrains-mono-variable-normal-latin-ext.woff2') format('woff2');
-      unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
-    }
-    /* latin */
-    @font-face {
-      font-family: 'JetBrains Mono';
-      font-style: normal;
-      font-weight: 500;
-      font-display: swap;
-      src: url('assets/fonts/jetbrains-mono-variable-normal-latin.woff2') format('woff2');
-      unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-    }
-
-    :root {
-      --bg-base: #fafaf7;
-      --bg-card: #ffffff;
-      --bg-tint: #faf7f0;
-      --border: #e8e3d4;
-      --text-primary: #1a1817;
-      --text-secondary: #6e6860;
-      --text-tertiary: #8a847a;
-      --accent: #cc785c;
-      --accent-soft: rgba(204, 120, 92, 0.08);
-      --accent-strong: #b35f44;
-      --success: #5fb37e;
-      --success-soft: rgba(95, 179, 126, 0.08);
-      --font-sans: 'Hanken Grotesk', system-ui, -apple-system, sans-serif;
-      --font-mono: 'JetBrains Mono', ui-monospace, 'SF Mono', monospace;
-      --radius-sm: 4px;
-      --radius-md: 6px;
-      --radius-lg: 10px;
-      --radius-xl: 14px;
-      --space-1: 4px;
-      --space-2: 8px;
-      --space-3: 12px;
-      --space-4: 16px;
-      --space-5: 22px;
-      --space-6: 30px;
-      --space-7: 44px;
-      --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
-      --shadow-md: 0 1px 3px rgba(0, 0, 0, 0.08), 0 4px 14px rgba(0, 0, 0, 0.06);
-    }
-
-    :root[data-theme="dark"] {
-      --bg-base: #141413;
-      --bg-card: #1f1d1b;
-      --bg-tint: #1a1817;
-      --border: #2e2a26;
-      --text-primary: #f5f1e9;
-      --text-secondary: #a8a298;
-      --text-tertiary: #a89d8e;
-      --accent: #e8a07c;
-      --accent-soft: rgba(232, 160, 124, 0.12);
-      --accent-strong: #ffb592;
-      --success: #86efac;
-      --success-soft: rgba(134, 239, 172, 0.10);
-      --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
-      --shadow-md: 0 1px 3px rgba(0, 0, 0, 0.4), 0 4px 14px rgba(0, 0, 0, 0.3);
-    }
-
-    @media (prefers-color-scheme: dark) {
-      :root:not([data-theme="light"]) {
-        --bg-base: #141413;
-        --bg-card: #1f1d1b;
-        --bg-tint: #1a1817;
-        --border: #2e2a26;
-        --text-primary: #f5f1e9;
-        --text-secondary: #a8a298;
-        --text-tertiary: #a89d8e;
-        --accent: #e8a07c;
-        --accent-soft: rgba(232, 160, 124, 0.12);
-        --accent-strong: #ffb592;
-        --success: #86efac;
-        --success-soft: rgba(134, 239, 172, 0.10);
-        --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
-        --shadow-md: 0 1px 3px rgba(0, 0, 0, 0.4), 0 4px 14px rgba(0, 0, 0, 0.3);
-      }
-    }
-
-    /* === app.css (inline) === */
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    html, body {
+    /* === Preview-only chrome === */
+    *, *::before, *::after { box-sizing: border-box; }
+    body {
+      margin: 0;
       font-family: var(--font-sans);
       background: var(--bg-base);
       color: var(--text-primary);
       line-height: 1.5;
       -webkit-font-smoothing: antialiased;
     }
-    .chapter-label {
-      font-size: 10px;
-      text-transform: uppercase;
-      letter-spacing: 2px;
-      color: var(--accent);
-      font-weight: 600;
-      margin-bottom: var(--space-4);
-    }
-    h1, h2, h3, h4 { letter-spacing: -0.025em; line-height: 1.1; font-weight: 600; }
-    h1 { font-size: 44px; }
-    h2 { font-size: 32px; }
-    h3 { font-size: 22px; }
-    h4 { font-size: 18px; }
-    p, li { font-size: 14px; line-height: 1.6; }
-    .pull-quote { font-style: italic; color: var(--text-secondary); font-size: 13px; margin: var(--space-3) 0; }
+    a { color: var(--cobalt); }
 
-    .card { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: var(--space-5); }
-
-    .stat { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: var(--space-3) var(--space-4); }
-    .stat-label { font-size: 10px; font-weight: 500; letter-spacing: 0.3px; color: var(--text-tertiary); }
-    .stat-value { font-size: 22px; font-weight: 600; letter-spacing: -0.025em; margin-top: 2px; }
-    .stat-value.accent { color: var(--accent); }
-
-    .progress { height: 5px; background: var(--border); border-radius: 3px; overflow: hidden; margin-top: var(--space-3); }
-    .progress-fill { height: 100%; background: var(--accent); transition: width 0.3s ease; }
-
-    .btn {
-      font-family: var(--font-sans);
-      font-size: 12px;
-      font-weight: 600;
-      padding: 6px 14px;
-      border-radius: var(--radius-md);
-      border: 1px solid var(--border);
-      background: var(--bg-card);
-      color: var(--text-primary);
-      cursor: pointer;
-      transition: border-color 0.15s, background 0.15s;
-    }
-    .btn:hover { border-color: var(--accent); }
-    .btn.btn-primary { background: var(--accent); border-color: var(--accent); color: #fff; }
-    .btn.btn-primary:hover { background: var(--accent-strong); }
-    .btn.btn-ghost { background: transparent; border-color: transparent; color: var(--text-secondary); }
-
-    .btn:focus-visible, .toggle:focus-visible, .code-block .copy-btn:focus-visible {
-      outline: 2px solid var(--accent);
-      outline-offset: 2px;
-    }
-
-    .code-block {
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-md);
-      padding: var(--space-3) var(--space-4);
+    .preview-topbar {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-4);
+      padding: 12px clamp(20px, 3vw, 40px);
+      background: var(--bg-tint);
+      border-bottom: 1px solid var(--border);
       font-family: var(--font-mono);
-      font-size: 12px;
-      color: var(--text-primary);
-      position: relative;
-      line-height: 1.6;
-      white-space: pre-wrap;
-      margin: var(--space-2) 0;
+      font-size: var(--fs-mono-label);
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--text-secondary);
     }
-    .code-block .copy-btn {
+    .preview-topbar b {
+      color: var(--text-primary);
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      font-family: var(--font-sans);
+      font-size: 14px;
+      text-transform: none;
+    }
+    .preview-topbar .meta {
+      color: var(--text-tertiary);
+    }
+    .theme-switch {
+      display: inline-flex;
+      gap: 4px;
+      align-items: center;
+    }
+    .theme-switch button {
+      font-family: var(--font-mono);
+      font-size: var(--fs-mono-label);
+      font-weight: 600;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      padding: 6px 12px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      background: var(--bg-card);
+      color: var(--text-secondary);
+      cursor: pointer;
+      transition: border-color var(--duration-fast) var(--ease-out),
+                  color var(--duration-fast) var(--ease-out);
+    }
+    .theme-switch button:hover { color: var(--text-primary); border-color: var(--text-primary); }
+    .theme-switch button.is-active {
+      background: var(--accent-soft);
+      border-color: color-mix(in srgb, var(--accent) 60%, transparent);
+      color: var(--text-primary);
+    }
+
+    .preview-wrap {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: clamp(28px, 4vw, 56px);
+      display: flex;
+      flex-direction: column;
+      gap: 64px;
+    }
+
+    .atom {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .atom-label {
+      font-family: var(--font-mono);
+      font-size: var(--fs-mono-label);
+      font-weight: 600;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--text-tertiary);
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .atom-label::before {
+      content: "//";
+      color: var(--accent-strong);
+      letter-spacing: 0;
+    }
+    .atom-meta {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--text-tertiary);
+      letter-spacing: 0.04em;
+    }
+    .atom-meta code {
+      font-family: var(--font-mono);
+      background: var(--bg-tint);
+      padding: 1px 6px;
+      border: 1px solid var(--border-soft);
+      border-radius: var(--radius-sm);
+      color: var(--text-primary);
+    }
+
+    /* Side-by-Side Light/Dark — eingebettete Themen-Container */
+    .theme-pair {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+    .theme-frame {
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      background: var(--bg-base);
+      padding: 20px;
+      position: relative;
+      overflow: hidden;
+    }
+    .theme-frame[data-theme] {
+      /* Force tokens via inheritance — only effective if we re-declare them */
+    }
+    .theme-frame::before {
+      content: attr(data-frame-label);
       position: absolute;
       top: 8px;
-      right: 8px;
-      font-size: 10px;
-      padding: 3px 9px;
-      background: var(--accent);
-      color: #fff;
-      border: none;
-      border-radius: var(--radius-sm);
-      cursor: pointer;
-      font-family: var(--font-sans);
-      font-weight: 600;
-    }
-    .code-label {
-      font-size: 10px;
+      right: 12px;
+      font-family: var(--font-mono);
+      font-size: 9px;
+      letter-spacing: 0.18em;
       text-transform: uppercase;
-      letter-spacing: 1.5px;
-      color: var(--accent);
-      font-weight: 700;
-      margin-bottom: var(--space-1);
-    }
-
-    .icon { display: inline-flex; align-items: center; justify-content: center; vertical-align: -3px; color: var(--accent); }
-    .icon svg { stroke: currentColor; stroke-width: 1.75; fill: none; width: 14px; height: 14px; }
-
-    .app-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: var(--space-4) var(--space-6);
-      border-bottom: 1px solid var(--border);
-      background: var(--bg-base);
-    }
-    .app-toggles { display: flex; gap: var(--space-2); align-items: center; }
-    .toggle {
-      font-family: var(--font-sans);
-      font-size: 11px;
-      font-weight: 500;
-      color: var(--text-secondary);
-      padding: 4px 10px;
-      border-radius: var(--radius-sm);
-      cursor: pointer;
-      background: transparent;
-      border: none;
-    }
-    .toggle.active { color: var(--accent); background: var(--accent-soft); }
-
-    /* === Preview-only Styling === */
-    .preview-wrap { max-width: 1100px; margin: 0 auto; padding: var(--space-7); }
-    .section { margin-bottom: var(--space-7); }
-    .section-title {
-      font-size: 12px;
-      text-transform: uppercase;
-      letter-spacing: 2px;
       color: var(--text-tertiary);
+    }
+    /* Local theme override inside the frame */
+    .theme-frame.theme-light {
+      --bg-base: #fafaf6;
+      --bg-card: #ffffff;
+      --bg-tint: #f3f2ec;
+      --border: #0a0a0c1c;
+      --border-soft: #0a0a0c10;
+      --text-primary: #0a0a0c;
+      --text-secondary: #44464b;
+      --text-tertiary: #8c8e96;
+      --accent: #c5e818;
+      --accent-soft: #d4f52640;
+      --accent-strong: #758c00;
+      --cobalt: #1f3df0;
+      --cobalt-soft: #1f3df012;
+      --crimson: #c4304a;
+      --signal: #16a674;
+      --warn: #d68410;
+      --success: #16a674;
+      --success-soft: #16a67414;
+      background: var(--bg-base);
+      color: var(--text-primary);
+    }
+    .theme-frame.theme-dark {
+      --bg-base: #0c0c0e;
+      --bg-card: #1a1a1d;
+      --bg-tint: #131316;
+      --border: #f0eee61c;
+      --border-soft: #f0eee610;
+      --text-primary: #f0eee6;
+      --text-secondary: #b4b4ba;
+      --text-tertiary: #6e6e76;
+      --accent: #d4f526;
+      --accent-soft: #d4f5263a;
+      --accent-strong: #b8d800;
+      --cobalt: #7f95ff;
+      --cobalt-soft: #7f95ff18;
+      --crimson: #e8627c;
+      --signal: #56d6a8;
+      --warn: #f0b54a;
+      --success: #56d6a8;
+      --success-soft: #56d6a814;
+      background: var(--bg-base);
+      color: var(--text-primary);
+    }
+
+    @media (max-width: 880px) {
+      .theme-pair { grid-template-columns: 1fr; }
+    }
+
+    /* Component demo containers */
+    .demo-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .demo-row {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    .demo-card-wrap {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 20px;
+    }
+
+    /* Color swatches */
+    .swatches {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+      gap: 8px;
+    }
+    .sw {
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.04em;
+    }
+    .sw-color {
+      height: 56px;
+    }
+    .sw-meta {
+      padding: 6px 8px;
+      background: var(--bg-card);
+      color: var(--text-secondary);
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+    .sw-meta b {
+      color: var(--text-primary);
       font-weight: 600;
-      margin-bottom: var(--space-4);
-      padding-bottom: var(--space-2);
+    }
+
+    /* Mini-slide preview wrapper — display Codex slide at smaller scale */
+    .slide-preview {
+      display: flex;
+      justify-content: center;
+    }
+    .slide-preview .slide.codex {
+      max-width: 1080px;
+      width: 100%;
+      box-shadow: var(--shadow-md);
+    }
+
+    /* Section title */
+    .section-h {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      padding-bottom: 12px;
       border-bottom: 1px solid var(--border);
     }
-    .row { display: flex; gap: var(--space-3); flex-wrap: wrap; align-items: flex-start; }
-    .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: var(--space-3); }
-    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-3); }
-    .swatch { width: 90px; height: 60px; border-radius: var(--radius-md); border: 1px solid var(--border); display: flex; flex-direction: column; align-items: center; justify-content: center; font-size: 10px; color: var(--text-primary); }
-    .swatch-label { font-size: 9px; color: var(--text-tertiary); font-family: var(--font-mono); }
-    .meta { font-size: 11px; color: var(--text-tertiary); font-family: var(--font-mono); margin-top: var(--space-1); }
+    .section-h h1 {
+      font-size: clamp(24px, 2.4vw, 32px);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: var(--text-primary);
+      margin: 0;
+    }
+    .section-h p {
+      font-size: 15px;
+      color: var(--text-secondary);
+      margin: 0;
+      max-width: 64ch;
+    }
   </style>
 </head>
 <body>
-  <header class="app-header">
+  <!-- Sprite Inline (early so all <use href="#i-..."/> work even offline) -->
+  <svg xmlns="http://www.w3.org/2000/svg" style="position:absolute; width:0; height:0; overflow:hidden" aria-hidden="true">
+    <defs>
+      <symbol id="i-arrow-left" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M5 12l7-7M5 12l7 7"/></symbol>
+      <symbol id="i-arrow-right" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M19 12l-7-7M19 12l-7 7"/></symbol>
+      <symbol id="i-chevron-right" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="m9 6 6 6-6 6"/></symbol>
+      <symbol id="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m4.93 19.07 1.41-1.41"/><path d="m17.66 6.34 1.41-1.41"/></symbol>
+      <symbol id="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3a7 7 0 0 0 9.79 9.79z"/></symbol>
+      <symbol id="i-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 5 5L20 7"/></symbol>
+      <symbol id="i-alert-triangle" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="m21.73 18-8-14a2 2 0 0 0-3.46 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3z"/><path d="M12 9v4"/><path d="M12 17h.01"/></symbol>
+      <symbol id="i-octagon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M7.86 2h8.28L22 7.86v8.28L16.14 22H7.86L2 16.14V7.86z"/></symbol>
+      <symbol id="i-shield" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></symbol>
+      <symbol id="i-shield-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></symbol>
+      <symbol id="i-bookmark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="m19 21-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></symbol>
+      <symbol id="i-globe" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></symbol>
+      <symbol id="i-lock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></symbol>
+      <symbol id="i-message-square" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></symbol>
+      <symbol id="i-eye" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></symbol>
+      <symbol id="i-sparkles" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3 1.9 5.7L19.5 11l-5.6 2.3L12 19l-1.9-5.7L4.5 11l5.6-2.3z"/><path d="M5 3v4"/><path d="M19 17v4"/><path d="M3 5h4"/><path d="M17 19h4"/></symbol>
+      <symbol id="i-layers" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="m12 2-10 5 10 5 10-5z"/><path d="m2 17 10 5 10-5"/><path d="m2 12 10 5 10-5"/></symbol>
+      <symbol id="i-route" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="19" r="3"/><circle cx="18" cy="5" r="3"/><path d="M6 16V8a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v0"/></symbol>
+      <symbol id="i-zap" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="m13 2-9 12h7l-1 8 9-12h-7z"/></symbol>
+      <symbol id="i-quote" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"/><path d="M15 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2h.75c0 2.25-1.75 4-3.5 4h-.75c-.001.008.75 1.031.75 1.031V20c0 1 0 1 1 1z"/></symbol>
+      <symbol id="i-x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></symbol>
+      <symbol id="i-play-circle" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m10 8 6 4-6 4z"/></symbol>
+    </defs>
+  </svg>
+
+  <header class="preview-topbar">
     <div>
-      <strong style="font-size: 14px;">Style-Preview — Phase 1</strong>
-      <span class="meta" style="margin-left: 12px;">tokens.css + app.css (inline)</span>
+      <b>Codex v2 — Component Library</b>
+      <span class="meta" style="margin-left:12px;">paket C · atoms</span>
     </div>
-    <div class="app-toggles">
-      <button class="toggle active" data-theme="light" type="button">Hell</button>
-      <button class="toggle" data-theme="dark" type="button">Dunkel</button>
-      <button class="toggle" data-theme="auto" type="button">OS</button>
+    <div class="theme-switch" role="group" aria-label="Theme">
+      <button type="button" class="is-active" data-theme="light">Hell</button>
+      <button type="button" data-theme="dark">Dunkel</button>
+      <button type="button" data-theme="auto">OS</button>
     </div>
   </header>
 
   <main class="preview-wrap">
 
-    <section class="section">
-      <div class="section-title">Typografie</div>
-      <div class="chapter-label">Kapitel 4 — Kontext</div>
-      <h1>Context Window</h1>
-      <h2 style="margin-top:16px;">Section Headline H2</h2>
-      <h3 style="margin-top:12px;">Subsection H3</h3>
-      <h4 style="margin-top:8px;">H4 für kleinere Blöcke</h4>
-      <p style="margin-top:12px;">Body-Text. Das ist die normale Lese-Größe. Hanken Grotesk in Regular. Eine zweite Zeile, damit du das Zeilen-Verhalten siehst — die line-height ist 1.6 für angenehme Lesbarkeit auf längeren Passagen.</p>
-      <p class="pull-quote">Context is like milk — best freshly served and condensed.</p>
+    <!-- ============================================
+         §0 — Section Intro
+         ============================================ -->
+    <section class="atom">
+      <header class="section-h">
+        <h1>Codex v2 — Atoms</h1>
+        <p>Visuelle Referenz für Paket C. Jede Sektion zeigt eine Komponente aus <code>presentation.css</code> mit Light + Dark Theme nebeneinander. Mockup-Anker: <code>docs/codex-mockup-reference.html</code>.</p>
+      </header>
     </section>
 
-    <section class="section">
-      <div class="section-title">Farb-Tokens</div>
-      <div class="row">
-        <div class="swatch" style="background: var(--bg-base);"><span class="swatch-label">bg-base</span></div>
-        <div class="swatch" style="background: var(--bg-card);"><span class="swatch-label">bg-card</span></div>
-        <div class="swatch" style="background: var(--bg-tint);"><span class="swatch-label">bg-tint</span></div>
-        <div class="swatch" style="background: var(--accent); color:#fff;"><span style="color:#fff;font-size:9px;">accent</span></div>
-        <div class="swatch" style="background: var(--accent-strong); color:#fff;"><span style="color:#fff;font-size:9px;">accent-strong</span></div>
-        <div class="swatch" style="background: var(--accent-soft);"><span class="swatch-label">accent-soft</span></div>
-        <div class="swatch" style="background: var(--success); color:#fff;"><span style="color:#fff;font-size:9px;">success</span></div>
-        <div class="swatch" style="background: var(--success-soft);"><span class="swatch-label">success-soft</span></div>
-      </div>
-    </section>
-
-    <section class="section">
-      <div class="section-title">Card</div>
-      <div class="grid-2">
-        <div class="card">
-          <div class="chapter-label">Beispiel</div>
-          <h3>Card-Komponente</h3>
-          <p style="margin-top:8px;">Wird für Inhaltsblöcke verwendet — Use-Case-Beispiele, Vergleichs-Spalten, Stat-Container.</p>
+    <!-- ============================================
+         §2.1 — Farb-Tokens (light + dark)
+         ============================================ -->
+    <section class="atom">
+      <div class="atom-label">Codex Atom — Farb-Tokens</div>
+      <div class="atom-meta">Spec §2.1 · <code>tokens.css</code></div>
+      <div class="theme-pair">
+        <div class="theme-frame theme-light" data-frame-label="Light">
+          <div class="swatches">
+            <div class="sw"><div class="sw-color" style="background: var(--bg-base);"></div><div class="sw-meta"><b>bg-base</b><span>#fafaf6</span></div></div>
+            <div class="sw"><div class="sw-color" style="background: var(--bg-card); border-bottom: 1px solid var(--border-soft);"></div><div class="sw-meta"><b>bg-card</b><span>#ffffff</span></div></div>
+            <div class="sw"><div class="sw-color" style="background: var(--bg-tint);"></div><div class="sw-meta"><b>bg-tint</b><span>#f3f2ec</span></div></div>
+            <div class="sw"><div class="sw-color" style="background: var(--accent);"></div><div class="sw-meta"><b>accent</b><span>Acid-Lime</span></div></div>
+            <div class="sw"><div class="sw-color" style="background: var(--accent-strong);"></div><div class="sw-meta"><b>accent-strong</b><span>Deep</span></div></div>
+            <div class="sw"><div class="sw-color" style="background: var(--cobalt);"></div><div class="sw-meta"><b>cobalt</b><span>cites</span></div></div>
+            <div class="sw"><div class="sw-color" style="background: var(--signal);"></div><div class="sw-meta"><b>signal</b><span>ok / done</span></div></div>
+            <div class="sw"><div class="sw-color" style="background: var(--warn);"></div><div class="sw-meta"><b>warn</b><span>caution</span></div></div>
+            <div class="sw"><div class="sw-color" style="background: var(--crimson);"></div><div class="sw-meta"><b>crimson</b><span>errata</span></div></div>
+          </div>
         </div>
-        <div class="card">
-          <div class="chapter-label">Zweite Card</div>
-          <h3>Mit Code-Block</h3>
-          <div class="code-label" style="margin-top:12px;">Beispiel-Prompt</div>
-          <div class="code-block"><button class="copy-btn" type="button">Kopieren</button>Erstelle eine Aktennotiz.
-Format: Datum · Sachverhalt · Massnahmen.</div>
-        </div>
-      </div>
-    </section>
-
-    <section class="section">
-      <div class="section-title">Stats + Progress</div>
-      <div class="grid-3">
-        <div class="stat">
-          <div class="stat-label">Nachrichten</div>
-          <div class="stat-value">9 / 12</div>
-        </div>
-        <div class="stat">
-          <div class="stat-label">Auslastung</div>
-          <div class="stat-value accent">75%</div>
-        </div>
-        <div class="stat">
-          <div class="stat-label">Frische</div>
-          <div class="stat-value">100%</div>
-        </div>
-      </div>
-      <div class="progress" style="margin-top: 16px;">
-        <div class="progress-fill" style="width: 75%;"></div>
-      </div>
-      <div class="meta">progress @ 75%</div>
-    </section>
-
-    <section class="section">
-      <div class="section-title">Buttons</div>
-      <div class="row">
-        <button class="btn" type="button">Default</button>
-        <button class="btn btn-primary" type="button">Primary</button>
-        <button class="btn btn-ghost" type="button">Ghost</button>
-        <button class="btn" type="button" disabled style="opacity: 0.5;">Disabled</button>
-      </div>
-      <div class="meta">Hover und Focus (Tab-Taste!) sind sichtbar.</div>
-    </section>
-
-    <section class="section">
-      <div class="section-title">Icons (Lucide-Stil — 14px, Coral)</div>
-      <div class="row" style="align-items: center; font-size: 13px; gap: 20px;">
-        <span><span class="icon"><svg viewBox="0 0 24 24"><path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48"/></svg></span> Anhang</span>
-        <span><span class="icon"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M8 13h8"/><path d="M8 17h8"/></svg></span> Anweisung</span>
-        <span><span class="icon"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></span> Verlauf</span>
-        <span><span class="icon"><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg></span> Check</span>
-      </div>
-    </section>
-
-    <section class="section">
-      <div class="section-title">Konsequenz-Vergleich (Vorgriff Task 4.4)</div>
-      <div class="grid-2">
-        <div class="card">
-          <div class="code-label">Strategie A — alles rein</div>
-          <p style="font-size: 13px; margin-top: 8px;">
-            <span class="icon"><svg viewBox="0 0 24 24"><path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48"/></svg></span> 12 Anhänge<br>
-            <span class="icon"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg></span> 8 Vorab-Anweisungen<br>
-            <span class="icon"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></span> Chat-Verlauf 50+ Nachrichten
-          </p>
-          <hr style="border: none; border-top: 1px solid var(--border); margin: 12px 0;">
-          <p style="font-size: 13px;"><strong>Frage:</strong> Was war Schritt 3?</p>
-          <p style="font-size: 13px; color: var(--accent-strong); font-weight: 600;">✗ erfunden / falsch</p>
-        </div>
-        <div class="card">
-          <div class="code-label">Strategie B — progressiv</div>
-          <p style="font-size: 13px; margin-top: 8px;">
-            <span class="icon"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg></span> Kernkontext (kurz)<br>
-            <span class="icon"><svg viewBox="0 0 24 24"><path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48"/></svg></span> nur relevanter Anhang<br>
-            <span class="icon"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></span> letzte 5 Nachrichten
-          </p>
-          <hr style="border: none; border-top: 1px solid var(--border); margin: 12px 0;">
-          <p style="font-size: 13px;"><strong>Frage:</strong> Was war Schritt 3?</p>
-          <p style="font-size: 13px; color: var(--success); font-weight: 600;">✓ korrekt</p>
+        <div class="theme-frame theme-dark" data-frame-label="Dark">
+          <div class="swatches">
+            <div class="sw"><div class="sw-color" style="background: var(--bg-base);"></div><div class="sw-meta"><b>bg-base</b><span>#0c0c0e</span></div></div>
+            <div class="sw"><div class="sw-color" style="background: var(--bg-card);"></div><div class="sw-meta"><b>bg-card</b><span>#1a1a1d</span></div></div>
+            <div class="sw"><div class="sw-color" style="background: var(--bg-tint);"></div><div class="sw-meta"><b>bg-tint</b><span>#131316</span></div></div>
+            <div class="sw"><div class="sw-color" style="background: var(--accent);"></div><div class="sw-meta"><b>accent</b><span>Acid-Lime</span></div></div>
+            <div class="sw"><div class="sw-color" style="background: var(--accent-strong);"></div><div class="sw-meta"><b>accent-strong</b><span>Deep</span></div></div>
+            <div class="sw"><div class="sw-color" style="background: var(--cobalt);"></div><div class="sw-meta"><b>cobalt</b><span>cites</span></div></div>
+            <div class="sw"><div class="sw-color" style="background: var(--signal);"></div><div class="sw-meta"><b>signal</b><span>ok / done</span></div></div>
+            <div class="sw"><div class="sw-color" style="background: var(--warn);"></div><div class="sw-meta"><b>warn</b><span>caution</span></div></div>
+            <div class="sw"><div class="sw-color" style="background: var(--crimson);"></div><div class="sw-meta"><b>crimson</b><span>errata</span></div></div>
+          </div>
         </div>
       </div>
     </section>
 
-    <p class="meta" style="text-align: center; margin-top: 60px;">
-      Datei: <code style="font-family: var(--font-mono);">claude-praesentation/style-preview.html</code> · self-contained (CSS inline) · nicht teil der Auslieferung
-    </p>
+    <!-- ============================================
+         §3.3 — Title-Row (Kicker + Lede)
+         ============================================ -->
+    <section class="atom">
+      <div class="atom-label">Codex Atom — Title-Row</div>
+      <div class="atom-meta">Spec §3.3 · <code>.title-row</code> + <code>.kicker</code> + <code>.lede</code>. Stack &lt; 720px.</div>
+      <div class="theme-pair">
+        <div class="theme-frame theme-light" data-frame-label="Light">
+          <div class="demo-card-wrap">
+            <div class="title-row">
+              <span class="kicker"><svg class="ic sm"><use href="#i-shield-check"/></svg> § Verwaltung &middot; KI</span>
+              <h2 class="lede">Was sagt die Verwaltung <em>zu KI?</em></h2>
+            </div>
+          </div>
+          <div class="demo-card-wrap" style="margin-top: 12px;">
+            <div class="title-row">
+              <span class="kicker kicker-accent"><svg class="ic sm"><use href="#i-sparkles"/></svg> Use Case &middot; 04</span>
+              <h2 class="lede">Prompt wird <em>Produkt</em></h2>
+            </div>
+          </div>
+        </div>
+        <div class="theme-frame theme-dark" data-frame-label="Dark">
+          <div class="demo-card-wrap">
+            <div class="title-row">
+              <span class="kicker"><svg class="ic sm"><use href="#i-shield-check"/></svg> § Verwaltung &middot; KI</span>
+              <h2 class="lede">Was sagt die Verwaltung <em>zu KI?</em></h2>
+            </div>
+          </div>
+          <div class="demo-card-wrap" style="margin-top: 12px;">
+            <div class="title-row">
+              <span class="kicker kicker-accent"><svg class="ic sm"><use href="#i-sparkles"/></svg> Use Case &middot; 04</span>
+              <h2 class="lede">Prompt wird <em>Produkt</em></h2>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================
+         §3.4 — Token-Pill
+         ============================================ -->
+    <section class="atom">
+      <div class="atom-label">Codex Atom — Token-Pill</div>
+      <div class="atom-meta">Spec §3.4 · <code>.tok</code> · Modifier: <code>.tok-cobalt</code>, <code>.tok-warn</code>. Inline-Icon-Gap 4px.</div>
+      <div class="theme-pair">
+        <div class="theme-frame theme-light" data-frame-label="Light">
+          <div class="demo-card-wrap">
+            <p style="font-size: 17px; line-height: 1.7; max-width: 64ch;">
+              Wir verwenden <span class="tok"><svg class="ic"><use href="#i-zap"/></svg>Kontext</span> aus dem
+              <span class="tok"><svg class="ic"><use href="#i-message-square"/></svg>Chatverlauf</span>,
+              verweisen auf <span class="tok tok-cobalt"><svg class="ic"><use href="#i-bookmark"/></svg>SB021 Art. 4</span>
+              und markieren <span class="tok tok-warn"><svg class="ic"><use href="#i-alert-triangle"/></svg>Tabu-Daten</span>
+              klar getrennt.
+            </p>
+          </div>
+        </div>
+        <div class="theme-frame theme-dark" data-frame-label="Dark">
+          <div class="demo-card-wrap">
+            <p style="font-size: 17px; line-height: 1.7; max-width: 64ch;">
+              Wir verwenden <span class="tok"><svg class="ic"><use href="#i-zap"/></svg>Kontext</span> aus dem
+              <span class="tok"><svg class="ic"><use href="#i-message-square"/></svg>Chatverlauf</span>,
+              verweisen auf <span class="tok tok-cobalt"><svg class="ic"><use href="#i-bookmark"/></svg>SB021 Art. 4</span>
+              und markieren <span class="tok tok-warn"><svg class="ic"><use href="#i-alert-triangle"/></svg>Tabu-Daten</span>
+              klar getrennt.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================
+         §3.2 — Slide-Frame (Full Demo)
+         ============================================ -->
+    <section class="atom">
+      <div class="atom-label">Codex Atom — Slide-Frame (Anatomie)</div>
+      <div class="atom-meta">Spec §3.2 · <code>.slide.codex</code> &middot; Head + Body + Foot. Stand-Stamp + Path-Dots im Footer.</div>
+      <div class="slide-preview">
+        <section class="slide codex" data-slide-id="demo-1" data-chapter="verwaltung" data-folio="05" data-volatile="true" data-checked="2026-05-16">
+          <div class="slide-head">
+            <div class="slide-crumb">
+              <span class="slide-crumb-icon"><svg class="ic lg"><use href="#i-shield-check"/></svg></span>
+              <span class="slide-crumb-chap">Verwaltung &amp; KI</span>
+              <span class="slide-crumb-sep"><svg class="ic sm"><use href="#i-chevron-right"/></svg></span>
+              <span class="slide-crumb-topic">Datenampel &middot; §§ 1–3</span>
+            </div>
+            <span class="slide-stand" data-volatile="true">
+              <svg class="ic sm"><use href="#i-bookmark"/></svg>
+              Stand 16.05.26
+            </span>
+          </div>
+          <div class="slide-body">
+            <div class="title-row">
+              <span class="kicker"><svg class="ic sm"><use href="#i-shield"/></svg> Daten &middot; klassifiziert</span>
+              <h2 class="lede">Drei Stufen, <em>klare Grenzen</em></h2>
+            </div>
+            <p style="font-size: 17px; line-height: 1.6; color: var(--text-secondary); max-width: 64ch;">
+              Die <span class="tok"><svg class="ic"><use href="#i-zap"/></svg>Datenampel</span> verdichtet die Verwaltungs-Richtlinie auf eine Frage:
+              Welche Daten dürfen in welches Tool?
+            </p>
+          </div>
+          <div class="slide-foot">
+            <a class="slide-nav" href="#prev">
+              <svg class="ic"><use href="#i-arrow-left"/></svg> zurück
+            </a>
+            <div class="slide-progress">
+              <span class="slide-folio"><svg class="ic"><use href="#i-bookmark"/></svg> Folie <b>05 / 30</b></span>
+              <span class="slide-progress-sep" aria-hidden="true"></span>
+              <span class="slide-path"><svg class="ic"><use href="#i-route"/></svg> Lernpfad <b>Compliance</b></span>
+              <span class="slide-progress-sep" aria-hidden="true"></span>
+              <span class="slide-step">
+                <span class="path-dots" aria-hidden="true"><i class="done"></i><i class="here"></i><i></i><i></i></span>
+                Schritt <b>2 von 4</b>
+              </span>
+            </div>
+            <a class="slide-nav" href="#next">
+              weiter <svg class="ic"><use href="#i-arrow-right"/></svg>
+            </a>
+          </div>
+        </section>
+      </div>
+    </section>
+
+    <!-- ============================================
+         §3.5 — Cover Display
+         ============================================ -->
+    <section class="atom">
+      <div class="atom-label">Codex Atom — Cover &middot; Display + Caret</div>
+      <div class="atom-meta">Spec §3.5 · <code>.slide.cover</code> &middot; <code>h1.display</code> mit blink-Caret (reduced-motion respektiert).</div>
+      <div class="slide-preview">
+        <section class="slide codex cover" data-slide-id="demo-cover" data-chapter="einstieg" data-folio="01">
+          <div class="slide-head">
+            <div class="slide-crumb">
+              <span class="slide-crumb-icon"><svg class="ic lg"><use href="#i-bookmark"/></svg></span>
+              <span class="slide-crumb-chap">Einstieg</span>
+              <span class="slide-crumb-sep"><svg class="ic sm"><use href="#i-chevron-right"/></svg></span>
+              <span class="slide-crumb-topic">Schulung &middot; Auftakt</span>
+            </div>
+            <span class="slide-stand">
+              <svg class="ic sm"><use href="#i-bookmark"/></svg>
+              Stand 16.05.26
+            </span>
+          </div>
+          <div class="slide-body">
+            <span class="kicker kicker-accent"><svg class="ic sm"><use href="#i-sparkles"/></svg> SREGE &middot; LLM-101</span>
+            <h1 class="display">
+              Claude, <em>verständlich</em><span class="caret" aria-hidden="true"></span>
+            </h1>
+            <p class="cover-lead">
+              Ein <span class="tok"><svg class="ic"><use href="#i-zap"/></svg>3-Stunden-Deep-Dive</span>
+              für Kolleginnen und Kollegen in der Verwaltung — von Modellfamilie bis Skill.
+            </p>
+            <div class="cover-colophon">
+              <div><svg class="ic"><use href="#i-bookmark"/></svg><b>Nils Baier</b><span>Trainer</span></div>
+              <div><svg class="ic"><use href="#i-shield-check"/></svg><b>SREGE</b><span>EJPD</span></div>
+              <div><svg class="ic"><use href="#i-route"/></svg><b>Run #04</b><span>Pilot</span></div>
+              <div><svg class="ic"><use href="#i-bookmark"/></svg><b>16.05.26</b><span>Edition</span></div>
+              <span></span>
+              <span class="cover-seal" aria-hidden="true">LLM</span>
+            </div>
+          </div>
+          <div class="slide-foot">
+            <a class="slide-nav" href="#prev" aria-disabled="true">
+              <svg class="ic"><use href="#i-arrow-left"/></svg> zurück
+            </a>
+            <div class="slide-progress">
+              <span class="slide-folio"><svg class="ic"><use href="#i-bookmark"/></svg> Folie <b>01 / 30</b></span>
+              <span class="slide-progress-sep" aria-hidden="true"></span>
+              <span class="slide-path"><svg class="ic"><use href="#i-route"/></svg> Lernpfad <b>Auftakt</b></span>
+            </div>
+            <a class="slide-nav" href="#next">
+              weiter <svg class="ic"><use href="#i-arrow-right"/></svg>
+            </a>
+          </div>
+        </section>
+      </div>
+    </section>
+
+    <!-- ============================================
+         §3.7 — Status Cards
+         ============================================ -->
+    <section class="atom">
+      <div class="atom-label">Codex Atom — Status-Cards</div>
+      <div class="atom-meta">Spec §3.7 · <code>.status-card</code> &middot; Modifier: <code>.status-ok</code>, <code>.status-warn</code>, <code>.status-stop</code>.</div>
+      <div class="theme-pair">
+        <div class="theme-frame theme-light" data-frame-label="Light">
+          <div class="status-cards">
+            <article class="status-card status-ok">
+              <div class="status-card-head">
+                <b><svg class="ic"><use href="#i-globe"/></svg> § 1 &middot; Öffentlich</b>
+                <span class="status-pill"><svg class="ic sm"><use href="#i-check"/></svg> FREI</span>
+              </div>
+              <h3>Frei verfügbar</h3>
+              <div class="status-card-desc">Gesetze, Medienmitteilungen, Rechtsprechung — bereits publiziert.</div>
+              <ul class="status-card-list">
+                <li><svg class="ic"><use href="#i-check"/></svg>SR / EUR-Lex</li>
+                <li><svg class="ic"><use href="#i-check"/></svg>Behörden-Websites</li>
+                <li><svg class="ic"><use href="#i-check"/></svg>Pressemitteilungen</li>
+              </ul>
+              <span class="status-card-cite"><svg class="ic sm"><use href="#i-bookmark"/></svg> vgl. SB021 Art. 4 (a)</span>
+            </article>
+            <article class="status-card status-warn">
+              <div class="status-card-head">
+                <b><svg class="ic"><use href="#i-shield"/></svg> § 2 &middot; Intern</b>
+                <span class="status-pill"><svg class="ic sm"><use href="#i-alert-triangle"/></svg> PRÜFEN</span>
+              </div>
+              <h3>Anonymisiert</h3>
+              <div class="status-card-desc">Interne Notizen, Protokolle — vor Eingabe Personen-/Akten-IDs entfernen.</div>
+              <ul class="status-card-list">
+                <li><svg class="ic"><use href="#i-alert-triangle"/></svg>Aktennotizen (clean)</li>
+                <li><svg class="ic"><use href="#i-alert-triangle"/></svg>Statistiken (aggregiert)</li>
+                <li><svg class="ic"><use href="#i-alert-triangle"/></svg>Entwurf-Texte</li>
+              </ul>
+              <span class="status-card-cite"><svg class="ic sm"><use href="#i-bookmark"/></svg> vgl. SB021 Art. 4 (b)</span>
+            </article>
+            <article class="status-card status-stop">
+              <div class="status-card-head">
+                <b><svg class="ic"><use href="#i-lock"/></svg> § 3 &middot; Sensitiv</b>
+                <span class="status-pill"><svg class="ic sm"><use href="#i-octagon"/></svg> STOP</span>
+              </div>
+              <h3>Nie eingeben</h3>
+              <div class="status-card-desc">Personendaten, Dossiers, klassifizierte Inhalte — kein Public-LLM.</div>
+              <ul class="status-card-list">
+                <li><svg class="ic"><use href="#i-octagon"/></svg>Klar-Personendaten</li>
+                <li><svg class="ic"><use href="#i-octagon"/></svg>VS-Klassifizierung</li>
+                <li><svg class="ic"><use href="#i-octagon"/></svg>Originaldossiers</li>
+              </ul>
+              <span class="status-card-cite"><svg class="ic sm"><use href="#i-bookmark"/></svg> vgl. SB021 Art. 4 (c)</span>
+            </article>
+          </div>
+        </div>
+        <div class="theme-frame theme-dark" data-frame-label="Dark">
+          <div class="status-cards">
+            <article class="status-card status-ok">
+              <div class="status-card-head">
+                <b><svg class="ic"><use href="#i-globe"/></svg> § 1 &middot; Öffentlich</b>
+                <span class="status-pill"><svg class="ic sm"><use href="#i-check"/></svg> FREI</span>
+              </div>
+              <h3>Frei verfügbar</h3>
+              <div class="status-card-desc">Gesetze, Medienmitteilungen — publiziert.</div>
+              <ul class="status-card-list">
+                <li><svg class="ic"><use href="#i-check"/></svg>SR / EUR-Lex</li>
+                <li><svg class="ic"><use href="#i-check"/></svg>Behörden-Websites</li>
+              </ul>
+              <span class="status-card-cite"><svg class="ic sm"><use href="#i-bookmark"/></svg> SB021 Art. 4 (a)</span>
+            </article>
+            <article class="status-card status-warn">
+              <div class="status-card-head">
+                <b><svg class="ic"><use href="#i-shield"/></svg> § 2 &middot; Intern</b>
+                <span class="status-pill"><svg class="ic sm"><use href="#i-alert-triangle"/></svg> PRÜFEN</span>
+              </div>
+              <h3>Anonymisiert</h3>
+              <div class="status-card-desc">Interne Notizen — IDs entfernen.</div>
+              <ul class="status-card-list">
+                <li><svg class="ic"><use href="#i-alert-triangle"/></svg>Aktennotizen</li>
+                <li><svg class="ic"><use href="#i-alert-triangle"/></svg>Entwürfe</li>
+              </ul>
+              <span class="status-card-cite"><svg class="ic sm"><use href="#i-bookmark"/></svg> SB021 Art. 4 (b)</span>
+            </article>
+            <article class="status-card status-stop">
+              <div class="status-card-head">
+                <b><svg class="ic"><use href="#i-lock"/></svg> § 3 &middot; Sensitiv</b>
+                <span class="status-pill"><svg class="ic sm"><use href="#i-octagon"/></svg> STOP</span>
+              </div>
+              <h3>Nie eingeben</h3>
+              <div class="status-card-desc">Personendaten — kein Public-LLM.</div>
+              <ul class="status-card-list">
+                <li><svg class="ic"><use href="#i-octagon"/></svg>Klar-Personendaten</li>
+                <li><svg class="ic"><use href="#i-octagon"/></svg>Dossiers</li>
+              </ul>
+              <span class="status-card-cite"><svg class="ic sm"><use href="#i-bookmark"/></svg> SB021 Art. 4 (c)</span>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================
+         §3.9 — Callout
+         ============================================ -->
+    <section class="atom">
+      <div class="atom-label">Codex Atom — Footer-Callout</div>
+      <div class="atom-meta">Spec §3.9 · <code>.callout</code> &middot; 3-col grid: icon + text + action.</div>
+      <div class="theme-pair">
+        <div class="theme-frame theme-light" data-frame-label="Light">
+          <aside class="callout">
+            <span class="callout-icon"><svg class="ic lg"><use href="#i-quote"/></svg></span>
+            <p><b>Faustregel — </b>Wer den Output prüft, ist verantwortlich. <em>Nicht das Modell.</em></p>
+            <a class="callout-action" href="#"><span>Beispiel ansehen</span> <svg class="ic"><use href="#i-arrow-right"/></svg></a>
+          </aside>
+        </div>
+        <div class="theme-frame theme-dark" data-frame-label="Dark">
+          <aside class="callout">
+            <span class="callout-icon"><svg class="ic lg"><use href="#i-quote"/></svg></span>
+            <p><b>Faustregel — </b>Wer den Output prüft, ist verantwortlich. <em>Nicht das Modell.</em></p>
+            <a class="callout-action" href="#"><span>Beispiel ansehen</span> <svg class="ic"><use href="#i-arrow-right"/></svg></a>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================
+         §3.2 — Path-Dots & Slide-Nav (Atoms)
+         ============================================ -->
+    <section class="atom">
+      <div class="atom-label">Codex Atom — Path-Dots</div>
+      <div class="atom-meta">Spec §3.2 · <code>.path-dots i</code> · Modifier: <code>.done</code>, <code>.here</code>.</div>
+      <div class="theme-pair">
+        <div class="theme-frame theme-light" data-frame-label="Light">
+          <div class="demo-grid">
+            <div class="demo-row">
+              <span class="path-dots"><i class="done"></i><i class="done"></i><i class="here"></i><i></i><i></i></span>
+              <span class="atom-meta">3 / 5 &middot; here = §3</span>
+            </div>
+            <div class="demo-row">
+              <span class="path-dots"><i class="here"></i><i></i><i></i><i></i></span>
+              <span class="atom-meta">1 / 4 &middot; start</span>
+            </div>
+            <div class="demo-row">
+              <span class="path-dots"><i class="done"></i><i class="done"></i><i class="done"></i><i class="here"></i></span>
+              <span class="atom-meta">4 / 4 &middot; finale</span>
+            </div>
+          </div>
+        </div>
+        <div class="theme-frame theme-dark" data-frame-label="Dark">
+          <div class="demo-grid">
+            <div class="demo-row">
+              <span class="path-dots"><i class="done"></i><i class="done"></i><i class="here"></i><i></i><i></i></span>
+              <span class="atom-meta">3 / 5 &middot; here = §3</span>
+            </div>
+            <div class="demo-row">
+              <span class="path-dots"><i class="here"></i><i></i><i></i><i></i></span>
+              <span class="atom-meta">1 / 4 &middot; start</span>
+            </div>
+            <div class="demo-row">
+              <span class="path-dots"><i class="done"></i><i class="done"></i><i class="done"></i><i class="here"></i></span>
+              <span class="atom-meta">4 / 4 &middot; finale</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="atom">
+      <div class="atom-label">Codex Atom — Slide-Nav Buttons</div>
+      <div class="atom-meta">Spec §3.2 · <code>.slide-nav</code> &middot; Hover &amp; aria-disabled-States.</div>
+      <div class="theme-pair">
+        <div class="theme-frame theme-light" data-frame-label="Light">
+          <div class="demo-row">
+            <a class="slide-nav" href="#"><svg class="ic"><use href="#i-arrow-left"/></svg> zurück</a>
+            <a class="slide-nav" href="#">weiter <svg class="ic"><use href="#i-arrow-right"/></svg></a>
+            <a class="slide-nav" href="#" aria-disabled="true">Ende <svg class="ic"><use href="#i-x"/></svg></a>
+          </div>
+        </div>
+        <div class="theme-frame theme-dark" data-frame-label="Dark">
+          <div class="demo-row">
+            <a class="slide-nav" href="#"><svg class="ic"><use href="#i-arrow-left"/></svg> zurück</a>
+            <a class="slide-nav" href="#">weiter <svg class="ic"><use href="#i-arrow-right"/></svg></a>
+            <a class="slide-nav" href="#" aria-disabled="true">Ende <svg class="ic"><use href="#i-x"/></svg></a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================
+         §3.2 — Stand-Stamp (with volatile)
+         ============================================ -->
+    <section class="atom">
+      <div class="atom-label">Codex Atom — Stand-Stamp</div>
+      <div class="atom-meta">Spec §3.2 · <code>.slide-stand</code> &middot; Volatile-Variant: <code>data-volatile="true"</code> bekommt warn-inset.</div>
+      <div class="theme-pair">
+        <div class="theme-frame theme-light" data-frame-label="Light">
+          <div class="demo-row">
+            <span class="slide-stand"><svg class="ic sm"><use href="#i-bookmark"/></svg> Stand 16.05.26</span>
+            <span class="slide-stand" data-volatile="true"><svg class="ic sm"><use href="#i-alert-triangle"/></svg> Stand 16.05.26 &middot; flüchtig</span>
+          </div>
+        </div>
+        <div class="theme-frame theme-dark" data-frame-label="Dark">
+          <div class="demo-row">
+            <span class="slide-stand"><svg class="ic sm"><use href="#i-bookmark"/></svg> Stand 16.05.26</span>
+            <span class="slide-stand" data-volatile="true"><svg class="ic sm"><use href="#i-alert-triangle"/></svg> Stand 16.05.26 &middot; flüchtig</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer class="atom" style="margin-top: 40px; padding-top: 24px; border-top: 1px solid var(--border);">
+      <p class="atom-meta">
+        Datei: <code>style-preview.html</code> &middot; Stand: 2026-05-16 &middot; Paket C
+      </p>
+      <p class="atom-meta">
+        Mockup-Anker: <code>docs/codex-mockup-reference.html</code> &middot;
+        Spec: <code>docs/codex-design-spec.md</code> §3.2–§3.9
+      </p>
+    </footer>
+
   </main>
 
   <script>
-    document.querySelectorAll('button[data-theme]').forEach(btn => {
+    // Theme-Toggle (global) — affects :root, not the in-page theme-frames
+    const buttons = document.querySelectorAll('.theme-switch button[data-theme]');
+    buttons.forEach(btn => {
       btn.addEventListener('click', () => {
         const t = btn.dataset.theme;
         if (t === 'auto') {
@@ -500,9 +777,7 @@ Format: Datum · Sachverhalt · Massnahmen.</div>
         } else {
           document.documentElement.setAttribute('data-theme', t);
         }
-        document.querySelectorAll('button[data-theme]').forEach(b => {
-          b.classList.toggle('active', b === btn);
-        });
+        buttons.forEach(b => b.classList.toggle('is-active', b === btn));
       });
     });
   </script>
