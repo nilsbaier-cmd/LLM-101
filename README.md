@@ -9,6 +9,7 @@ Hybrid Slide/Scroll-Präsentation als Einführung in Large Language Models mit k
 - `handout.html` — druckbarer One-Pager für Teilnehmende
 - `trainer-export.html` — Moderationsblatt mit Abläufen, Fallbacks, Demo-Checklisten und Prompts
 - `quellen-refresh.html` — Wartungsseite für volatile Quellen und Faktenchecks
+- `design-variants.html` — zwei isolierte Look-&-Feel-Studien mit je fünf Beispiel-Folien, Light/Dark und bestehenden Fonts
 - Lernpfad-Kompass — direkt in `index.html`, lokal gespeicherter Fortschritt für Einsteiger-, Praxis-, Power-User- und Governance-Pfad
 - Trainer-Cockpit — aktivierbar über `index.html?trainer=1`, mit Ablaufvarianten, Sprecherhinweisen, Fallbacks und Demo-Prompts
 - `explainer/*.html` — Sieben standalone Concept-Explainer (A–G):
