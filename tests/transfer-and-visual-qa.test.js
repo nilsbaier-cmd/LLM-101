@@ -28,6 +28,8 @@ describe('transfer close and visual QA targets', () => {
     expect(transferSlide.textContent).toContain('7-Tage-Experiment');
     expect(transferSlide.querySelector('a[href="meine-notizen.html"]')?.textContent).toContain('Meine Notizen');
     expect(transferSlide.querySelector('a[href="handout.html"]')?.textContent).toContain('Handout');
+    expect(transferSlide.querySelector('a[href="quellen-refresh.html"]')?.textContent).toContain('Quellencheck');
+    expect(transferSlide.querySelector('a[href="trainer-export.html"]')).toBeNull();
     expect(document.querySelector('[data-slide-id="next-5"]')?.nextElementSibling?.dataset.slideId).toBe('next-4');
   });
 

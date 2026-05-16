@@ -18,6 +18,11 @@ describe('workshop readiness package', () => {
     expect(read('trainer-export.html')).toContain('Moderationsblatt');
     expect(read('quellen-refresh.html')).toContain('Quellen- und Faktencheck');
     expect(read('trainer-export.html')).toContain('TRAINER_VARIANTS');
+    expect(read('handout.html')).toContain('support-page.js');
+    expect(read('quellen-refresh.html')).toContain('support-page.js');
+    expect(read('trainer-export.html')).toContain('support-page.js');
+    expect(read('trainer-export.html')).not.toContain('index.html?trainer=1');
+    expect(read('lib/support-page.js')).toContain("mode.get('theme')");
   });
 
   it('adds pattern gallery and Codex bridge slides', () => {

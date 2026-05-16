@@ -6,9 +6,11 @@
   <meta name="theme-color" content="#C45A43">
   <title>LLM 101 — Trainer-Export</title>
   <link rel="icon" href="assets/icon.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="tokens.css?v=2026-05-16af">
-  <link rel="stylesheet" href="app.css?v=2026-05-16af">
+  <link rel="stylesheet" href="tokens.css?v=2026-05-16ag">
+  <link rel="stylesheet" href="app.css?v=2026-05-16ag">
   <style>
+    body { background: var(--bg-base); color: var(--text-primary); overflow-x: hidden; }
+    .support-back { color: var(--text-primary); }
     .trainer-sheet { max-width: 1040px; margin: 0 auto; padding: var(--space-7); }
     .trainer-sheet h1 { font-size: 42px; }
     .variant-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-4); margin: var(--space-5) 0; }
@@ -31,7 +33,7 @@
 </head>
 <body>
   <header class="app-header">
-    <div class="app-title"><a href="index.html?trainer=1">← Zurück zum Cockpit</a></div>
+    <a class="app-title home-link support-back" href="index.html#next-4">Zurück zur Präsentation</a>
   </header>
   <main class="trainer-sheet">
     <div class="panel-eyebrow">Trainer</div>
@@ -41,7 +43,7 @@
     <section class="notes-grid" id="notes"></section>
   </main>
   <script type="module">
-    import { TRAINER_NOTES, TRAINER_VARIANTS } from './lib/learning-paths.js?v=2026-05-16af';
+    import { TRAINER_NOTES, TRAINER_VARIANTS } from './lib/learning-paths.js?v=2026-05-16ag';
 
     const escapeHtml = (value) => String(value)
       .replaceAll('&', '&amp;')
@@ -71,5 +73,6 @@
       </article>
     `).join('');
   </script>
+  <script type="module" src="lib/support-page.js?v=2026-05-16ag"></script>
 </body>
 </html>

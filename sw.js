@@ -1,12 +1,11 @@
 const CACHE_PREFIX = 'llm-101-offline-';
-const CACHE_NAME = `${CACHE_PREFIX}2026-05-16af`;
+const CACHE_NAME = `${CACHE_PREFIX}2026-05-16ag`;
 
 const CORE_ASSETS = [
   './',
   './index.html',
   './meine-notizen.html',
   './handout.html',
-  './trainer-export.html',
   './quellen-refresh.html',
   './manifest.webmanifest',
   './assets/icon.svg',
@@ -22,6 +21,7 @@ const CORE_ASSETS = [
   './lib/exercises.js',
   './lib/notes-export.js',
   './lib/learning-paths.js',
+  './lib/support-page.js',
   './explainer/a-context-window.html',
   './explainer/b-chat-vs-project.html',
   './explainer/c-skills-architektur.html',

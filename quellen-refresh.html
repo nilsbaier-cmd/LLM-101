@@ -6,9 +6,11 @@
   <meta name="theme-color" content="#C45A43">
   <title>LLM 101 — Quellencheck</title>
   <link rel="icon" href="assets/icon.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="tokens.css?v=2026-05-16af">
-  <link rel="stylesheet" href="app.css?v=2026-05-16af">
+  <link rel="stylesheet" href="tokens.css?v=2026-05-16ag">
+  <link rel="stylesheet" href="app.css?v=2026-05-16ag">
   <style>
+    body { background: var(--bg-base); color: var(--text-primary); overflow-x: hidden; }
+    .support-back { color: var(--text-primary); }
     .refresh-page { max-width: 1040px; margin: 0 auto; padding: var(--space-7); }
     .refresh-page h1 { font-size: 42px; }
     .refresh-table { display: grid; border: 1px solid var(--border); border-radius: var(--radius-md); overflow: hidden; margin-top: var(--space-5); }
@@ -27,7 +29,7 @@
 </head>
 <body>
   <header class="app-header">
-    <div class="app-title"><a href="index.html">← Zurück zur Präsentation</a></div>
+    <a class="app-title home-link support-back" href="index.html#next-4">Zurück zur Präsentation</a>
   </header>
   <main class="refresh-page">
     <div class="panel-eyebrow">Wartung</div>
@@ -42,5 +44,6 @@
       <div class="refresh-row"><span><strong>next-3</strong></span><span>Desktop-Apps, CLI-Namen, Mobile-Features</span><a href="https://gemini.google/subscriptions/">Gemini Subscriptions</a><span class="badge">16.05.2026</span></div>
     </section>
   </main>
+  <script type="module" src="lib/support-page.js?v=2026-05-16ag"></script>
 </body>
 </html>
