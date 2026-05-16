@@ -26,3 +26,6 @@ coverage/
 
 # Playwright MCP Test-Artefakte
 .playwright-mcp/
+
+# Visual-QA Screenshot-Output (lokal generiert via `npm run visual:qa`)
+.visual-qa/
