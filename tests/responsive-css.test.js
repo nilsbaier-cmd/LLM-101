@@ -13,6 +13,10 @@ describe('responsive css', () => {
     expect(appCss).toMatch(/@media\s*\(max-width:\s*900px\)/);
     expect(appCss).toContain('flex-wrap: wrap');
     expect(presentationCss).toMatch(/@media\s*\(max-width:\s*900px\)/);
+    expect(presentationCss).toContain('body[data-layout="slide"] {');
+    expect(presentationCss).toContain('grid-template-rows: auto minmax(0, 1fr)');
+    expect(presentationCss).toContain('body[data-layout="slide"] .slide');
+    expect(presentationCss).toContain('overflow: hidden;');
     expect(presentationCss).toContain('body[data-layout="scroll"] .app-main');
     expect(presentationCss).toContain('body[data-layout="scroll"] .app-toc');
   });
