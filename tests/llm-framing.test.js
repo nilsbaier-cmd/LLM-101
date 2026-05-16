@@ -11,6 +11,8 @@ describe('llm-agnostic framing', () => {
   it('frames the deck as LLM 101 while keeping Claude as an example', () => {
     expect(document.title).toBe('LLM 101');
     expect(document.querySelector('.app-title')?.textContent).toBe('LLM 101');
+    expect(document.querySelector('.app-title')?.tagName).toBe('A');
+    expect(document.querySelector('.app-title')?.getAttribute('href')).toBe('#einstieg-1');
     expect(document.querySelector('.cover-title')?.textContent).toBe('LLM 101');
     expect(document.querySelector('.cover-subtitle')?.textContent).toContain('Claude');
     expect(document.querySelector('.cover-subtitle')?.textContent).toContain('ChatGPT');

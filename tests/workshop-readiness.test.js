@@ -33,9 +33,12 @@ describe('workshop readiness package', () => {
 
   it('adds chapter progress and Safari/iPad hardening CSS', () => {
     expect(document.querySelector('#chapter-progress')).toBeTruthy();
+    expect(document.querySelector('.control-status #chapter-progress')).toBeTruthy();
     expect(app).toContain('updateChapterProgress');
     expect(appCss).toContain('-webkit-fill-available');
     expect(appCss).toContain('-webkit-text-size-adjust');
+    expect(appCss).toContain('.home-link');
+    expect(presentationCss).toContain('.control-status-row');
     expect(presentationCss).toContain('100svh');
     expect(presentationCss).toContain('align-items: center');
   });

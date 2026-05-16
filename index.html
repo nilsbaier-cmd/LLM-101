@@ -10,14 +10,14 @@
   <title>LLM 101</title>
   <link rel="icon" href="assets/icon.svg" type="image/svg+xml">
   <link rel="manifest" href="manifest.webmanifest">
-  <link rel="stylesheet" href="tokens.css?v=2026-05-16ab">
-  <link rel="stylesheet" href="app.css?v=2026-05-16ab">
-  <link rel="stylesheet" href="presentation.css?v=2026-05-16ab">
-  <link rel="stylesheet" href="print.css?v=2026-05-16ab" media="print">
+  <link rel="stylesheet" href="tokens.css?v=2026-05-16ac">
+  <link rel="stylesheet" href="app.css?v=2026-05-16ac">
+  <link rel="stylesheet" href="presentation.css?v=2026-05-16ac">
+  <link rel="stylesheet" href="print.css?v=2026-05-16ac" media="print">
 </head>
 <body data-layout="slide">
   <header class="app-header">
-    <div class="app-title">LLM 101</div>
+    <a class="app-title home-link" href="#einstieg-1" aria-label="Zur Startfolie">LLM 101</a>
     <div class="app-toggles" role="toolbar" aria-label="Darstellungs- und Anzeigemodi">
       <button class="toggle" data-mode="layout" data-value="slide" aria-pressed="false">Vortrag</button>
       <button class="toggle" data-mode="layout" data-value="scroll" aria-pressed="false">Lesen</button>
@@ -36,15 +36,6 @@
   <div class="update-banner" id="update-banner" role="status" hidden>
     <span>Neue Version verfügbar.</span>
     <button class="btn btn-primary" id="update-reload" type="button">Neu laden</button>
-  </div>
-  <div class="chapter-progress" id="chapter-progress" aria-hidden="true">
-    <span data-progress-chapter="einstieg"></span>
-    <span data-progress-chapter="verwaltung"></span>
-    <span data-progress-chapter="claude"></span>
-    <span data-progress-chapter="context"></span>
-    <span data-progress-chapter="usecases"></span>
-    <span data-progress-chapter="skills"></span>
-    <span data-progress-chapter="next-level"></span>
   </div>
 
   <main class="app-main">
@@ -2411,8 +2402,21 @@ VERBOTEN
 
     <div class="app-controls">
       <button class="btn btn-ghost" id="prev-slide" aria-label="Vorherige Folie">‹</button>
-      <span class="slide-counter"><span id="current">1</span> / <span id="total">1</span></span>
-      <span class="path-status" id="path-status" hidden></span>
+      <div class="control-status" aria-label="Folienstatus">
+        <div class="control-status-row">
+          <span class="slide-counter"><span id="current">1</span> / <span id="total">1</span></span>
+          <span class="path-status" id="path-status" hidden></span>
+        </div>
+        <div class="chapter-progress" id="chapter-progress" aria-hidden="true">
+          <span data-progress-chapter="einstieg"></span>
+          <span data-progress-chapter="verwaltung"></span>
+          <span data-progress-chapter="claude"></span>
+          <span data-progress-chapter="context"></span>
+          <span data-progress-chapter="usecases"></span>
+          <span data-progress-chapter="skills"></span>
+          <span data-progress-chapter="next-level"></span>
+        </div>
+      </div>
       <button class="btn btn-ghost" id="next-slide" aria-label="Nächste Folie">›</button>
     </div>
   </main>
@@ -2439,6 +2443,6 @@ VERBOTEN
     <div class="side-panel-body" id="trainer-panel-body"></div>
   </aside>
 
-  <script type="module" src="app.js?v=2026-05-16ab"></script>
+  <script type="module" src="app.js?v=2026-05-16ac"></script>
 </body>
 </html>
