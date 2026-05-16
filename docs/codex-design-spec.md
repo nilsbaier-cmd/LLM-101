@@ -1210,6 +1210,17 @@ Resolutionen aus den Implementations-Paketen, die für Folgepakete relevant sind
 - **Cover-Colophon auf 3 generische Felder gekürzt.** Trainer-Name · [Team]/[Organisation] · [Datum]/Kursdatum. Run-Spalte entfällt. Trainer editiert pro Kurs drei Werte; HTML-Kommentar markiert den Hotspot.
 - **Volatile-Label final: „zu prüfen".** Statt „flüchtig" oder „veränderlich". Wording-Festlegung des Trainers — Paket D1/D2/D3 MUSS exakt diesen String setzen, kein Synonym.
 
+### Aus Paket H (Commits `09ef945` bis `ca335c4`)
+
+- **Service-Worker-Cache-Version:** `llm-101-offline-2026-05-17-codex-v2`. Beim Deploy MUSS nach diesem Wert gebumpt werden — sonst zeigt der Service Worker bei wiederkehrenden Nutzern altes Design.
+- **Visual-QA-Targets unverändert:** alle 9 Slide-Hashes (`#einstieg-1`, `#usecase-5/-lab/-6/-7/-8`, `#next-5`, `#usecase-4`, `#claude-1`) + `#path-toggle` + `[data-context-xray-mode="noisy"]` greifen weiterhin.
+- **`.slide-inner`-Fallback in `print.css` entfernt** (0 Vorkommen in `index.html`).
+- **`.app-title`-Doppelklasse aufgeräumt:** Markup nutzt nur noch `.app-brand-id`. `tests/llm-framing.test.js` mitumgestellt. CSS-Selektor in `app.css` synchron.
+- **`.visual-qa/` in `.gitignore`** — lokale QA-Screenshots gehören nicht ins Repo.
+- **Legacy `icon()`-API bleibt:** 80+ aktive `data-icon`-Aufrufer in `index.html` + Utility-Pages. Migration ist eigenes Paket (Vorschlag: „Paket J · Icon-API-Migration").
+- **`@page slide-16x9` in `print.css` bleibt:** `tests/print.test.js` und `README.md` erwarten das. Entkopplung in eigener Aufräumrunde.
+- **`docs/codex-release-qa.md`** (NEU) — 10-Punkt-Checkliste mit OK/PENDING-Status. Fünf Punkte sind manuelle Browser-Checks (Console clean, Lesen-Modus, Print-Preview, Reduced-Motion, 375px-Mobile).
+
 ### Aus Pakete E + F + G + Konsolidierung
 
 - **`renderSlideFooter()` setzt `.slide-progress.innerHTML` komplett neu.** Normiert damit die unterschiedlichen Stubs aus D1/D2/D3 zur Laufzeit. Konsequenz für Paket H: zusätzliche Markup-Elemente in `.slide-progress` MÜSSEN in den Template-String von `renderSlideFooter()` wandern, nicht ins HTML — sonst werden sie überschrieben.
