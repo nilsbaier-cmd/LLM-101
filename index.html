@@ -10,10 +10,10 @@
   <title>LLM 101</title>
   <link rel="icon" href="assets/icon.svg" type="image/svg+xml">
   <link rel="manifest" href="manifest.webmanifest">
-  <link rel="stylesheet" href="tokens.css?v=2026-05-16ag">
-  <link rel="stylesheet" href="app.css?v=2026-05-16ag">
-  <link rel="stylesheet" href="presentation.css?v=2026-05-16ag">
-  <link rel="stylesheet" href="print.css?v=2026-05-16ag" media="print">
+  <link rel="stylesheet" href="tokens.css?v=2026-05-16ah">
+  <link rel="stylesheet" href="app.css?v=2026-05-16ah">
+  <link rel="stylesheet" href="presentation.css?v=2026-05-16ah">
+  <link rel="stylesheet" href="print.css?v=2026-05-16ah" media="print">
 </head>
 <body data-layout="slide">
   <header class="app-header">
@@ -2116,36 +2116,52 @@ VERBOTEN
           <p class="lead">Versionsverwaltung in vier Schritten — von der Idee zum geprüften Merge in den Hauptzweig.</p>
 
           <div class="git-flow">
-            <svg viewBox="0 0 900 280" xmlns="http://www.w3.org/2000/svg" class="git-flow-svg" aria-hidden="true">
-              <line x1="40" y1="60" x2="860" y2="60" stroke="var(--success)" stroke-width="3" stroke-linecap="round"/>
-              <circle cx="120" cy="60" r="8" fill="var(--success)"/>
-              <circle cx="240" cy="60" r="8" fill="var(--success)"/>
-              <text x="80" y="40" font-size="13" font-weight="600" fill="var(--success)" font-family="var(--font-sans)">main</text>
+            <svg viewBox="0 0 960 300" xmlns="http://www.w3.org/2000/svg" class="git-flow-svg" aria-hidden="true">
+              <defs>
+                <filter id="git-node-shadow" x="-50%" y="-50%" width="200%" height="200%">
+                  <feDropShadow dx="0" dy="6" stdDeviation="6" flood-color="rgba(0,0,0,0.14)"/>
+                </filter>
+              </defs>
+
+              <rect x="34" y="38" width="892" height="70" rx="18" fill="var(--success-soft)" opacity="0.56"/>
+              <rect x="232" y="146" width="520" height="94" rx="20" fill="var(--accent-soft)" opacity="0.64"/>
+
+              <text x="70" y="30" font-size="13" font-weight="800" fill="var(--success)" font-family="var(--font-sans)">main</text>
+              <line x1="70" y1="74" x2="890" y2="74" stroke="var(--success)" stroke-width="4" stroke-linecap="round"/>
 
               <g data-step="1">
-                <path d="M 240 60 Q 280 140, 340 200 L 540 200" fill="none" stroke="var(--accent)" stroke-width="3" stroke-linecap="round"/>
-                <text x="350" y="190" font-size="13" font-weight="600" fill="var(--accent)" font-family="var(--font-sans)">feature-branch</text>
+                <path d="M 254 78 C 282 124, 318 162, 370 188 L 560 188"
+                      fill="none" stroke="var(--accent)" stroke-width="4" stroke-linecap="round"/>
+                <text x="366" y="174" font-size="13" font-weight="800" fill="var(--accent)" font-family="var(--font-sans)">feature branch</text>
               </g>
 
               <g data-step="2">
-                <circle cx="380" cy="200" r="8" fill="var(--accent)"/>
-                <circle cx="480" cy="200" r="8" fill="var(--accent)"/>
-                <text x="380" y="232" font-size="11" fill="var(--text-tertiary)" text-anchor="middle" font-family="var(--font-sans)">Commit</text>
-                <text x="480" y="232" font-size="11" fill="var(--text-tertiary)" text-anchor="middle" font-family="var(--font-sans)">Commit</text>
+                <circle cx="400" cy="188" r="10" fill="var(--accent)" filter="url(#git-node-shadow)"/>
+                <circle cx="512" cy="188" r="10" fill="var(--accent)" filter="url(#git-node-shadow)"/>
+                <text x="400" y="224" font-size="11" fill="var(--text-tertiary)" text-anchor="middle" font-family="var(--font-sans)">Commit</text>
+                <text x="512" y="224" font-size="11" fill="var(--text-tertiary)" text-anchor="middle" font-family="var(--font-sans)">Commit</text>
               </g>
 
               <g data-step="3">
-                <line x1="540" y1="200" x2="640" y2="200" stroke="var(--accent)" stroke-width="3" stroke-linecap="round"/>
-                <circle cx="640" cy="200" r="14" fill="var(--bg-base)" stroke="var(--accent)" stroke-width="3"/>
-                <text x="640" y="205" font-size="13" font-weight="700" fill="var(--accent-strong)" text-anchor="middle" font-family="var(--font-sans)">PR</text>
-                <text x="640" y="232" font-size="11" fill="var(--text-secondary)" text-anchor="middle" font-family="var(--font-sans)">Pull Request</text>
+                <line x1="560" y1="188" x2="668" y2="188" stroke="var(--accent)" stroke-width="4" stroke-linecap="round"/>
+                <circle cx="688" cy="188" r="22" fill="var(--bg-base)" stroke="var(--accent)" stroke-width="4" filter="url(#git-node-shadow)"/>
+                <text x="688" y="194" font-size="14" font-weight="800" fill="var(--accent-strong)" text-anchor="middle" font-family="var(--font-sans)">PR</text>
+                <text x="688" y="224" font-size="11" fill="var(--text-secondary)" text-anchor="middle" font-family="var(--font-sans)">Review Gate</text>
               </g>
 
               <g data-step="4">
-                <path d="M 655 200 Q 700 140, 760 60" fill="none" stroke="var(--success)" stroke-width="3" stroke-linecap="round" stroke-dasharray="6 4"/>
-                <circle cx="780" cy="60" r="10" fill="var(--success)" stroke="var(--bg-base)" stroke-width="2"/>
-                <text x="780" y="40" font-size="13" font-weight="700" fill="var(--success)" text-anchor="middle" font-family="var(--font-sans)">Merge!</text>
+                <path d="M 710 184 C 746 158, 766 102, 812 74"
+                      fill="none" stroke="var(--success)" stroke-width="4" stroke-linecap="round" stroke-dasharray="8 7"/>
+                <text x="812" y="30" font-size="13" font-weight="800" fill="var(--success)" text-anchor="middle" font-family="var(--font-sans)">Merge</text>
               </g>
+
+              <circle cx="138" cy="74" r="9" fill="var(--success)" stroke="var(--bg-base)" stroke-width="4" filter="url(#git-node-shadow)"/>
+              <circle cx="254" cy="74" r="11" fill="var(--success)" stroke="var(--bg-base)" stroke-width="4" filter="url(#git-node-shadow)"/>
+              <circle cx="812" cy="74" r="14" fill="var(--success)" stroke="var(--bg-base)" stroke-width="4" filter="url(#git-node-shadow)"/>
+
+              <text x="138" y="113" font-size="11" fill="var(--text-tertiary)" text-anchor="middle" font-family="var(--font-sans)">Start</text>
+              <text x="254" y="113" font-size="11" fill="var(--text-tertiary)" text-anchor="middle" font-family="var(--font-sans)">Branch</text>
+              <text x="812" y="113" font-size="11" fill="var(--text-tertiary)" text-anchor="middle" font-family="var(--font-sans)">geprüft übernommen</text>
             </svg>
           </div>
 
@@ -2442,6 +2458,6 @@ VERBOTEN
     <div class="side-panel-body" id="trainer-panel-body"></div>
   </aside>
 
-  <script type="module" src="app.js?v=2026-05-16ag"></script>
+  <script type="module" src="app.js?v=2026-05-16ah"></script>
 </body>
 </html>
