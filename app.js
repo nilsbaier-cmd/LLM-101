@@ -1,10 +1,10 @@
 // app.js — Haupteinstieg
-import { Storage } from './lib/storage.js?v=2026-05-16w';
-import { ModeManager } from './lib/mode.js?v=2026-05-16w';
-import { icon } from './lib/icons.js?v=2026-05-16w';
-import { initTabs } from './lib/tabs.js?v=2026-05-16w';
-import { Exercises } from './lib/exercises.js?v=2026-05-16w';
-import { LEARNING_PATHS, TRAINER_NOTES, TRAINER_VARIANTS } from './lib/learning-paths.js?v=2026-05-16w';
+import { Storage } from './lib/storage.js?v=2026-05-16y';
+import { ModeManager } from './lib/mode.js?v=2026-05-16y';
+import { icon } from './lib/icons.js?v=2026-05-16y';
+import { initTabs } from './lib/tabs.js?v=2026-05-16y';
+import { Exercises } from './lib/exercises.js?v=2026-05-16y';
+import { LEARNING_PATHS, TRAINER_NOTES, TRAINER_VARIANTS } from './lib/learning-paths.js?v=2026-05-16y';
 
 const NS = 'llm-101-v1';
 const storage = new Storage(NS);
@@ -453,6 +453,12 @@ function renderTrainerPanel(slide = slides()[currentIdx]) {
       <ol>
         ${variant.checkpoints.map(item => `<li>${escapeHtml(item)}</li>`).join('')}
       </ol>
+    </section>
+    <section class="panel-section trainer-demo-checklist">
+      <h3>Demo-Checkliste</h3>
+      <ul>
+        ${variant.demoChecklist.map(item => `<li>${escapeHtml(item)}</li>`).join('')}
+      </ul>
     </section>
   `;
 

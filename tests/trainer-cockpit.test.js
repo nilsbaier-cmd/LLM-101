@@ -32,7 +32,8 @@ describe('trainer cockpit', () => {
       'usecase-lab',
       'skills-1',
       'skills-3',
-      'next-3'
+      'next-3',
+      'next-4'
     ].forEach(id => {
       expect(slideIds).toContain(id);
       expect(TRAINER_NOTES[id]?.focus?.length).toBeGreaterThan(20);
@@ -44,11 +45,17 @@ describe('trainer cockpit', () => {
     expect(TRAINER_VARIANTS.map(item => item.id)).toEqual(['60', '120', '180']);
     TRAINER_VARIANTS.forEach(item => {
       expect(item.checkpoints.length).toBeGreaterThanOrEqual(5);
+      expect(item.demoChecklist.length).toBeGreaterThanOrEqual(3);
     });
   });
 
   it('supports copyable demo prompts where useful', () => {
     expect(app).toContain('data-trainer-copy');
     expect(Object.values(TRAINER_NOTES).some(note => note.prompt)).toBe(true);
+  });
+
+  it('surfaces a demo checklist in the trainer cockpit', () => {
+    expect(app).toContain('trainer-demo-checklist');
+    expect(css).toContain('.trainer-demo-checklist ul');
   });
 });

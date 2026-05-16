@@ -4,7 +4,7 @@ Hybrid Slide/Scroll-Präsentation als Einführung in Large Language Models mit k
 
 ## Inhalt
 
-- `index.html` — Hauptpräsentation, 25 Folien in 7 Kapiteln, Vortrags- und Lesemodus, Hell/Dunkel/Auto-Theme, optional LLM-agnostische Tabs (Claude, ChatGPT und Gemini) und Übungen
+- `index.html` — Hauptpräsentation, 26 Folien in 7 Kapiteln, Vortrags- und Lesemodus, Hell/Dunkel/Auto-Theme, optional LLM-agnostische Tabs (Claude, ChatGPT und Gemini) und Übungen
 - `meine-notizen.html` — Sammelseite für eigene Reflexionsantworten mit Markdown-Export
 - Lernpfad-Kompass — direkt in `index.html`, lokal gespeicherter Fortschritt für Einsteiger-, Praxis-, Power-User- und Governance-Pfad
 - Trainer-Cockpit — aktivierbar über `index.html?trainer=1`, mit Ablaufvarianten, Sprecherhinweisen, Fallbacks und Demo-Prompts
@@ -49,6 +49,11 @@ npm test      # Tests laufen lassen
 ```
 
 Auslieferung bleibt build-frei. `node_modules/` und `tests/` sind Dev-Artefakte.
+
+## Visuelle QA
+
+- `lib/visual-qa-targets.js` definiert die wichtigsten Prüfansichten für manuelle oder browsergestützte Sichtkontrolle: Cover, X-Ray, Prompt-Labor auf Phone, Trainer-Cockpit, Lernpfad-Panel und Dark Mode.
+- Vor wichtigen Workshops: lokalen Server starten, die Targets nacheinander öffnen und auf Überlappungen, Lesbarkeit, Kontrast und den jeweils erwarteten Interaktionszustand prüfen.
 
 ## Architektur
 

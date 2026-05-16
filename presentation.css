@@ -1090,6 +1090,56 @@ body[data-layout="scroll"] .app-controls { display: none; }
   line-height: 1.5;
 }
 
+/* Transfer-Folie */
+.transfer-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--space-4);
+  margin-top: var(--space-5);
+}
+.transfer-card {
+  position: relative;
+  min-height: 210px;
+  padding: var(--space-5);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border);
+  background: var(--bg-card);
+}
+.transfer-step {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  margin-bottom: var(--space-4);
+  border-radius: 50%;
+  background: var(--accent);
+  color: #fff;
+  font-weight: 800;
+}
+.transfer-card h3 {
+  font-size: 20px;
+  margin-bottom: var(--space-2);
+}
+.transfer-card p {
+  color: var(--text-secondary);
+}
+.transfer-commitment {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--space-4);
+  align-items: center;
+  margin-top: var(--space-5);
+  padding: var(--space-4) var(--space-5);
+  border: 1px solid color-mix(in srgb, var(--accent) 24%, var(--border));
+  border-radius: var(--radius-lg);
+  background: var(--accent-soft);
+}
+.transfer-commitment p {
+  max-width: 780px;
+  color: var(--text-secondary);
+}
+
 /* Kapitel 6: Skills */
 
 /* Demo Time */
@@ -2226,7 +2276,8 @@ body[data-exercises="off"] .exercise { display: none; }
   .platform-grid,
   .repo-benefits,
   .repo-how,
-  .skill-anatomy-grid {
+  .skill-anatomy-grid,
+  .transfer-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
@@ -2287,6 +2338,7 @@ body[data-exercises="off"] .exercise { display: none; }
   .repo-benefits,
   .repo-how,
   .skill-anatomy-grid,
+  .transfer-grid,
   .uc-steps,
   .uc-prompts,
   .pp-grid,
@@ -2338,6 +2390,50 @@ body[data-exercises="off"] .exercise { display: none; }
 
   .ex-outcome-grid {
     grid-template-columns: 1fr;
+  }
+
+  .transfer-grid {
+    gap: var(--space-2);
+    margin-top: var(--space-4);
+  }
+
+  .transfer-card {
+    display: grid;
+    grid-template-columns: 32px 1fr;
+    column-gap: var(--space-3);
+    min-height: auto;
+    padding: var(--space-3);
+  }
+
+  .transfer-step {
+    grid-row: 1 / span 2;
+    width: 28px;
+    height: 28px;
+    margin-bottom: 0;
+    font-size: 13px;
+  }
+
+  .transfer-card h3 {
+    font-size: 16px;
+    margin-bottom: 4px;
+  }
+
+  .transfer-card p {
+    font-size: 13px;
+    line-height: 1.35;
+  }
+
+  .transfer-commitment {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-2);
+    margin-top: var(--space-3);
+    padding: var(--space-3);
+  }
+
+  .transfer-commitment p {
+    font-size: 13px;
+    line-height: 1.35;
   }
 
   .myth-table {

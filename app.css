@@ -375,7 +375,8 @@ body[data-trainer="on"] .side-panel.trainer-only {
   letter-spacing: 0.8px;
 }
 .trainer-current ul,
-.trainer-timeline ol {
+.trainer-timeline ol,
+.trainer-demo-checklist ul {
   margin: var(--space-3) 0;
   padding-left: 1.2rem;
 }

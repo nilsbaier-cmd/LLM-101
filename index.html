@@ -10,10 +10,10 @@
   <title>LLM 101</title>
   <link rel="icon" href="assets/icon.svg" type="image/svg+xml">
   <link rel="manifest" href="manifest.webmanifest">
-  <link rel="stylesheet" href="tokens.css?v=2026-05-16w">
-  <link rel="stylesheet" href="app.css?v=2026-05-16w">
-  <link rel="stylesheet" href="presentation.css?v=2026-05-16w">
-  <link rel="stylesheet" href="print.css?v=2026-05-16w" media="print">
+  <link rel="stylesheet" href="tokens.css?v=2026-05-16y">
+  <link rel="stylesheet" href="app.css?v=2026-05-16y">
+  <link rel="stylesheet" href="presentation.css?v=2026-05-16y">
+  <link rel="stylesheet" href="print.css?v=2026-05-16y" media="print">
 </head>
 <body data-layout="slide">
   <header class="app-header">
@@ -1057,7 +1057,6 @@
       </section>
 
       <section class="slide" data-slide-id="context-2" data-chapter="context">
-        <!-- TODO Phase 7 / Explainer A: Progressive Declaration als Pfad-/Route-Visualisierung neu denken -->
         <div class="slide-inner">
           <div class="chapter-label">Kapitel 4 — Kontext & Pflege</div>
           <h2>Wie pflegt man das Context Window?</h2>
@@ -1086,7 +1085,9 @@
             </div>
           </div>
 
-          <p><span class="see-more-disabled">→ Live-Simulator folgt im Concept-Explainer A (Phase 7 in Arbeit)</span></p>
+          <p class="see-more">
+            → Strategien ausprobieren im <a href="explainer/a-context-window.html?back=context-2">Concept-Explainer A — Context Window Simulator</a>
+          </p>
 
           <div class="exercise quiz" data-learning-station data-chapter="context" data-exercise="q2"
                data-feedback="Genau — und das ist tückisch, weil man es nicht direkt merkt. Die Pflege-Strategien (Reset, Summarize, Progressive) verhindern das.">
@@ -2176,6 +2177,40 @@ VERBOTEN
           </p>
         </div>
       </section>
+
+      <section class="slide" data-slide-id="next-4" data-chapter="next-level">
+        <div class="slide-inner">
+          <div class="chapter-label">Kapitel 7 — Transfer</div>
+          <h2>Dein nächster Schritt</h2>
+          <p class="lead">Nicht alles übernehmen. Eine echte Aufgabe wählen, klein testen, sauber reflektieren.</p>
+
+          <div class="transfer-grid">
+            <div class="transfer-card">
+              <span class="transfer-step">1</span>
+              <h3>Eine Aufgabe wählen</h3>
+              <p>Wiederkehrend, ungefährlich, aber nützlich. Keine Personendaten, keine klassifizierten Inhalte.</p>
+            </div>
+            <div class="transfer-card">
+              <span class="transfer-step">2</span>
+              <h3>Als Arbeitsauftrag formulieren</h3>
+              <p>Ziel, Kontext, Rolle, Grenzen, Stil und Outputformat explizit machen.</p>
+            </div>
+            <div class="transfer-card">
+              <span class="transfer-step">3</span>
+              <h3>Ergebnis prüfen</h3>
+              <p>Fakten, Tonalität, Datenfreigabe und Entscheidverantwortung bewusst kontrollieren.</p>
+            </div>
+          </div>
+
+          <div class="transfer-commitment">
+            <div>
+              <div class="code-label">7-Tage-Experiment</div>
+              <p>„Ich teste LLMs nächste Woche für <strong>eine</strong> klar begrenzte Aufgabe und notiere: Was wurde schneller, was musste ich prüfen, was bleibt tabu?"</p>
+            </div>
+            <a class="btn btn-primary" href="meine-notizen.html">Meine Notizen öffnen</a>
+          </div>
+        </div>
+      </section>
     </div>
 
     <div class="app-controls">
@@ -2208,6 +2243,6 @@ VERBOTEN
     <div class="side-panel-body" id="trainer-panel-body"></div>
   </aside>
 
-  <script type="module" src="app.js?v=2026-05-16w"></script>
+  <script type="module" src="app.js?v=2026-05-16y"></script>
 </body>
 </html>

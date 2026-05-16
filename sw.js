@@ -1,5 +1,5 @@
 const CACHE_PREFIX = 'llm-101-offline-';
-const CACHE_NAME = `${CACHE_PREFIX}2026-05-16w`;
+const CACHE_NAME = `${CACHE_PREFIX}2026-05-16y`;
 
 const CORE_ASSETS = [
   './',
