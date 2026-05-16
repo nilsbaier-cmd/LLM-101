@@ -11,19 +11,27 @@ describe('llm-agnostic framing', () => {
   it('frames the deck as LLM 101 while keeping Claude as an example', () => {
     expect(document.title).toBe('LLM 101');
     expect(document.querySelector('.app-title')?.textContent).toBe('LLM 101');
-    expect(document.querySelector('.cover-title')?.textContent).toBe('LLM 101');
-    expect(document.querySelector('.cover-subtitle')?.textContent).toContain('Claude');
-    expect(document.querySelector('.cover-subtitle')?.textContent).toContain('ChatGPT');
-    expect(document.querySelector('.cover-subtitle')?.textContent).toContain('Gemini');
+    // Codex cover: h1.display + p.cover-lead replace .cover-title/.cover-subtitle
+    const cover = document.querySelector('[data-slide-id="einstieg-1"]');
+    // Soft-hyphen (­) splits "Sprachmodelle" in the source — strip it before asserting.
+    const display = (cover?.querySelector('h1.display')?.textContent ?? '').replace(/­/g, '');
+    expect(display).toContain('Sprachmodelle');
+    expect(display).toContain('kommentiert');
+    const coverLead = cover?.querySelector('.cover-lead')?.textContent ?? '';
+    expect(coverLead).toContain('Claude');
+    expect(coverLead).toContain('ChatGPT');
+    expect(coverLead).toContain('Gemini');
   });
 
   it('uses provider-neutral labels for the core tool chapter', () => {
-    const labels = [...document.querySelectorAll('[data-chapter="claude"] .chapter-label')]
+    // Codex frame: .slide-crumb-chap (mono uppercase eyebrow) replaces .chapter-label
+    const labels = [...document.querySelectorAll('[data-chapter="claude"].codex .slide-crumb-chap')]
       .map(label => label.textContent.trim());
 
     expect(labels.length).toBeGreaterThanOrEqual(5);
     labels.forEach(label => expect(label).toContain('LLM-Tools 101'));
-    expect(document.querySelector('[data-slide-id="claude-1"] h2')?.textContent).toBe('Modellfamilien verstehen');
+    expect(document.querySelector('[data-slide-id="claude-1"] .slide-crumb-topic')?.textContent).toBe('Modellfamilien verstehen');
+    // next-3 is migrated by package D3 — keep legacy h2 assertion until then.
     expect(document.querySelector('[data-slide-id="next-3"] h2')?.textContent).toBe('LLM überall');
   });
 
