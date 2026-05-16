@@ -10,7 +10,8 @@ describe('volatile fact guardrails', () => {
   const document = new JSDOM(index).window.document;
 
   it('marks slides with fast-changing product or governance facts', () => {
-    const volatileSlides = Array.from(document.querySelectorAll('[data-volatile="true"]'));
+    // Codex frame: .slide-stand inherits data-volatile from the slide; scope to actual slides.
+    const volatileSlides = Array.from(document.querySelectorAll('section.slide[data-volatile="true"]'));
     const ids = volatileSlides.map(slide => slide.dataset.slideId);
 
     expect(ids).toEqual(expect.arrayContaining([
