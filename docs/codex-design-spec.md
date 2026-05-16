@@ -276,9 +276,15 @@ Jede Komponente ist als **Mini-Spec** dokumentiert: HTML-Struktur, CSS-Klassen, 
       <span class="slide-crumb-sep"><svg class="ic sm"><use href="#i-chevron-right"/></svg></span>
       <span class="slide-crumb-topic">{Unterthema}</span>
     </div>
+    <!-- Stable: bookmark-Icon, nur Datum -->
     <span class="slide-stand">
       <svg class="ic sm"><use href="#i-bookmark"/></svg>
       Stand 16.05.26
+    </span>
+    <!-- Volatile-Variante (data-volatile="true" auf Slide): warn-Icon + " · zu prüfen" -->
+    <span class="slide-stand" data-volatile="true">
+      <svg class="ic sm"><use href="#i-alert-triangle"/></svg>
+      Stand 16.05.26 · zu prüfen
     </span>
   </div>
   <div class="slide-body">
@@ -322,7 +328,7 @@ Jede Komponente ist als **Mini-Spec** dokumentiert: HTML-Struktur, CSS-Klassen, 
 - `.slide-crumb-icon`: 32×32 grid-cell, `border: 1px solid var(--border); border-radius: 6px; background: var(--bg-card);`.
 - `.slide-crumb-chap`: `font-family: var(--font-mono); font-size: 11px; font-weight: 600; letter-spacing: 0.22em; text-transform: uppercase; color: var(--text-secondary);`.
 - `.slide-crumb-topic`: `font-size: 16px; font-weight: 700; letter-spacing: -0.012em; color: var(--text-primary);`.
-- `.slide-stand`: `padding: 5px 10px; border: 1px solid var(--border); background: var(--bg-card); font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--text-secondary);`. Wenn `data-volatile="true"`: zusätzliche `box-shadow: inset 0 0 0 1px var(--warn);` als visueller Vorsicht-Hinweis.
+- `.slide-stand`: `padding: 5px 10px; border: 1px solid var(--border); background: var(--bg-card); font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--text-secondary);`. **Volatile-Variante:** Wenn das umgebende `<section class="slide codex">` das Attribut `data-volatile="true"` trägt, MUSS der zugehörige `.slide-stand` auch `data-volatile="true"` bekommen. CSS-Effekt: `box-shadow: inset 0 0 0 1px var(--warn);`. Inhalt der Volatile-Variante: Warn-Icon (`#i-alert-triangle`) statt Bookmark + Suffix `" · zu prüfen"` hinter dem Datum. Wording-Festlegung des Trainers — kein anderes Wording verwenden.
 - `.slide-body`: `padding: clamp(32px, 4.4vw, 64px) clamp(36px, 4.4vw, 72px); display: flex; flex-direction: column; gap: 24px;`.
 - `.slide-foot`: `display: grid; grid-template-columns: auto 1fr auto; gap: 24px; padding: 12px clamp(28px, 3vw, 48px); border-top: 1px solid var(--border); background: var(--bg-tint);`.
 - `.slide-nav`: `display: inline-flex; align-items: center; gap: 8px; padding: 8px 14px; background: var(--bg-card); border: 1px solid var(--border); color: var(--text-primary); font-family: var(--font-mono); font-size: 11px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; text-decoration: none; border-radius: 3px;`. Hover: `border-color: var(--text-primary);`.
@@ -408,21 +414,41 @@ Jede Komponente ist als **Mini-Spec** dokumentiert: HTML-Struktur, CSS-Klassen, 
 
 **Hinweis (Paket C resolved):** Die existierende Klasse `.lead` in `presentation.css` (Skills-Section, font-size 17px) bleibt unangetastet. Der Cover-Lead-Paragraph nutzt stattdessen `.cover-lead` (clamp 18px–23px). Bei der Slide-Migration MUSS für den Cover-Lead `<p class="cover-lead">` verwendet werden, NICHT `<p class="lead">`.
 
+**Cover-Colophon-Pattern (revidiert nach User-Review):** Drei generische Felder, keine Mockup-Seal:
+
+```html
+<!-- Cover-Colophon: drei generische Felder, pro Kurs anpassen -->
+<div class="cover-colophon">
+  <div><svg class="ic"><use href="#i-bookmark"/></svg><b>Nils Baier</b><span>Trainer</span></div>
+  <div><svg class="ic"><use href="#i-shield-check"/></svg><b>[Team]</b><span>[Organisation]</span></div>
+  <div><svg class="ic"><use href="#i-bookmark"/></svg><b>16.05.2026</b><span>Kursdatum</span></div>
+</div>
+```
+
+- **Kein `.cover-seal`** (entfernt — war Mockup-Dekoration ohne funktionalen Wert).
+- **`.cover-colophon` ist 3-spaltig** (`grid-template-columns: repeat(3, auto) 1fr` mit füllendem letzten Track).
+- Inhalte sind Platzhalter im Master. Pro Kurs editiert der Trainer drei Werte:
+  - Spalte 1: Trainer-Name (Vor- + Nachname)
+  - Spalte 2: Team (oben) + Organisation/Behörde (unten)
+  - Spalte 3: Kursdatum (oben) + Label „Kursdatum" (unten)
+- HTML-Kommentar `<!-- Cover-Colophon: drei generische Felder, pro Kurs anpassen -->` direkt vor dem Block MUSS erhalten bleiben, damit der Bearbeitungs-Hotspot auffindbar bleibt.
+
 **Sonderfall.** Statt `.title-row` → `.cover-display`.
 
 ```html
-<section class="slide cover" id="slide-einstieg-1" data-slide="einstieg-1" data-chapter="einstieg" data-folio="01">
+<section class="slide codex cover" id="einstieg-1" data-slide-id="einstieg-1" data-chapter="einstieg" data-folio="01">
   <div class="slide-head">...</div>
   <div class="slide-body">
     <span class="kicker kicker-accent"><svg class="ic sm"><use href="#i-sparkles"/></svg> {Eyebrow}</span>
     <h1 class="display">
       {Titel} <em>{italic-highlight}</em><span class="caret" aria-hidden="true"></span>
     </h1>
-    <p class="lead">{Lead-Paragraph mit <span class="tok">Tokens</span>}</p>
+    <p class="cover-lead">{Lead-Paragraph mit <span class="tok">Tokens</span>}</p>
+    <!-- Cover-Colophon: drei generische Felder, pro Kurs anpassen -->
     <div class="cover-colophon">
       <div><svg class="ic"><use href="#i-bookmark"/></svg><b>Nils Baier</b><span>Trainer</span></div>
-      ...
-      <span class="cover-seal" aria-hidden="true">LLM</span>
+      <div><svg class="ic"><use href="#i-shield-check"/></svg><b>[Team]</b><span>[Organisation]</span></div>
+      <div><svg class="ic"><use href="#i-bookmark"/></svg><b>16.05.2026</b><span>Kursdatum</span></div>
     </div>
   </div>
   <div class="slide-foot">...</div>
@@ -1177,6 +1203,12 @@ Resolutionen aus den Implementations-Paketen, die für Folgepakete relevant sind
 - **`.app-brand-meta`-Span** (Run · Edition · Status) ist in §3.1 markup-mäßig vorgesehen und CSS-stylebar, aber in `index.html` noch leer. Inhalts-Entscheidung delegiert an Paket D1 oder H: z.B. „Run 03 · 2026-05 · live".
 - **`.is-open` und `aria-hidden="false"` koexistieren** auf Panels — beide gültig im neuen CSS. `app.js` setzt `.is-open` weiterhin per `setPanelOpen`. Aufräumen (eine von beiden Konventionen) gehört in Paket H.
 - **Neuer Mobile-Breakpoint `@media (max-width: 720px)`** für Toolbar-Wrap. Falls Paket C/D eigene 720er-Breakpoints einführen: kohärent halten.
+
+### Aus User-Review nach Paket C (Commit folgt unten)
+
+- **Cover-Seal entfernt.** `.cover-seal` (LLM-Glyph im Kreis mit „v2.4 · ed."-Caption) war Mockup-Dekoration — wird ersatzlos gestrichen. CSS aus `presentation.css` entfernt, HTML-Markup aus style-preview.html und Spec §3.5 entfernt.
+- **Cover-Colophon auf 3 generische Felder gekürzt.** Trainer-Name · [Team]/[Organisation] · [Datum]/Kursdatum. Run-Spalte entfällt. Trainer editiert pro Kurs drei Werte; HTML-Kommentar markiert den Hotspot.
+- **Volatile-Label final: „zu prüfen".** Statt „flüchtig" oder „veränderlich". Wording-Festlegung des Trainers — Paket D1/D2/D3 MUSS exakt diesen String setzen, kein Synonym.
 
 ### Aus Paket C (Commit `ebb88d0`)
 

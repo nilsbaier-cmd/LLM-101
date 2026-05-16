@@ -3241,7 +3241,7 @@ h1.display em,
 .cover-colophon {
   margin-top: auto;
   display: grid;
-  grid-template-columns: repeat(4, auto) 1fr auto;
+  grid-template-columns: repeat(3, auto) 1fr;
   gap: 36px;
   align-items: end;
   padding-top: 20px;
@@ -3272,47 +3272,11 @@ h1.display em,
   margin-bottom: 4px;
 }
 
-.cover-seal {
-  justify-self: end;
-  width: 64px;
-  height: 64px;
-  border: 2px solid var(--text-primary);
-  border-radius: 50%;
-  display: grid;
-  place-items: center;
-  font-family: var(--font-sans);
-  font-weight: 800;
-  font-size: 15px;
-  color: var(--text-primary);
-  position: relative;
-  letter-spacing: -0.01em;
-}
-.cover-seal::before {
-  content: "";
-  position: absolute;
-  inset: -8px;
-  border: 1px dashed var(--border);
-  border-radius: 50%;
-}
-.cover-seal::after {
-  content: "v2.4 · ed.";
-  position: absolute;
-  bottom: -18px;
-  left: 50%;
-  transform: translateX(-50%);
-  font-family: var(--font-mono);
-  font-size: 9px;
-  letter-spacing: 0.14em;
-  color: var(--text-tertiary);
-  white-space: nowrap;
-}
-
 @media (max-width: 980px) {
   .cover-colophon {
     grid-template-columns: 1fr 1fr;
     gap: 16px;
   }
-  .cover-seal { justify-self: start; }
 }
 
 /* ============================================================
