@@ -2,9 +2,15 @@
 import { Storage } from './lib/storage.js?v=2026-05-16ab';
 import { ModeManager } from './lib/mode.js?v=2026-05-16ab';
 import { icon } from './lib/icons.js?v=2026-05-16ab';
+import { initSprite } from './lib/icons-sprite.js?v=2026-05-16ab';
 import { initTabs } from './lib/tabs.js?v=2026-05-16ab';
 import { Exercises } from './lib/exercises.js?v=2026-05-16ab';
 import { LEARNING_PATHS, TRAINER_NOTES, TRAINER_VARIANTS } from './lib/learning-paths.js?v=2026-05-16ab';
+
+// Codex-Sprite so früh wie möglich inlined, damit nachgelagerte renderIcon()-
+// Aufrufe und <use href="#i-NAME"/>-Referenzen sofort auflösen. Fire-and-forget:
+// die alte icon()-API funktioniert auch ohne Sprite (sie inline'd Pfade selbst).
+initSprite();
 
 const NS = 'llm-101-v1';
 const storage = new Storage(NS);
