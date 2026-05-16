@@ -6,6 +6,8 @@ Hybrid Slide/Scroll-Präsentation als Einführung in Large Language Models mit k
 
 - `index.html` — Hauptpräsentation, 25 Folien in 7 Kapiteln, Vortrags- und Lesemodus, Hell/Dunkel/Auto-Theme, optional LLM-agnostische Tabs (Claude, ChatGPT und Gemini) und Übungen
 - `meine-notizen.html` — Sammelseite für eigene Reflexionsantworten mit Markdown-Export
+- Lernpfad-Kompass — direkt in `index.html`, lokal gespeicherter Fortschritt für Einsteiger-, Praxis-, Power-User- und Governance-Pfad
+- Trainer-Cockpit — aktivierbar über `index.html?trainer=1`, mit Ablaufvarianten, Sprecherhinweisen, Fallbacks und Demo-Prompts
 - `explainer/*.html` — Sieben standalone Concept-Explainer (A–G):
   - A — Context Window Simulator
   - B — Chat vs. Project
@@ -23,6 +25,12 @@ ES-Module funktionieren nicht über `file://` — du brauchst einen lokalen HTTP
 cd claude-praesentation
 python3 -m http.server 8765
 # dann http://localhost:8765 im Browser öffnen
+```
+
+Trainer-Ansicht:
+
+```bash
+http://localhost:8765/index.html?trainer=1
 ```
 
 ## Offline & Quellenstand

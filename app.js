@@ -1,14 +1,19 @@
 // app.js — Haupteinstieg
-import { Storage } from './lib/storage.js?v=2026-05-16s';
-import { ModeManager } from './lib/mode.js?v=2026-05-16s';
-import { icon } from './lib/icons.js?v=2026-05-16s';
-import { initTabs } from './lib/tabs.js?v=2026-05-16s';
-import { Exercises } from './lib/exercises.js?v=2026-05-16s';
+import { Storage } from './lib/storage.js?v=2026-05-16v';
+import { ModeManager } from './lib/mode.js?v=2026-05-16v';
+import { icon } from './lib/icons.js?v=2026-05-16v';
+import { initTabs } from './lib/tabs.js?v=2026-05-16v';
+import { Exercises } from './lib/exercises.js?v=2026-05-16v';
+import { LEARNING_PATHS, TRAINER_NOTES, TRAINER_VARIANTS } from './lib/learning-paths.js?v=2026-05-16v';
 
 const NS = 'llm-101-v1';
 const storage = new Storage(NS);
 const mode = new ModeManager(storage);
 const exercises = new Exercises(storage);
+const params = new URLSearchParams(window.location.search);
+const trainerEnabled = params.get('trainer') === '1';
+
+if (trainerEnabled) document.body.dataset.trainer = 'on';
 
 function registerServiceWorker() {
   if (!('serviceWorker' in navigator) || window.location.protocol === 'file:') return;
@@ -159,7 +164,7 @@ function initContextXray(root = document) {
 initContextXray();
 
 // Toggle-Verkabelung
-document.querySelectorAll('.toggle').forEach(btn => {
+document.querySelectorAll('.toggle[data-mode]').forEach(btn => {
   btn.addEventListener('click', () => {
     const modeKey = btn.dataset.mode;
     if (btn.dataset.toggle !== undefined) {
@@ -172,7 +177,7 @@ document.querySelectorAll('.toggle').forEach(btn => {
 });
 
 function refreshToggleStates() {
-  document.querySelectorAll('.toggle').forEach(btn => {
+  document.querySelectorAll('.toggle[data-mode]').forEach(btn => {
     const key = btn.dataset.mode;
     const val = btn.dataset.value;
     const current = mode.get(key);
@@ -190,6 +195,271 @@ refreshToggleStates();
 // Slide-Navigation
 const slides = () => Array.from(document.querySelectorAll('.app-deck .slide'));
 let currentIdx = 0;
+
+const pathPanel = document.getElementById('path-panel');
+const pathToggle = document.getElementById('path-toggle');
+const pathClose = document.getElementById('path-close');
+const pathPanelBody = document.getElementById('path-panel-body');
+const pathStatus = document.getElementById('path-status');
+const trainerPanel = document.getElementById('trainer-panel');
+const trainerToggle = document.getElementById('trainer-toggle');
+const trainerClose = document.getElementById('trainer-close');
+const trainerPanelBody = document.getElementById('trainer-panel-body');
+
+function normalizePathState(raw) {
+  const state = raw && typeof raw === 'object' ? raw : {};
+  return {
+    activePathId: state.activePathId || null,
+    completed: state.completed && typeof state.completed === 'object' ? state.completed : {}
+  };
+}
+
+let pathState = normalizePathState(storage.get('learningPaths'));
+
+function savePathState() {
+  storage.set('learningPaths', pathState);
+}
+
+function pathById(id) {
+  return LEARNING_PATHS.find(path => path.id === id) || null;
+}
+
+function slideById(id) {
+  return slides().find(slide => slide.dataset.slideId === id) || null;
+}
+
+function slideTitle(id) {
+  const slide = slideById(id);
+  return slide?.querySelector('h1, h2, h3')?.textContent?.trim() || id;
+}
+
+function escapeHtml(value) {
+  return String(value)
+    .replaceAll('&', '&amp;')
+    .replaceAll('<', '&lt;')
+    .replaceAll('>', '&gt;')
+    .replaceAll('"', '&quot;')
+    .replaceAll("'", '&#039;');
+}
+
+function completedFor(pathId) {
+  return new Set(pathState.completed[pathId] || []);
+}
+
+function setCompleted(pathId, set) {
+  pathState.completed[pathId] = Array.from(set);
+  savePathState();
+}
+
+function pathProgress(path) {
+  const completed = completedFor(path.id);
+  const done = path.stations.filter(id => completed.has(id)).length;
+  return { done, total: path.stations.length, pct: Math.round((done / path.stations.length) * 100) };
+}
+
+function navigateToSlide(id) {
+  const idx = slides().findIndex(slide => slide.dataset.slideId === id);
+  if (idx < 0) return;
+  showSlide(idx);
+  history.replaceState(null, '', `#${id}`);
+}
+
+function setPanelOpen(panel, button, open) {
+  if (!panel || !button) return;
+  panel.classList.toggle('is-open', open);
+  panel.setAttribute('aria-hidden', open ? 'false' : 'true');
+  button.classList.toggle('active', open);
+  button.setAttribute('aria-expanded', open ? 'true' : 'false');
+}
+
+function renderPathPanel() {
+  if (!pathPanelBody) return;
+  const activePath = pathById(pathState.activePathId);
+  const activeSlideId = slides()[currentIdx]?.dataset.slideId;
+
+  const cards = LEARNING_PATHS.map(path => {
+    const progress = pathProgress(path);
+    const active = path.id === pathState.activePathId;
+    return `
+      <article class="path-card ${active ? 'is-active' : ''}">
+        <div class="path-card-top">
+          <div>
+            <h3>${escapeHtml(path.title)}</h3>
+            <p>${escapeHtml(path.description)}</p>
+          </div>
+          <span class="path-duration">${escapeHtml(path.duration)}</span>
+        </div>
+        <div class="path-progress" aria-label="${escapeHtml(path.title)} Fortschritt ${progress.done} von ${progress.total}">
+          <span style="width: ${progress.pct}%"></span>
+        </div>
+        <div class="path-card-bottom">
+          <span>${progress.done}/${progress.total} Stationen</span>
+          <button class="btn ${active ? '' : 'btn-primary'}" data-path-start="${escapeHtml(path.id)}" type="button">${active ? 'Aktiv' : progress.done ? 'Fortsetzen' : 'Starten'}</button>
+        </div>
+      </article>
+    `;
+  }).join('');
+
+  const activeDetail = activePath ? renderActivePath(activePath, activeSlideId) : `
+    <section class="panel-section">
+      <h3>Wähle einen Pfad</h3>
+      <p>Du kannst mehrere Pfade nacheinander absolvieren. Dein Fortschritt bleibt nur in diesem Browser gespeichert.</p>
+    </section>
+  `;
+
+  pathPanelBody.innerHTML = `
+    <section class="path-grid">${cards}</section>
+    ${activeDetail}
+  `;
+
+  pathPanelBody.querySelectorAll('[data-path-start]').forEach(btn => {
+    btn.addEventListener('click', () => startPath(btn.dataset.pathStart));
+  });
+  pathPanelBody.querySelectorAll('[data-path-station]').forEach(btn => {
+    btn.addEventListener('click', () => navigateToSlide(btn.dataset.pathStation));
+  });
+  pathPanelBody.querySelector('[data-path-next]')?.addEventListener('click', (e) => {
+    navigateToSlide(e.currentTarget.dataset.pathNext);
+  });
+  pathPanelBody.querySelector('[data-path-reset]')?.addEventListener('click', (e) => {
+    const pathId = e.currentTarget.dataset.pathReset;
+    pathState.completed[pathId] = [];
+    savePathState();
+    renderPathPanel();
+    updatePathStatus();
+  });
+}
+
+function renderActivePath(path, activeSlideId) {
+  const completed = completedFor(path.id);
+  const nextId = path.stations.find(id => !completed.has(id)) || path.stations[path.stations.length - 1];
+  const progress = pathProgress(path);
+  const stations = path.stations.map(id => {
+    const done = completed.has(id);
+    const current = activeSlideId === id;
+    return `
+      <button class="path-station ${done ? 'is-done' : ''} ${current ? 'is-current' : ''}" data-path-station="${escapeHtml(id)}" type="button">
+        <span>${done ? '✓' : current ? '→' : '·'}</span>
+        <strong>${escapeHtml(slideTitle(id))}</strong>
+      </button>
+    `;
+  }).join('');
+
+  return `
+    <section class="panel-section active-path">
+      <div class="active-path-head">
+        <div>
+          <h3>${escapeHtml(path.title)}</h3>
+          <p>${progress.done}/${progress.total} Stationen abgeschlossen</p>
+        </div>
+        <button class="btn btn-primary" data-path-next="${escapeHtml(nextId)}" type="button">${progress.done === progress.total ? 'Nochmal ansehen' : 'Nächste Station'}</button>
+      </div>
+      <div class="path-stations">${stations}</div>
+      <button class="btn btn-ghost panel-reset" data-path-reset="${escapeHtml(path.id)}" type="button">Fortschritt zurücksetzen</button>
+    </section>
+  `;
+}
+
+function startPath(pathId) {
+  const path = pathById(pathId);
+  if (!path) return;
+  pathState.activePathId = path.id;
+  if (!Array.isArray(pathState.completed[path.id])) pathState.completed[path.id] = [];
+  savePathState();
+  mode.set('llm', true);
+  mode.set('exercises', true);
+  refreshToggleStates();
+  markActivePathSlide(slides()[currentIdx]);
+  navigateToSlide(path.stations.find(id => !completedFor(path.id).has(id)) || path.stations[0]);
+  renderPathPanel();
+  updatePathStatus();
+}
+
+function markActivePathSlide(slide) {
+  const path = pathById(pathState.activePathId);
+  const id = slide?.dataset.slideId;
+  if (!path || !id || !path.stations.includes(id)) return;
+  const completed = completedFor(path.id);
+  if (!completed.has(id)) {
+    completed.add(id);
+    setCompleted(path.id, completed);
+  }
+}
+
+function updatePathStatus() {
+  if (!pathStatus) return;
+  const path = pathById(pathState.activePathId);
+  if (!path) {
+    pathStatus.hidden = true;
+    return;
+  }
+  const progress = pathProgress(path);
+  pathStatus.textContent = `${path.title}: ${progress.done}/${progress.total}`;
+  pathStatus.hidden = false;
+}
+
+function copyText(text, button) {
+  if (!text) return;
+  navigator.clipboard?.writeText(text).then(() => {
+    const original = button.textContent;
+    button.textContent = 'Kopiert';
+    setTimeout(() => { button.textContent = original; }, 1400);
+  }).catch(() => {
+    button.textContent = 'Nicht kopiert';
+  });
+}
+
+let trainerVariantId = storage.get('trainer.variant') || '120';
+
+function renderTrainerPanel(slide = slides()[currentIdx]) {
+  if (!trainerEnabled || !trainerPanelBody) return;
+  const slideId = slide?.dataset.slideId || '';
+  const title = slideTitle(slideId);
+  const note = TRAINER_NOTES[slideId] || {
+    timing: 'frei',
+    focus: 'Keine spezifische Trainer-Notiz. Kurz halten und zur nächsten Kernstation führen.',
+    notes: ['Bei Bedarf Lernpfad öffnen und passende Station markieren.'],
+    fallback: 'Folie überspringen, wenn sie für die Gruppe nicht relevant ist.',
+    prompt: ''
+  };
+  const variant = TRAINER_VARIANTS.find(item => item.id === trainerVariantId) || TRAINER_VARIANTS[1];
+
+  trainerPanelBody.innerHTML = `
+    <section class="trainer-variant-switch" aria-label="Workshop-Länge">
+      ${TRAINER_VARIANTS.map(item => `<button class="btn ${item.id === variant.id ? 'btn-primary' : ''}" data-trainer-variant="${escapeHtml(item.id)}" type="button">${escapeHtml(item.label)}</button>`).join('')}
+    </section>
+    <section class="panel-section trainer-current">
+      <div class="trainer-meta">
+        <span>${escapeHtml(note.timing)}</span>
+        <span>${escapeHtml(slideId)}</span>
+      </div>
+      <h3>${escapeHtml(title)}</h3>
+      <p>${escapeHtml(note.focus)}</p>
+      <ul>
+        ${note.notes.map(item => `<li>${escapeHtml(item)}</li>`).join('')}
+      </ul>
+      <div class="trainer-fallback"><strong>Fallback:</strong> ${escapeHtml(note.fallback)}</div>
+      ${note.prompt ? `<button class="btn btn-primary" data-trainer-copy="${escapeHtml(note.prompt)}" type="button">Demo-Prompt kopieren</button>` : ''}
+    </section>
+    <section class="panel-section trainer-timeline">
+      <h3>Ablauf ${escapeHtml(variant.label)}</h3>
+      <ol>
+        ${variant.checkpoints.map(item => `<li>${escapeHtml(item)}</li>`).join('')}
+      </ol>
+    </section>
+  `;
+
+  trainerPanelBody.querySelectorAll('[data-trainer-variant]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      trainerVariantId = btn.dataset.trainerVariant;
+      storage.set('trainer.variant', trainerVariantId);
+      renderTrainerPanel(slides()[currentIdx]);
+    });
+  });
+  trainerPanelBody.querySelector('[data-trainer-copy]')?.addEventListener('click', (e) => {
+    copyText(e.currentTarget.dataset.trainerCopy, e.currentTarget);
+  });
+}
 
 function getMaxStep(slide) {
   const nums = Array.from(slide.querySelectorAll('[data-step]'))
@@ -231,6 +501,10 @@ function showSlide(idx) {
   document.getElementById('current').textContent = idx + 1;
   document.getElementById('total').textContent = list.length;
   updateTOCCurrent(newSlide?.dataset.slideId);
+  markActivePathSlide(newSlide);
+  renderPathPanel();
+  updatePathStatus();
+  renderTrainerPanel(newSlide);
 }
 
 function goNext() {
@@ -262,9 +536,15 @@ document.getElementById('next-slide').addEventListener('click', goNext);
 document.addEventListener('keydown', (e) => {
   if (mode.get('layout') !== 'slide') return;
   const tag = e.target.tagName;
-  if (tag === 'INPUT' || tag === 'TEXTAREA' || e.target.isContentEditable) return;
+  if (['INPUT', 'TEXTAREA', 'BUTTON', 'SELECT', 'A'].includes(tag) || e.target.isContentEditable) return;
   if (e.key === 'ArrowRight' || e.key === 'PageDown' || e.key === ' ') { e.preventDefault(); goNext(); }
   if (e.key === 'ArrowLeft'  || e.key === 'PageUp') { e.preventDefault(); goPrev(); }
+});
+
+document.addEventListener('keydown', (e) => {
+  if (e.key !== 'Escape') return;
+  setPanelOpen(pathPanel, pathToggle, false);
+  setPanelOpen(trainerPanel, trainerToggle, false);
 });
 
 mode.on('change', ({ key }) => {
@@ -284,6 +564,24 @@ function jumpToHash() {
 window.addEventListener('hashchange', jumpToHash);
 
 if (!jumpToHash()) showSlide(0);
+
+pathToggle?.addEventListener('click', () => {
+  const open = pathPanel?.getAttribute('aria-hidden') !== 'false';
+  setPanelOpen(pathPanel, pathToggle, open);
+  if (open) setPanelOpen(trainerPanel, trainerToggle, false);
+});
+pathClose?.addEventListener('click', () => setPanelOpen(pathPanel, pathToggle, false));
+trainerToggle?.addEventListener('click', () => {
+  const open = trainerPanel?.getAttribute('aria-hidden') !== 'false';
+  setPanelOpen(trainerPanel, trainerToggle, open);
+  if (open) setPanelOpen(pathPanel, pathToggle, false);
+});
+trainerClose?.addEventListener('click', () => setPanelOpen(trainerPanel, trainerToggle, false));
+
+renderPathPanel();
+updatePathStatus();
+renderTrainerPanel(slides()[currentIdx]);
+if (trainerEnabled) setPanelOpen(trainerPanel, trainerToggle, true);
 
 // TOC im Scroll-Modus aus den Folien generieren
 function rebuildTOC() {

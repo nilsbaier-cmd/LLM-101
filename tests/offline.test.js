@@ -39,6 +39,7 @@ describe('offline delivery shell', () => {
       './app.js',
       './lib/storage.js',
       './lib/notes-export.js',
+      './lib/learning-paths.js',
       './explainer/a-context-window.html',
       './explainer/g-modellwahl.html',
       './explainer/explainer.css',
@@ -51,5 +52,6 @@ describe('offline delivery shell', () => {
     expect(sw).toContain('CACHE_PREFIX');
     expect(sw).toContain('networkFirst');
     expect(sw).toContain('cacheFirst');
+    expect(sw).toContain("url.searchParams.has('v')");
   });
 });

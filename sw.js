@@ -1,5 +1,5 @@
 const CACHE_PREFIX = 'llm-101-offline-';
-const CACHE_NAME = `${CACHE_PREFIX}2026-05-16s`;
+const CACHE_NAME = `${CACHE_PREFIX}2026-05-16v`;
 
 const CORE_ASSETS = [
   './',
@@ -18,6 +18,7 @@ const CORE_ASSETS = [
   './lib/tabs.js',
   './lib/exercises.js',
   './lib/notes-export.js',
+  './lib/learning-paths.js',
   './explainer/a-context-window.html',
   './explainer/b-chat-vs-project.html',
   './explainer/c-skills-architektur.html',
@@ -71,6 +72,14 @@ async function networkFirst(request) {
 }
 
 async function cacheFirst(request) {
+  const url = new URL(request.url);
+  if (url.searchParams.has('v')) {
+    try {
+      return await putFresh(request, await fetch(request));
+    } catch (error) {
+      // Offline: auf die unversionierten Precache-Einträge zurückfallen.
+    }
+  }
   const cached = await caches.match(request, { ignoreSearch: true });
   if (cached) return cached;
   return putFresh(request, await fetch(request));

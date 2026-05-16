@@ -19,6 +19,7 @@ describe('print and pdf delivery', () => {
     expect(printCss).toContain('size: 16in 9in');
     expect(printCss).toContain('@media print');
     expect(printCss).toContain('.app-header');
+    expect(printCss).toContain('.side-panel');
     expect(printCss).toContain('display: none !important');
     expect(printCss).toContain('break-after: page');
     expect(printCss).toContain('page-break-after: always');
