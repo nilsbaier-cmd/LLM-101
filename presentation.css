@@ -3,11 +3,11 @@
 .app-main {
   display: grid;
   grid-template-rows: 1fr auto;
-  height: calc(100vh - 60px);
+  height: calc(100vh - var(--app-header-height, 60px));
 }
 @supports (height: 100svh) {
   .app-main {
-    height: calc(100svh - 60px);
+    height: calc(100svh - var(--app-header-height, 60px));
   }
 }
 
@@ -54,7 +54,7 @@ body[data-layout="scroll"] .app-toc {
   padding: var(--space-5);
   border-right: 1px solid var(--border);
   overflow-y: auto;
-  height: calc(100vh - 60px);
+  height: calc(100vh - var(--app-header-height, 60px));
 }
 body[data-layout="scroll"] .app-deck {
   overflow-y: auto;
@@ -2665,7 +2665,7 @@ body[data-exercises="off"] .exercise { display: none; }
 
 @media (max-width: 900px) {
   .app-main {
-    height: calc(100vh - 96px);
+    height: calc(100vh - var(--app-header-height, 96px));
   }
 
   body[data-layout="scroll"] .app-main {
@@ -2736,7 +2736,7 @@ body[data-exercises="off"] .exercise { display: none; }
 
 @media (max-width: 700px) {
   .app-main {
-    height: calc(100vh - 118px);
+    height: calc(100vh - var(--app-header-height, 118px));
   }
 
   body[data-layout="scroll"] .app-deck {

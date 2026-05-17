@@ -66,6 +66,7 @@ async function inspectState(page) {
     const slide = document.querySelector('.slide.is-active');
     const body = slide?.querySelector('.slide-body');
     const fit = body?.querySelector(':scope > .slide-body-fit');
+    const footer = slide?.querySelector('.slide-foot');
     const next = slide?.querySelector('.slide-nav.next');
     const rect = (el) => {
       const r = el?.getBoundingClientRect();
@@ -78,6 +79,7 @@ async function inspectState(page) {
       nextDisabled: next?.getAttribute('aria-disabled'),
       bodyRect: rect(body),
       fitRect: rect(fit),
+      footerRect: rect(footer),
       scale: body ? getComputedStyle(body).getPropertyValue('--slide-fit-scale').trim() : '',
       hiddenHit: [...document.querySelectorAll('.slide[data-stepped] [data-step]:not(.is-revealed)')]
         .some(el => getComputedStyle(el).pointerEvents !== 'none'),
@@ -118,6 +120,15 @@ try {
       if (state.hiddenHit) issues.push({ issue: 'hidden step can receive clicks', id: state.id, step: state.step });
       if (state.externalControls !== 'none') issues.push({ issue: 'external controls visible', id: state.id });
       if (state.bodyOverflow !== 'hidden') issues.push({ issue: 'body can scroll in slide mode', id: state.id });
+      if (state.footerRect && state.footerRect.bottom > viewport.height + 1) {
+        issues.push({
+          issue: 'slide footer below viewport',
+          id: state.id,
+          step: state.step,
+          bottom: Number(state.footerRect.bottom.toFixed(1)),
+          viewport: viewport.height
+        });
+      }
       const allowsBodyScroll = viewport.width <= 480 && state.slideBodyOverflowY === 'auto';
       if (!allowsBodyScroll && state.fitRect && state.bodyRect && state.fitRect.bottom > state.bodyRect.bottom + 4) {
         issues.push({

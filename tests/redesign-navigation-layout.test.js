@@ -38,6 +38,16 @@ describe('codex v2 slide navigation and layout safeguards', () => {
     expect(app).toContain('queueSlideBodyFit');
   });
 
+  it('sizes the slide stage from the measured header height on wrapped phone toolbars', () => {
+    expect(css).toContain('var(--app-header-height, 60px)');
+    expect(css).toContain('var(--app-header-height, 96px)');
+    expect(css).toContain('var(--app-header-height, 118px)');
+    expect(app).toContain('function updateAppShellMetrics()');
+    expect(app).toContain('--app-header-height');
+    expect(app).toContain('new ResizeObserver');
+    expect(app).toContain('updateAppShellMetrics();\nif (!jumpToHash()) showSlide(0);');
+  });
+
   it('keeps lime actions readable in light and dark mode', () => {
     expect(tokens).toContain('--text-on-accent: #111400');
     expect(appCss).toMatch(/\.btn\.btn-primary\s*{[^}]*color:\s*var\(--text-on-accent\)/s);

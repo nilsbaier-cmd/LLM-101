@@ -1,11 +1,11 @@
 // app.js — Haupteinstieg
-import { Storage } from './lib/storage.js?v=2026-05-17-codex-v2d';
-import { ModeManager } from './lib/mode.js?v=2026-05-17-codex-v2d';
-import { icon } from './lib/icons.js?v=2026-05-17-codex-v2d';
-import { initSprite } from './lib/icons-sprite.js?v=2026-05-17-codex-v2d';
-import { initTabs } from './lib/tabs.js?v=2026-05-17-codex-v2d';
-import { Exercises } from './lib/exercises.js?v=2026-05-17-codex-v2d';
-import { LEARNING_PATHS, TRAINER_NOTES, TRAINER_VARIANTS, getPathProgress } from './lib/learning-paths.js?v=2026-05-17-codex-v2d';
+import { Storage } from './lib/storage.js?v=2026-05-17-codex-v2e';
+import { ModeManager } from './lib/mode.js?v=2026-05-17-codex-v2e';
+import { icon } from './lib/icons.js?v=2026-05-17-codex-v2e';
+import { initSprite } from './lib/icons-sprite.js?v=2026-05-17-codex-v2e';
+import { initTabs } from './lib/tabs.js?v=2026-05-17-codex-v2e';
+import { Exercises } from './lib/exercises.js?v=2026-05-17-codex-v2e';
+import { LEARNING_PATHS, TRAINER_NOTES, TRAINER_VARIANTS, getPathProgress } from './lib/learning-paths.js?v=2026-05-17-codex-v2e';
 
 // Codex-Sprite so früh wie möglich inlined, damit nachgelagerte renderIcon()-
 // Aufrufe und <use href="#i-NAME"/>-Referenzen sofort auflösen. Fire-and-forget:
@@ -282,6 +282,21 @@ refreshToggleStates();
 // Slide-Navigation
 const slides = () => Array.from(document.querySelectorAll('.app-deck .slide'));
 let currentIdx = 0;
+const appHeader = document.querySelector('.app-header');
+
+function updateAppShellMetrics() {
+  if (!appHeader) return;
+  const height = Math.ceil(appHeader.getBoundingClientRect().height);
+  document.documentElement.style.setProperty('--app-header-height', `${height}px`);
+}
+
+if ('ResizeObserver' in window && appHeader) {
+  const headerObserver = new ResizeObserver(() => {
+    updateAppShellMetrics();
+    fitVisibleSlide();
+  });
+  headerObserver.observe(appHeader);
+}
 
 const pathPanel = document.getElementById('path-panel');
 const pathToggle = document.getElementById('path-toggle');
@@ -749,7 +764,10 @@ mode.on('change', ({ key }) => {
   if (key === 'layout') showSlide(currentIdx);
 });
 
-window.addEventListener('resize', () => fitVisibleSlide());
+window.addEventListener('resize', () => {
+  updateAppShellMetrics();
+  fitVisibleSlide();
+});
 
 // Hash-Navigation: bei Page-Load oder Hash-Wechsel zur Folie mit data-slide-id springen
 function jumpToHash() {
@@ -763,6 +781,7 @@ function jumpToHash() {
 
 window.addEventListener('hashchange', jumpToHash);
 
+updateAppShellMetrics();
 if (!jumpToHash()) showSlide(0);
 // Initial alle 30 Slide-Footer normieren (D-Pakete hinterliessen variierende Stubs).
 refreshAllSlideFooters();
