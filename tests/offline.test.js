@@ -39,6 +39,8 @@ describe('offline delivery shell', () => {
       './trainer-export.html',
       './quellen-refresh.html',
       './assets/icon.svg',
+      './assets/github-xray-light.png',
+      './assets/github-xray-dark.png',
       './tokens.css',
       './app.css',
       './presentation.css',

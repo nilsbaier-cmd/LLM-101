@@ -185,6 +185,13 @@
   margin-bottom: var(--space-4);
 }
 .sim-buttons .btn { font-size: 13px; padding: 8px 14px; }
+.sim-feedback {
+  min-height: 22px;
+  margin-bottom: var(--space-3);
+  color: var(--text-secondary);
+  font-size: 13px;
+  line-height: 1.4;
+}
 .sim-msglist {
   display: flex;
   flex-direction: column;
@@ -282,13 +289,13 @@
 .path-saving {
   margin-top: var(--space-3);
   padding: var(--space-2) var(--space-3);
-  background: var(--success-soft);
-  border-left: 3px solid var(--success);
+  background: var(--accent);
+  border-left: 3px solid var(--accent-strong);
   border-radius: var(--radius-sm);
   font-size: 13px;
-  color: var(--text-primary);
+  color: var(--text-on-accent);
 }
-.path-saving strong { color: var(--success); }
+.path-saving strong { color: var(--text-on-accent); }
 .path-note {
   background: var(--bg-tint);
   padding: var(--space-4);

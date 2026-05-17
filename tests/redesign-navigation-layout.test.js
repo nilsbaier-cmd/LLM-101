@@ -20,14 +20,15 @@ describe('codex v2 slide navigation and layout safeguards', () => {
   });
 
   it('prevents hidden step content from intercepting navigation clicks', () => {
-    expect(css).toMatch(/body\[data-layout="slide"\] \.slide\[data-stepped\] \[data-step\]\s*{[^}]*display:\s*none;/s);
+    expect(css).toMatch(/body\[data-layout="slide"\] \.slide\[data-stepped\] \[data-step\]\s*{[^}]*visibility:\s*hidden;/s);
     expect(css).toMatch(/body\[data-layout="slide"\] \.slide\[data-stepped\] \[data-step\]\s*{[^}]*pointer-events:\s*none;/s);
-    expect(css).toMatch(/body\[data-layout="slide"\] \.slide\[data-stepped\] \[data-step\]\.is-revealed\s*{[^}]*display:\s*revert;/s);
+    expect(css).toMatch(/body\[data-layout="slide"\] \.slide\[data-stepped\] \[data-step\]\.is-revealed\s*{[^}]*visibility:\s*visible;/s);
     expect(css).toMatch(/body\[data-layout="slide"\] \.slide\[data-stepped\] \[data-step\]\.is-revealed\s*{[^}]*pointer-events:\s*auto;/s);
   });
 
   it('routes the visible slide footer controls through the same navigation logic', () => {
     expect(app).toContain(".slide-nav.prev, .slide-nav.next");
+    expect(app).toContain("if (href && !href.startsWith('#')) return;");
     expect(app).toMatch(/classList\.contains\('next'\)[\s\S]*goNext\(\)/);
     expect(app).toMatch(/else goPrev\(\)/);
   });
@@ -106,5 +107,7 @@ describe('codex v2 slide navigation and layout safeguards', () => {
 
   it('exposes a reproducible browser QA command for the redesign branch', () => {
     expect(pkg.scripts['qa:redesign']).toBe('node scripts/redesign-qa.mjs');
+    expect(qa).toContain('nextHref');
+    expect(qa).toContain("!state.nextHref.startsWith('#')");
   });
 });

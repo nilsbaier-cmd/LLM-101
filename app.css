@@ -552,9 +552,14 @@ body[data-trainer="on"] .side-panel.trainer-only {
 .path-station.is-done {
   background: var(--bg-tint);
 }
-.panel-reset {
+.path-management {
+  display: grid;
+  gap: var(--space-2);
   margin-top: var(--space-3);
+}
+.panel-reset {
   padding-left: 0;
+  justify-content: flex-start;
 }
 .trainer-variant-switch {
   display: flex;

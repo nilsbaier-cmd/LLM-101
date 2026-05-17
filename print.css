@@ -86,7 +86,7 @@
 
   /* ------------------------------------------------------------
      body[data-layout] wird im Print ignoriert — alle Folien
-     fließen als Sequenz, Page-Break vor jeder Slide.
+     fliessen als Sequenz, Page-Break vor jeder Slide.
      ------------------------------------------------------------ */
   body[data-layout="slide"] .slide,
   body[data-layout="scroll"] .slide {

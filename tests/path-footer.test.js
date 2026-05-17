@@ -42,7 +42,7 @@ describe('getPathProgress() · Pfad-Position', () => {
     expect(gov.inPath).toBe(true);
   });
 
-  it('markiert Slides, die nicht im Pfad sind, mit inPath=false', () => {
+  it('markiert Slides, die ausserhalb des Pfads sind, mit inPath=false', () => {
     // skills-1 gehört zu power-user, nicht zu einsteiger.
     const result = getPathProgress('skills-1', 'einsteiger');
     expect(result.inPath).toBe(false);

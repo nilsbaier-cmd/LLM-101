@@ -8,10 +8,10 @@
   <meta http-equiv="Expires" content="0">
   <title>Context Window & Pflege — Explainer A</title>
   <link rel="icon" href="../assets/icon.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="../tokens.css?v=2026-05-17-codex-v2j">
-  <link rel="stylesheet" href="../app.css?v=2026-05-17-codex-v2j">
-  <link rel="stylesheet" href="../presentation.css?v=2026-05-17-codex-v2j">
-  <link rel="stylesheet" href="explainer.css?v=2026-05-17-codex-v2j">
+  <link rel="stylesheet" href="../tokens.css?v=2026-05-18-codex-v2k">
+  <link rel="stylesheet" href="../app.css?v=2026-05-18-codex-v2k">
+  <link rel="stylesheet" href="../presentation.css?v=2026-05-18-codex-v2k">
+  <link rel="stylesheet" href="explainer.css?v=2026-05-18-codex-v2k">
 </head>
 <body data-layout="scroll">
   <header class="app-header">
@@ -61,8 +61,9 @@
           <div class="sim-buttons">
             <button class="btn" id="btn-reset">↺ Reset</button>
             <button class="btn" id="btn-summarize">∑ Summarize (älteste 3 zusammenfassen)</button>
-            <button class="btn btn-primary" id="btn-progressive">⤴ Progressive (nur Relevantes laden)</button>
+            <button class="btn btn-primary" id="btn-progressive">⤴ Strategie anzeigen: nur Relevantes laden</button>
           </div>
+          <div class="sim-feedback" id="sim-feedback" aria-live="polite"></div>
 
           <div class="sim-msglist" id="sim-msglist"></div>
         </section>
@@ -127,10 +128,10 @@
   </main>
 
   <script type="module">
-    import { initSprite } from '../lib/icons-sprite.js?v=2026-05-17-codex-v2j';
-    import { ModeManager } from '../lib/mode.js?v=2026-05-17-codex-v2j';
-    import { Storage } from '../lib/storage.js?v=2026-05-17-codex-v2j';
-    import { icon } from '../lib/icons.js?v=2026-05-17-codex-v2j';
+    import { initSprite } from '../lib/icons-sprite.js?v=2026-05-18-codex-v2k';
+    import { ModeManager } from '../lib/mode.js?v=2026-05-18-codex-v2k';
+    import { Storage } from '../lib/storage.js?v=2026-05-18-codex-v2k';
+    import { icon } from '../lib/icons.js?v=2026-05-18-codex-v2k';
 
     await initSprite();
 
@@ -204,23 +205,27 @@
       render();
     });
 
-    document.getElementById('btn-summarize').addEventListener('click', () => {
-      const active = messages.filter(m => !m.archived && !m.dropped);
-      if (active.length < 4) return;
-      const oldThree = active.slice(0, 3);
-      const oldTokens = oldThree.reduce((s, m) => s + m.tokens, 0);
-      // Remove the oldest 3, replace with a summary (smaller token count)
-      messages = messages.filter(m => !oldThree.includes(m));
-      messages.unshift({ text: `[Zusammenfassung der ersten ${oldThree.length} Nachrichten]`, tokens: Math.max(80, Math.floor(oldTokens * 0.4)), summary: true });
-      render();
-    });
+	    document.getElementById('btn-summarize').addEventListener('click', () => {
+	      const active = messages.filter(m => !m.archived && !m.dropped);
+	      if (active.length < 4) {
+	        document.getElementById('sim-feedback').textContent = 'Für Summarize braucht es mindestens 4 aktive Nachrichten. Füge noch ein paar kurze Nachrichten hinzu.';
+	        return;
+	      }
+	      const oldThree = active.slice(0, 3);
+	      const oldTokens = oldThree.reduce((s, m) => s + m.tokens, 0);
+	      // Remove the oldest 3, replace with a summary (smaller token count)
+	      messages = messages.filter(m => !oldThree.includes(m));
+	      messages.unshift({ text: `[Zusammenfassung der ersten ${oldThree.length} Nachrichten]`, tokens: Math.max(80, Math.floor(oldTokens * 0.4)), summary: true });
+	      document.getElementById('sim-feedback').textContent = `Summarize hat ${oldThree.length} ältere Nachrichten zu einer kompakten Zusammenfassung verdichtet.`;
+	      render();
+	    });
 
-    document.getElementById('btn-progressive').addEventListener('click', () => {
-      messages = messages.map((m, i, arr) => ({ ...m, archived: i < arr.length - 5 }));
-      document.getElementById('progressive-section').hidden = false;
-      document.getElementById('progressive-section').scrollIntoView({ behavior: 'smooth', block: 'start' });
-      render();
-    });
+	    document.getElementById('btn-progressive').addEventListener('click', () => {
+	      messages = messages.map((m, i, arr) => ({ ...m, archived: i < arr.length - 5 }));
+	      document.getElementById('progressive-section').hidden = false;
+	      document.getElementById('sim-feedback').textContent = 'Progressive Disclosure zeigt unten eine alternative Input-Strategie: Relevantes wird gezielt geladen, nicht der aktuelle Prompt umformatiert.';
+	      render();
+	    });
 
     function enforceLimit() {
       let total = 0;

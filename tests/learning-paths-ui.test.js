@@ -37,7 +37,9 @@ describe('learning path compass', () => {
     expect(app).toContain("storage.set('learningPaths'");
     expect(app).toContain('activePathId');
     expect(app).toContain('data-path-start');
-    expect(app).toContain('Fortschritt zurücksetzen');
+    expect(app).toContain('Aktiven Pfad pausieren');
+    expect(app).toContain('Alle Fortschritte zurücksetzen');
+    expect(app).toContain("storage.remove('path.active')");
   });
 
   it('turns on useful learner modes when a path starts', () => {

@@ -57,4 +57,13 @@ describe('initTabs', () => {
     expect(panels[0].hidden).toBe(false);
     expect(panels[1].hidden).toBe(false);
   });
+
+  it('wrappt Pfeiltasten nicht am Ende der Tabreihe', () => {
+    initTabs(document.body);
+    const tabs = Array.from(document.querySelectorAll('[data-tab]'));
+    tabs[2].click();
+    tabs[2].dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowRight', bubbles: true, cancelable: true }));
+    expect(document.querySelector('[data-tab-panel="gemini"]').hidden).toBe(false);
+    expect(document.querySelector('[data-tab="gemini"]').getAttribute('aria-selected')).toBe('true');
+  });
 });

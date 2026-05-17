@@ -102,6 +102,7 @@ async function inspectState(page) {
       step: slide?.dataset.stepCurrent || '0',
       visualViewportHeight: window.visualViewport?.height || window.innerHeight,
       nextDisabled: next?.getAttribute('aria-disabled'),
+      nextHref: next?.getAttribute('href') || '',
       bodyRect: rect(body),
       fitRect: rect(fit),
       footerRect: rect(footer),
@@ -171,6 +172,7 @@ try {
       }
 
       if (state.nextDisabled === 'true') break;
+      if (state.nextHref && !state.nextHref.startsWith('#')) break;
 
       try {
         await page.locator('.slide.is-active .slide-nav.next').click({ timeout: 1000 });

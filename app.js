@@ -1,11 +1,11 @@
 // app.js — Haupteinstieg
-import { Storage } from './lib/storage.js?v=2026-05-17-codex-v2j';
-import { ModeManager } from './lib/mode.js?v=2026-05-17-codex-v2j';
-import { icon } from './lib/icons.js?v=2026-05-17-codex-v2j';
-import { initSprite } from './lib/icons-sprite.js?v=2026-05-17-codex-v2j';
-import { initTabs } from './lib/tabs.js?v=2026-05-17-codex-v2j';
-import { Exercises } from './lib/exercises.js?v=2026-05-17-codex-v2j';
-import { LEARNING_PATHS, TRAINER_NOTES, TRAINER_VARIANTS, getPathProgress } from './lib/learning-paths.js?v=2026-05-17-codex-v2j';
+import { Storage } from './lib/storage.js?v=2026-05-18-codex-v2k';
+import { ModeManager } from './lib/mode.js?v=2026-05-18-codex-v2k';
+import { icon } from './lib/icons.js?v=2026-05-18-codex-v2k';
+import { initSprite } from './lib/icons-sprite.js?v=2026-05-18-codex-v2k';
+import { initTabs } from './lib/tabs.js?v=2026-05-18-codex-v2k';
+import { Exercises } from './lib/exercises.js?v=2026-05-18-codex-v2k';
+import { LEARNING_PATHS, TRAINER_NOTES, TRAINER_VARIANTS, getPathProgress } from './lib/learning-paths.js?v=2026-05-18-codex-v2k';
 
 // Codex-Sprite so früh wie möglich inlined, damit nachgelagerte renderIcon()-
 // Aufrufe und <use href="#i-NAME"/>-Referenzen sofort auflösen. Fire-and-forget:
@@ -194,6 +194,9 @@ function initPromptProduct(root = document) {
         btn.classList.toggle('active', active);
         btn.setAttribute('aria-pressed', active ? 'true' : 'false');
       });
+      demo.querySelectorAll('[data-prompt-anatomy]').forEach(el => {
+        el.hidden = modeName !== 'strong';
+      });
       views.forEach(view => {
         const active = view.dataset.promptView === modeName;
         view.hidden = !active;
@@ -335,18 +338,18 @@ function savePathState() {
 }
 
 // Spec §6.2 — Active-Path-Persistierung (separater Key vom Fortschritt).
-// Default beim First-Run: 'praxis'.
-const DEFAULT_PATH_ID = 'praxis';
+// First-Run: kein aktiver Pfad, bis der User bewusst einen auswählt.
 function loadActiveFooterPath() {
   const raw = storage.get('path.active');
   if (typeof raw === 'string' && LEARNING_PATHS.some(p => p.id === raw)) return raw;
-  return DEFAULT_PATH_ID;
+  return null;
 }
-let activeFooterPathId = loadActiveFooterPath();
+let activeFooterPathId = pathState.activePathId || loadActiveFooterPath();
 function setActiveFooterPath(pathId) {
-  if (!LEARNING_PATHS.some(p => p.id === pathId)) return;
+  if (pathId !== null && !LEARNING_PATHS.some(p => p.id === pathId)) return;
   activeFooterPathId = pathId;
-  storage.set('path.active', pathId);
+  if (pathId) storage.set('path.active', pathId);
+  else storage.remove('path.active');
 }
 
 function pathById(id) {
@@ -457,6 +460,23 @@ function renderPathPanel() {
     renderPathPanel();
     updatePathStatus();
   });
+  pathPanelBody.querySelector('[data-path-pause]')?.addEventListener('click', () => {
+    pathState.activePathId = null;
+    savePathState();
+    setActiveFooterPath(null);
+    renderPathPanel();
+    updatePathStatus();
+    refreshAllSlideFooters();
+  });
+  pathPanelBody.querySelector('[data-path-reset-all]')?.addEventListener('click', () => {
+    if (!window.confirm('Alle Lernpfad-Fortschritte in diesem Browser zurücksetzen?')) return;
+    pathState = normalizePathState(null);
+    savePathState();
+    setActiveFooterPath(null);
+    renderPathPanel();
+    updatePathStatus();
+    refreshAllSlideFooters();
+  });
 }
 
 function renderActivePath(path, activeSlideId) {
@@ -484,7 +504,11 @@ function renderActivePath(path, activeSlideId) {
         <button class="btn btn-primary" data-path-next="${escapeHtml(nextId)}" type="button">${progress.done === progress.total ? 'Nochmal ansehen' : 'Nächste Station'}</button>
       </div>
       <div class="path-stations">${stations}</div>
-      <button class="btn btn-ghost panel-reset" data-path-reset="${escapeHtml(path.id)}" type="button">Fortschritt zurücksetzen</button>
+      <div class="path-management">
+        <button class="btn btn-ghost panel-reset" data-path-pause type="button">Aktiven Pfad pausieren</button>
+        <button class="btn btn-ghost panel-reset" data-path-reset="${escapeHtml(path.id)}" type="button">Diesen Fortschritt zurücksetzen</button>
+        <button class="btn btn-ghost panel-reset" data-path-reset-all type="button">Alle Fortschritte zurücksetzen</button>
+      </div>
     </section>
   `;
 }
@@ -542,7 +566,7 @@ function updatePathStatus() {
 //     <span class="path-dots">…</span> Schritt <b>{n} von {m}</b>
 //   </span>
 // Cover (`einstieg-1`) → Lernpfad „Übersicht", kein Schritt.
-// Slide nicht im Pfad → Lernpfad „(nicht im Pfad)", kein Schritt.
+// Slide ausserhalb des Pfads → nur aktiver Lernpfad, kein Schritt.
 function renderSlideFooter(slideId) {
   if (!slideId) return;
   const slide = slideById(slideId);
@@ -552,17 +576,16 @@ function renderSlideFooter(slideId) {
 
   const folio = slide.dataset.folio || '';
   const isCover = slideId === 'einstieg-1';
-  const info = isCover ? null : getPathProgress(slideId, activeFooterPathId);
+  const activePath = pathById(activeFooterPathId);
+  const info = activePath && !isCover ? getPathProgress(slideId, activeFooterPathId) : null;
 
   let pathLabel;
   let stepHtml = '';
-  if (isCover) {
-    pathLabel = 'Übersicht';
-  } else if (!info) {
-    // Fallback (Pfad unbekannt) — sollte nicht passieren, da activeFooterPathId validiert ist.
-    pathLabel = '(nicht im Pfad)';
-  } else if (!info.inPath) {
-    pathLabel = '(nicht im Pfad)';
+  let pathHtml = '';
+  if (!activePath || isCover) {
+    pathLabel = '';
+  } else if (!info || !info.inPath) {
+    pathLabel = activePath.title;
   } else {
     pathLabel = info.pathLabel;
     const dots = [];
@@ -577,11 +600,14 @@ function renderSlideFooter(slideId) {
         `Schritt <b>${info.step} von ${info.total}</b>` +
       `</span>`;
   }
+  if (pathLabel) {
+    pathHtml = `<span class="slide-progress-sep" aria-hidden="true"></span>` +
+      `<span class="slide-path"><svg class="ic" aria-hidden="true"><use href="#i-route"/></svg> Lernpfad <b>${escapeHtml(pathLabel)}</b></span>`;
+  }
 
   progress.innerHTML =
     `<button class="slide-folio quick-nav-trigger" type="button" aria-haspopup="dialog" aria-expanded="${quickNavPopover?.getAttribute('aria-hidden') === 'false' ? 'true' : 'false'}"><svg class="ic" aria-hidden="true"><use href="#i-bookmark"/></svg> Folie <b>${escapeHtml(folio)} / 30</b></button>` +
-    `<span class="slide-progress-sep" aria-hidden="true"></span>` +
-    `<span class="slide-path"><svg class="ic" aria-hidden="true"><use href="#i-route"/></svg> Lernpfad <b>${escapeHtml(pathLabel)}</b></span>` +
+    pathHtml +
     stepHtml;
 }
 
@@ -736,6 +762,30 @@ function setRevealedCount(slide, n) {
 function resetSteps(slide) { setRevealedCount(slide, 0); }
 function revealAllSteps(slide) { setRevealedCount(slide, getMaxStep(slide)); }
 
+const LLM_TAB_SEQUENCE = ['claude', 'chatgpt', 'gemini'];
+
+function activeTabName(slide) {
+  return slide?.querySelector('[data-llm-tabs] [data-tab].active')?.dataset.tab || LLM_TAB_SEQUENCE[0];
+}
+
+function setLlmTab(slide, tabName) {
+  slide?.querySelector(`[data-llm-tabs] [data-tab="${tabName}"]`)?.click();
+}
+
+function moveLlmTab(slide, direction) {
+  if (!mode.get('llm')) return false;
+  const group = slide?.querySelector('[data-llm-tabs]');
+  if (!group) return false;
+  const current = activeTabName(slide);
+  const index = LLM_TAB_SEQUENCE.indexOf(current);
+  if (index < 0) return false;
+  const nextIndex = index + direction;
+  if (nextIndex < 0 || nextIndex >= LLM_TAB_SEQUENCE.length) return false;
+  group.querySelector(`[data-tab="${LLM_TAB_SEQUENCE[nextIndex]}"]`)?.click();
+  queueSlideBodyFit(slide);
+  return true;
+}
+
 function showSlide(idx) {
   const list = slides();
   if (idx < 0 || idx >= list.length) return;
@@ -751,6 +801,9 @@ function showSlide(idx) {
     else revealAllSteps(newSlide);
   }
   currentIdx = idx;
+  if (mode.get('layout') === 'slide' && mode.get('llm') && newSlide?.querySelector('[data-llm-tabs]')) {
+    setLlmTab(newSlide, goingForward ? LLM_TAB_SEQUENCE[0] : LLM_TAB_SEQUENCE[LLM_TAB_SEQUENCE.length - 1]);
+  }
   document.getElementById('current').textContent = idx + 1;
   document.getElementById('total').textContent = list.length;
   updateTOCCurrent(newSlide?.dataset.slideId);
@@ -772,6 +825,7 @@ function goNext() {
       const rev = getRevealedCount(cur);
       if (rev < max) { setRevealedCount(cur, rev + 1); return; }
     }
+    if (moveLlmTab(cur, 1)) return;
   }
   showSlide(currentIdx + 1);
 }
@@ -779,6 +833,7 @@ function goNext() {
 function goPrev() {
   if (mode.get('layout') === 'slide') {
     const cur = slides()[currentIdx];
+    if (moveLlmTab(cur, -1)) return;
     if (cur?.hasAttribute('data-stepped')) {
       const rev = getRevealedCount(cur);
       if (rev > 0) { setRevealedCount(cur, rev - 1); return; }
@@ -821,6 +876,8 @@ document.addEventListener('click', (e) => {
 
   const nav = e.target.closest('.slide-nav.prev, .slide-nav.next');
   if (!nav || mode.get('layout') !== 'slide') return;
+  const href = nav.getAttribute('href') || '';
+  if (href && !href.startsWith('#')) return;
   e.preventDefault();
   if (nav.getAttribute('aria-disabled') === 'true') return;
   if (nav.classList.contains('next')) goNext();
@@ -829,8 +886,10 @@ document.addEventListener('click', (e) => {
 
 document.addEventListener('keydown', (e) => {
   if (mode.get('layout') !== 'slide') return;
+  if (e.defaultPrevented) return;
   const tag = e.target.tagName;
-  if (['INPUT', 'TEXTAREA', 'BUTTON', 'SELECT', 'A'].includes(tag) || e.target.isContentEditable) return;
+  const isLlmTabControl = e.target.closest?.('[data-llm-tabs]');
+  if ((['INPUT', 'TEXTAREA', 'BUTTON', 'SELECT', 'A'].includes(tag) && !isLlmTabControl) || e.target.isContentEditable) return;
   if (e.key === 'ArrowRight' || e.key === 'PageDown' || e.key === ' ') { e.preventDefault(); goNext(); }
   if (e.key === 'ArrowLeft'  || e.key === 'PageUp') { e.preventDefault(); goPrev(); }
 });

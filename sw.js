@@ -1,5 +1,5 @@
 const CACHE_PREFIX = 'llm-101-codex-v2-preview-offline-';
-const CACHE_NAME = `${CACHE_PREFIX}2026-05-17-codex-v2j`;
+const CACHE_NAME = `${CACHE_PREFIX}2026-05-18-codex-v2k`;
 
 const CORE_ASSETS = [
   './',
@@ -10,6 +10,8 @@ const CORE_ASSETS = [
   './quellen-refresh.html',
   './manifest.webmanifest',
   './assets/icon.svg',
+  './assets/github-xray-light.png',
+  './assets/github-xray-dark.png',
   './tokens.css',
   './app.css',
   './presentation.css',
