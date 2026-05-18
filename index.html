@@ -10,10 +10,10 @@
   <title>LLM 101</title>
   <link rel="icon" href="assets/icon.svg" type="image/svg+xml">
   <link rel="manifest" href="manifest.webmanifest">
-  <link rel="stylesheet" href="tokens.css?v=2026-05-18-codex-v2k">
-  <link rel="stylesheet" href="app.css?v=2026-05-18-codex-v2k">
-  <link rel="stylesheet" href="presentation.css?v=2026-05-18-codex-v2k">
-  <link rel="stylesheet" href="print.css?v=2026-05-18-codex-v2k" media="print">
+  <link rel="stylesheet" href="tokens.css?v=2026-05-18-codex-v2l">
+  <link rel="stylesheet" href="app.css?v=2026-05-18-codex-v2l">
+  <link rel="stylesheet" href="presentation.css?v=2026-05-18-codex-v2l">
+  <link rel="stylesheet" href="print.css?v=2026-05-18-codex-v2l" media="print">
 </head>
 <body data-layout="slide">
   <header class="app-header" role="banner">
@@ -82,7 +82,7 @@
           <div class="cover-display">
             <span class="kicker kicker-accent"><svg class="ic sm"><use href="#i-sparkles"/></svg> Eine flexible Einführung · [Zielgruppe] · [Datum]</span>
             <h1 class="display">
-              Sprach&shy;modelle, <em>kommentiert</em><span class="caret" aria-hidden="true"></span>
+              Sprach&shy;modelle, <em>erklärt</em>
             </h1>
             <p class="cover-lead">
               Eine Einführung zu
@@ -1874,7 +1874,7 @@ Freundliche Grüsse</div>
             <div class="rot-chart" aria-label="Context Rot: Verlässlichkeit sinkt bei wachsendem Kontext">
               <div class="rot-axis y">Verlässlichkeit</div>
               <div class="rot-axis x">Kontextlänge</div>
-              <svg viewBox="0 0 620 300" role="img" aria-label="Kurven zeigen sinkende Verlässlichkeit bei mehr Kontext und Distraktoren">
+              <svg viewBox="0 0 620 300" role="img" aria-label="Kurven zeigen sinkende Verlässlichkeit bei mehr Kontext und Kontext-Rauschen">
                 <defs>
                   <linearGradient id="rotClean" x1="0" x2="1">
                     <stop offset="0" stop-color="var(--signal)"/>
@@ -1887,7 +1887,7 @@ Freundliche Grüsse</div>
                 <path class="rot-curve rot-curve-noisy" d="M70 92 C160 116 240 152 330 186 C420 220 500 238 565 246"/>
                 <g class="rot-band">
                   <rect x="362" y="58" width="178" height="182" rx="10"/>
-                  <text x="382" y="86">Distraktoren</text>
+                  <text x="382" y="86">Kontext-Rauschen</text>
                 </g>
                 <circle cx="150" cy="84" r="7" class="rot-dot clean"/>
                 <circle cx="455" cy="178" r="7" class="rot-dot clean"/>
@@ -1906,7 +1906,7 @@ Freundliche Grüsse</div>
               </article>
               <article>
                 <span>2</span>
-                <strong>Distraktoren ziehen</strong>
+                <strong>Rauschen zieht Fokus ab</strong>
                 <p>Irrelevante Details wirken wie scheinbar nützliche Hinweise und können die Antwort umlenken.</p>
               </article>
               <article>
@@ -2513,69 +2513,37 @@ Freundliche Grüsse</div>
             <span class="kicker"><svg class="ic sm"><use href="#i-layers"/></svg> Kapitel 6 &middot; Skills</span>
             <h2 class="lede">Skill-Lifecycle</h2>
           </div>
-          <p class="lead">Skills entstehen iterativ — kein einmaliger Schreibakt, sondern ein fortlaufender Loop.</p>
+          <p class="lead">Skills werden nicht „fertig geschrieben“. Sie reifen in kurzen Schleifen: klein starten, testen, nachschärfen.</p>
 
-          <div class="agile-circle">
-            <!-- Center Label -->
-            <div class="agile-center">
-              <div class="agile-center-icon">↻</div>
-              <div class="agile-center-label">Loop</div>
-            </div>
-
-            <!-- 4 Phases positioned around circle -->
-            <div class="agile-phase phase-top">
-              <div class="agile-icon-circle" style="--phase-color: var(--accent);">
-                <span class="icon" data-icon="lightbulb"></span>
-              </div>
-              <div class="agile-phase-content">
-                <div class="agile-phase-name">1 · Planen</div>
-                <div class="agile-phase-desc">Welche Aufgabe wiederholt sich?</div>
-              </div>
-            </div>
-
-            <div class="agile-phase phase-right">
-              <div class="agile-icon-circle" style="--phase-color: var(--accent-strong);">
-                <span class="icon" data-icon="code"></span>
-              </div>
-              <div class="agile-phase-content">
-                <div class="agile-phase-name">2 · Bauen</div>
-                <div class="agile-phase-desc">SKILL.md schreiben, Beispiele ergänzen</div>
-              </div>
-            </div>
-
-            <div class="agile-phase phase-bottom">
-              <div class="agile-icon-circle" style="--phase-color: var(--success);">
-                <span class="icon" data-icon="check"></span>
-              </div>
-              <div class="agile-phase-content">
-                <div class="agile-phase-name">3 · Testen</div>
-                <div class="agile-phase-desc">Lädt der Skill richtig? Stimmt der Output?</div>
-              </div>
-            </div>
-
-            <div class="agile-phase phase-left">
-              <div class="agile-icon-circle" style="--phase-color: var(--accent);">
-                <span class="icon" data-icon="rotate-ccw"></span>
-              </div>
-              <div class="agile-phase-content">
-                <div class="agile-phase-name">4 · Verbessern</div>
-                <div class="agile-phase-desc">Feedback einarbeiten, description schärfen</div>
-              </div>
-            </div>
-
-            <!-- Curved arrows (background SVG) -->
-            <svg class="agile-arrows" viewBox="0 0 600 600" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-              <defs>
-                <marker id="ag-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
-                  <path d="M0,0 L10,5 L0,10 Z" fill="var(--accent)"/>
-                </marker>
-              </defs>
-              <!-- 4 quarter-arcs, each from one phase to the next, with arrowhead -->
-              <path d="M 380 130 A 180 180 0 0 1 470 220" fill="none" stroke="var(--accent)" stroke-width="2.5" stroke-dasharray="4 4" stroke-linecap="round" marker-end="url(#ag-arrow)"/>
-              <path d="M 470 380 A 180 180 0 0 1 380 470" fill="none" stroke="var(--accent)" stroke-width="2.5" stroke-dasharray="4 4" stroke-linecap="round" marker-end="url(#ag-arrow)"/>
-              <path d="M 220 470 A 180 180 0 0 1 130 380" fill="none" stroke="var(--accent)" stroke-width="2.5" stroke-dasharray="4 4" stroke-linecap="round" marker-end="url(#ag-arrow)"/>
-              <path d="M 130 220 A 180 180 0 0 1 220 130" fill="none" stroke="var(--accent)" stroke-width="2.5" stroke-dasharray="4 4" stroke-linecap="round" marker-end="url(#ag-arrow)"/>
-            </svg>
+          <div class="skill-loop-flow" aria-label="Skill-Lifecycle in vier Schritten">
+            <article class="skill-loop-step">
+              <span class="skill-loop-icon" data-icon="lightbulb"></span>
+              <span class="skill-loop-num">01</span>
+              <h3>Planen</h3>
+              <p>Welche wiederkehrende Aufgabe lohnt eine eigene Anleitung?</p>
+            </article>
+            <article class="skill-loop-step">
+              <span class="skill-loop-icon" data-icon="code"></span>
+              <span class="skill-loop-num">02</span>
+              <h3>Bauen</h3>
+              <p><code>SKILL.md</code> schreiben, Beispiele und Grenzen ergänzen.</p>
+            </article>
+            <article class="skill-loop-step">
+              <span class="skill-loop-icon" data-icon="check"></span>
+              <span class="skill-loop-num">03</span>
+              <h3>Testen</h3>
+              <p>Lädt der Skill richtig? Ist der Output wirklich brauchbar?</p>
+            </article>
+            <article class="skill-loop-step">
+              <span class="skill-loop-icon" data-icon="rotate-ccw"></span>
+              <span class="skill-loop-num">04</span>
+              <h3>Verbessern</h3>
+              <p>Feedback einarbeiten, Beschreibung schärfen, Beispiele ersetzen.</p>
+            </article>
+          </div>
+          <div class="skill-loop-note">
+            <span class="icon" data-icon="rotate-ccw"></span>
+            <strong>Loop statt Big Bang:</strong> Der beste Skill entsteht aus echten Testläufen, nicht aus einem perfekten ersten Entwurf.
           </div>
         </div>
         <div class="slide-foot">
@@ -2782,7 +2750,7 @@ VERBOTEN
             <h2 class="lede">GitHub 101</h2>
           </div>
           <picture class="github-xray-asset">
-            <img src="assets/github-xray-light.png" alt="GitHub Repo X-Ray: Änderungen entstehen im Branch, werden als Pull Request geprüft und danach in main gemerged.">
+            <img src="assets/github-xray-light.png" alt="GitHub 101: Änderungen entstehen im Branch, werden als Pull Request geprüft und danach in main gemerged.">
           </picture>
         </div>
         <div class="slide-foot">
@@ -3116,6 +3084,6 @@ VERBOTEN
     <div class="side-panel-body" id="trainer-panel-body"></div>
   </aside>
 
-  <script type="module" src="app.js?v=2026-05-18-codex-v2k"></script>
+  <script type="module" src="app.js?v=2026-05-18-codex-v2l"></script>
 </body>
 </html>

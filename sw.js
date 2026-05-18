@@ -1,5 +1,5 @@
 const CACHE_PREFIX = 'llm-101-codex-v2-preview-offline-';
-const CACHE_NAME = `${CACHE_PREFIX}2026-05-18-codex-v2k`;
+const CACHE_NAME = `${CACHE_PREFIX}2026-05-18-codex-v2l`;
 
 const CORE_ASSETS = [
   './',

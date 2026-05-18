@@ -1,11 +1,11 @@
 // app.js — Haupteinstieg
-import { Storage } from './lib/storage.js?v=2026-05-18-codex-v2k';
-import { ModeManager } from './lib/mode.js?v=2026-05-18-codex-v2k';
-import { icon } from './lib/icons.js?v=2026-05-18-codex-v2k';
-import { initSprite } from './lib/icons-sprite.js?v=2026-05-18-codex-v2k';
-import { initTabs } from './lib/tabs.js?v=2026-05-18-codex-v2k';
-import { Exercises } from './lib/exercises.js?v=2026-05-18-codex-v2k';
-import { LEARNING_PATHS, TRAINER_NOTES, TRAINER_VARIANTS, getPathProgress } from './lib/learning-paths.js?v=2026-05-18-codex-v2k';
+import { Storage } from './lib/storage.js?v=2026-05-18-codex-v2l';
+import { ModeManager } from './lib/mode.js?v=2026-05-18-codex-v2l';
+import { icon } from './lib/icons.js?v=2026-05-18-codex-v2l';
+import { initSprite } from './lib/icons-sprite.js?v=2026-05-18-codex-v2l';
+import { initTabs } from './lib/tabs.js?v=2026-05-18-codex-v2l';
+import { Exercises } from './lib/exercises.js?v=2026-05-18-codex-v2l';
+import { LEARNING_PATHS, TRAINER_NOTES, TRAINER_VARIANTS, getPathProgress } from './lib/learning-paths.js?v=2026-05-18-codex-v2l';
 
 // Codex-Sprite so früh wie möglich inlined, damit nachgelagerte renderIcon()-
 // Aufrufe und <use href="#i-NAME"/>-Referenzen sofort auflösen. Fire-and-forget:
@@ -92,7 +92,16 @@ function fitSlideBody(slide) {
   const style = getComputedStyle(body);
   const paddingY = parseFloat(style.paddingTop) + parseFloat(style.paddingBottom);
   const available = body.clientHeight - paddingY;
-  const needed = wrapper.scrollHeight;
+  const wrapperTop = wrapper.getBoundingClientRect().top;
+  const visibleBottom = [...wrapper.querySelectorAll('*')].reduce((bottom, el) => {
+    if (el.closest('[data-step]:not(.is-revealed)')) return bottom;
+    const elStyle = getComputedStyle(el);
+    if (elStyle.display === 'none' || elStyle.visibility === 'hidden') return bottom;
+    const rect = el.getBoundingClientRect();
+    if (rect.width < 1 || rect.height < 1) return bottom;
+    return Math.max(bottom, rect.bottom - wrapperTop);
+  }, 0);
+  const needed = Math.max(visibleBottom, wrapper.firstElementChild ? 1 : wrapper.scrollHeight);
   if (!available || !needed || needed <= available) return;
 
   const minScale = window.matchMedia('(max-width: 700px)').matches ? 0.3 : 0.46;
@@ -559,12 +568,9 @@ function updatePathStatus() {
 // Spec §6.3 — Slide-Footer-Rendering.
 // Setzt `.slide-progress` einer Slide komplett neu (robust gegen variierende Stubs
 // aus den D-Paketen). Markup-Pattern:
-//   <button class="slide-folio quick-nav-trigger"><svg.ic><use #i-bookmark/></svg> Folie <b>{folio} / 30</b></button>
-//   <span class="slide-progress-sep" aria-hidden="true"></span>
-//   <span class="slide-path"><svg.ic><use #i-route/></svg> Lernpfad <b>{pathLabel}</b></span>
-//   <span class="slide-step">
-//     <span class="path-dots">…</span> Schritt <b>{n} von {m}</b>
-//   </span>
+//   <button class="slide-status slide-folio quick-nav-trigger">Folie <b>{folio} / 30</b></button>
+//   <span class="slide-status slide-path">Lernpfad <b>{pathLabel}</b></span>
+//   <span class="slide-status slide-step">Schnitt <b>{n} von {m}</b> + Mini-Bar</span>
 // Cover (`einstieg-1`) → Lernpfad „Übersicht", kein Schritt.
 // Slide ausserhalb des Pfads → nur aktiver Lernpfad, kein Schritt.
 function renderSlideFooter(slideId) {
@@ -588,25 +594,18 @@ function renderSlideFooter(slideId) {
     pathLabel = activePath.title;
   } else {
     pathLabel = info.pathLabel;
-    const dots = [];
-    for (let i = 1; i <= info.total; i++) {
-      if (i < info.step) dots.push('<i class="done"></i>');
-      else if (i === info.step) dots.push('<i class="here"></i>');
-      else dots.push('<i></i>');
-    }
-    stepHtml = `<span class="slide-progress-sep" aria-hidden="true"></span>` +
-      `<span class="slide-step">` +
-        `<span class="path-dots" aria-hidden="true">${dots.join('')}</span> ` +
-        `Schritt <b>${info.step} von ${info.total}</b>` +
+    const pct = Math.max(0, Math.min(100, Math.round((info.step / info.total) * 100)));
+    stepHtml = `<span class="slide-status slide-step" style="--path-progress:${pct}%">` +
+      `<span class="slide-status-text">Schnitt <b>${info.step} von ${info.total}</b></span>` +
+      `<span class="path-mini-bar" aria-hidden="true"><i></i></span>` +
       `</span>`;
   }
   if (pathLabel) {
-    pathHtml = `<span class="slide-progress-sep" aria-hidden="true"></span>` +
-      `<span class="slide-path"><svg class="ic" aria-hidden="true"><use href="#i-route"/></svg> Lernpfad <b>${escapeHtml(pathLabel)}</b></span>`;
+    pathHtml = `<span class="slide-status slide-path"><svg class="ic" aria-hidden="true"><use href="#i-route"/></svg><span>Lernpfad</span> <b>${escapeHtml(pathLabel)}</b></span>`;
   }
 
   progress.innerHTML =
-    `<button class="slide-folio quick-nav-trigger" type="button" aria-haspopup="dialog" aria-expanded="${quickNavPopover?.getAttribute('aria-hidden') === 'false' ? 'true' : 'false'}"><svg class="ic" aria-hidden="true"><use href="#i-bookmark"/></svg> Folie <b>${escapeHtml(folio)} / 30</b></button>` +
+    `<button class="slide-status slide-folio quick-nav-trigger" type="button" aria-haspopup="dialog" aria-expanded="${quickNavPopover?.getAttribute('aria-hidden') === 'false' ? 'true' : 'false'}"><svg class="ic" aria-hidden="true"><use href="#i-bookmark"/></svg><span>Folie</span> <b>${escapeHtml(folio)} / 30</b></button>` +
     pathHtml +
     stepHtml;
 }

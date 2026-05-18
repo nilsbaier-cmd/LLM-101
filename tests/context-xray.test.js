@@ -18,13 +18,14 @@ describe('context window x-ray demo', () => {
     expect(rotSlide?.textContent).toContain('Context Rot');
   });
 
-  it('explains context rot with reliability curves and distractors', () => {
+  it('explains context rot with reliability curves and context noise', () => {
     const slide = document.querySelector('[data-slide-id="usecase-5"]');
 
     expect(slide?.querySelector('.context-rot')).toBeTruthy();
     expect(slide?.querySelector('.rot-curve-clean')).toBeTruthy();
     expect(slide?.querySelector('.rot-curve-noisy')).toBeTruthy();
-    expect(slide?.textContent).toContain('Distraktoren');
+    expect(slide?.textContent).toContain('Kontext-Rauschen');
+    expect(slide?.textContent).toContain('Rauschen zieht Fokus ab');
     expect(slide?.textContent).toContain('Signal verdünnt');
     expect(slide?.textContent).toContain('Gegenmittel');
   });

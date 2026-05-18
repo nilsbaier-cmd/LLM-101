@@ -16,7 +16,7 @@ describe('llm-agnostic framing', () => {
     // Soft-hyphen (­) splits "Sprachmodelle" in the source — strip it before asserting.
     const display = (cover?.querySelector('h1.display')?.textContent ?? '').replace(/­/g, '');
     expect(display).toContain('Sprachmodelle');
-    expect(display).toContain('kommentiert');
+    expect(display).toContain('erklärt');
     const coverLead = cover?.querySelector('.cover-lead')?.textContent ?? '';
     expect(coverLead).toContain('Claude');
     expect(coverLead).toContain('ChatGPT');

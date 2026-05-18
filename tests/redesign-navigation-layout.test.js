@@ -20,8 +20,10 @@ describe('codex v2 slide navigation and layout safeguards', () => {
   });
 
   it('prevents hidden step content from intercepting navigation clicks', () => {
+    expect(css).toMatch(/body\[data-layout="slide"\] \.slide\[data-stepped\] \[data-step\]\s*{[^}]*display:\s*none;/s);
     expect(css).toMatch(/body\[data-layout="slide"\] \.slide\[data-stepped\] \[data-step\]\s*{[^}]*visibility:\s*hidden;/s);
     expect(css).toMatch(/body\[data-layout="slide"\] \.slide\[data-stepped\] \[data-step\]\s*{[^}]*pointer-events:\s*none;/s);
+    expect(css).toMatch(/body\[data-layout="slide"\] \.slide\[data-stepped\] \[data-step\]\.is-revealed\s*{[^}]*display:\s*revert;/s);
     expect(css).toMatch(/body\[data-layout="slide"\] \.slide\[data-stepped\] \[data-step\]\.is-revealed\s*{[^}]*visibility:\s*visible;/s);
     expect(css).toMatch(/body\[data-layout="slide"\] \.slide\[data-stepped\] \[data-step\]\.is-revealed\s*{[^}]*pointer-events:\s*auto;/s);
   });
@@ -98,10 +100,14 @@ describe('codex v2 slide navigation and layout safeguards', () => {
   it('isolates preview browser state from the main course URL', () => {
     const notes = read('meine-notizen.html');
     const explainer = read('explainer/a-context-window.html');
+    const handout = read('handout.html');
+    const quellen = read('quellen-refresh.html');
     const sw = read('sw.js');
     expect(app).toContain("const NS = 'llm-101-codex-v2-preview'");
     expect(notes).toContain("new Storage('llm-101-codex-v2-preview')");
     expect(explainer).toContain("new Storage('llm-101-codex-v2-preview')");
+    expect(handout).toContain("new ModeManager(new Storage('llm-101-codex-v2-preview'))");
+    expect(quellen).toContain("new ModeManager(new Storage('llm-101-codex-v2-preview'))");
     expect(sw).toContain("const CACHE_PREFIX = 'llm-101-codex-v2-preview-offline-'");
   });
 
